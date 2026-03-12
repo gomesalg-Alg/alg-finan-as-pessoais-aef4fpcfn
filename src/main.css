@@ -62,7 +62,7 @@
   }
 
   .card-hover {
-    @apply transition-all duration-400 ease-out hover:-translate-y-2 hover:shadow-[0_10px_30px_-10px_rgba(212,175,55,0.2)] hover:border-[#d4af37]/50;
+    @apply transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_10px_30px_-10px_rgba(212,175,55,0.2)] hover:border-[#d4af37]/50;
   }
 
   .text-gradient-gold {
