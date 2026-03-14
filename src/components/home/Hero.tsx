@@ -60,7 +60,7 @@ export function Hero() {
               >
                 <a href="https://wa.me/5511992459400" target="_blank" rel="noopener noreferrer">
                   <MessageCircle className="mr-2 h-5 w-5 text-[#25D366]" />
-                  Iniciar conversa
+                  Iniciar Conversa
                 </a>
               </Button>
             </div>

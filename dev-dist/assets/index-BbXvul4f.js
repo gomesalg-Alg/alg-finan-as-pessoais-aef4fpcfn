@@ -19009,15 +19009,6 @@ var ArrowRight = createLucideIcon("arrow-right", [["path", {
 	d: "m12 5 7 7-7 7",
 	key: "xquz4c"
 }]]);
-var Award = createLucideIcon("award", [["path", {
-	d: "m15.477 12.89 1.515 8.526a.5.5 0 0 1-.81.47l-3.58-2.687a1 1 0 0 0-1.197 0l-3.586 2.686a.5.5 0 0 1-.81-.469l1.514-8.526",
-	key: "1yiouv"
-}], ["circle", {
-	cx: "12",
-	cy: "8",
-	r: "6",
-	key: "1vp47v"
-}]]);
 var Briefcase = createLucideIcon("briefcase", [["path", {
 	d: "M16 20V4a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16",
 	key: "jecpp"
@@ -19125,6 +19116,20 @@ var Calendar = createLucideIcon("calendar", [
 		key: "8toen8"
 	}]
 ]);
+var ChartNoAxesColumnIncreasing = createLucideIcon("chart-no-axes-column-increasing", [
+	["path", {
+		d: "M5 21v-6",
+		key: "1hz6c0"
+	}],
+	["path", {
+		d: "M12 21V9",
+		key: "uvy0l4"
+	}],
+	["path", {
+		d: "M19 21V3",
+		key: "11j9sm"
+	}]
+]);
 var Check = createLucideIcon("check", [["path", {
 	d: "M20 6 9 17l-5-5",
 	key: "1gmf2c"
@@ -19185,10 +19190,6 @@ var GraduationCap = createLucideIcon("graduation-cap", [
 		key: "1r8lef"
 	}]
 ]);
-var HeartHandshake = createLucideIcon("heart-handshake", [["path", {
-	d: "M19.414 14.414C21 12.828 22 11.5 22 9.5a5.5 5.5 0 0 0-9.591-3.676.6.6 0 0 1-.818.001A5.5 5.5 0 0 0 2 9.5c0 2.3 1.5 4 3 5.5l5.535 5.362a2 2 0 0 0 2.879.052 2.12 2.12 0 0 0-.004-3 2.124 2.124 0 1 0 3-3 2.124 2.124 0 0 0 3.004 0 2 2 0 0 0 0-2.828l-1.881-1.882a2.41 2.41 0 0 0-3.409 0l-1.71 1.71a2 2 0 0 1-2.828 0 2 2 0 0 1 0-2.828l2.823-2.762",
-	key: "17lmqv"
-}]]);
 var Landmark = createLucideIcon("landmark", [
 	["path", {
 		d: "M10 18v-7",
@@ -19215,20 +19216,10 @@ var Landmark = createLucideIcon("landmark", [
 		key: "1ivflk"
 	}]
 ]);
-var Lightbulb = createLucideIcon("lightbulb", [
-	["path", {
-		d: "M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5",
-		key: "1gvzjb"
-	}],
-	["path", {
-		d: "M9 18h6",
-		key: "x1upvd"
-	}],
-	["path", {
-		d: "M10 22h4",
-		key: "ceow96"
-	}]
-]);
+var LoaderCircle = createLucideIcon("loader-circle", [["path", {
+	d: "M21 12a9 9 0 1 1-6.219-8.56",
+	key: "13zald"
+}]]);
 var Mail = createLucideIcon("mail", [["path", {
 	d: "m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7",
 	key: "132q7q"
@@ -19271,26 +19262,22 @@ var Phone = createLucideIcon("phone", [["path", {
 	d: "M13.832 16.568a1 1 0 0 0 1.213-.303l.355-.465A2 2 0 0 1 17 15h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2A18 18 0 0 1 2 4a2 2 0 0 1 2-2h3a2 2 0 0 1 2 2v3a2 2 0 0 1-.8 1.6l-.468.351a1 1 0 0 0-.292 1.233 14 14 0 0 0 6.392 6.384",
 	key: "9njp5v"
 }]]);
-var Scale = createLucideIcon("scale", [
+var Rocket = createLucideIcon("rocket", [
 	["path", {
-		d: "M12 3v18",
-		key: "108xh3"
+		d: "M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5",
+		key: "qeys4"
 	}],
 	["path", {
-		d: "m19 8 3 8a5 5 0 0 1-6 0zV7",
-		key: "zcdpyk"
+		d: "M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09",
+		key: "u4xsad"
 	}],
 	["path", {
-		d: "M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1",
-		key: "1yorad"
+		d: "M9 12a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.4 22.4 0 0 1-4 2z",
+		key: "676m9"
 	}],
 	["path", {
-		d: "m5 8 3 8a5 5 0 0 1-6 0zV7",
-		key: "eua70x"
-	}],
-	["path", {
-		d: "M7 21h10",
-		key: "1b0cd5"
+		d: "M9 12H4s.55-3.03 2-4c1.62-1.08 5 .05 5 .05",
+		key: "92ym6u"
 	}]
 ]);
 var Send = createLucideIcon("send", [["path", {
@@ -24492,7 +24479,7 @@ function Header() {
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 				"data-uid": "src/components/layout/Header.tsx:41:9",
 				"data-prohibitions": "[editContent]",
-				className: "flex items-center justify-between h-14",
+				className: "flex items-center justify-between h-16 relative",
 				children: [
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 						"data-uid": "src/components/layout/Header.tsx:43:11",
@@ -24528,7 +24515,7 @@ function Header() {
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 						"data-uid": "src/components/layout/Header.tsx:69:11",
 						"data-prohibitions": "[]",
-						className: "flex-shrink-0 flex justify-center items-center",
+						className: "absolute left-1/2 -translate-x-1/2 flex justify-center items-center",
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
 							"data-uid": "src/components/layout/Header.tsx:70:13",
 							"data-prohibitions": "[]",
@@ -24543,7 +24530,7 @@ function Header() {
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 								"data-uid": "src/components/layout/Header.tsx:76:15",
 								"data-prohibitions": "[]",
-								className: "font-bold text-xs md:text-sm tracking-tight text-foreground hidden sm:block",
+								className: "font-bold text-xs tracking-tight text-foreground hidden sm:block whitespace-nowrap",
 								children: "ALG Finanças Pessoais"
 							})]
 						})
@@ -24726,16 +24713,16 @@ function Footer() {
 									"data-uid": "src/components/layout/Footer.tsx:60:15",
 									"data-prohibitions": "[]",
 									className: "text-sm text-muted-foreground",
-									children: "Gestão de Controle Pessoal"
+									children: "Gestão de Controle Financeiro Pessoal"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
-									"data-uid": "src/components/layout/Footer.tsx:61:15",
+									"data-uid": "src/components/layout/Footer.tsx:63:15",
 									"data-prohibitions": "[]",
 									className: "text-sm text-muted-foreground",
 									children: "Consultoria de Investimentos"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
-									"data-uid": "src/components/layout/Footer.tsx:62:15",
+									"data-uid": "src/components/layout/Footer.tsx:64:15",
 									"data-prohibitions": "[]",
 									className: "text-sm text-muted-foreground",
 									children: "Organização de Dívidas"
@@ -24744,78 +24731,78 @@ function Footer() {
 						})]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						"data-uid": "src/components/layout/Footer.tsx:67:11",
+						"data-uid": "src/components/layout/Footer.tsx:69:11",
 						"data-prohibitions": "[]",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-							"data-uid": "src/components/layout/Footer.tsx:68:13",
+							"data-uid": "src/components/layout/Footer.tsx:70:13",
 							"data-prohibitions": "[]",
 							className: "text-foreground font-semibold mb-6 text-lg",
 							children: "Contato"
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("ul", {
-							"data-uid": "src/components/layout/Footer.tsx:69:13",
+							"data-uid": "src/components/layout/Footer.tsx:71:13",
 							"data-prohibitions": "[]",
 							className: "space-y-4",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
-									"data-uid": "src/components/layout/Footer.tsx:70:15",
+									"data-uid": "src/components/layout/Footer.tsx:72:15",
 									"data-prohibitions": "[]",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
-										"data-uid": "src/components/layout/Footer.tsx:71:17",
+										"data-uid": "src/components/layout/Footer.tsx:73:17",
 										"data-prohibitions": "[]",
 										href: "mailto:gomesalg@gmail.com",
 										className: "flex items-start gap-3 text-sm text-muted-foreground hover:text-primary transition-colors",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Mail, {
-											"data-uid": "src/components/layout/Footer.tsx:75:19",
+											"data-uid": "src/components/layout/Footer.tsx:77:19",
 											"data-prohibitions": "[editContent]",
 											className: "h-5 w-5 text-primary shrink-0"
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											"data-uid": "src/components/layout/Footer.tsx:76:19",
+											"data-uid": "src/components/layout/Footer.tsx:78:19",
 											"data-prohibitions": "[]",
 											children: "gomesalg@gmail.com"
 										})]
 									})
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
-									"data-uid": "src/components/layout/Footer.tsx:79:15",
+									"data-uid": "src/components/layout/Footer.tsx:81:15",
 									"data-prohibitions": "[]",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
-										"data-uid": "src/components/layout/Footer.tsx:80:17",
+										"data-uid": "src/components/layout/Footer.tsx:82:17",
 										"data-prohibitions": "[]",
 										href: "https://wa.me/5511992459400",
 										target: "_blank",
 										rel: "noopener noreferrer",
 										className: "flex items-start gap-3 text-sm text-muted-foreground hover:text-primary transition-colors",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Phone, {
-											"data-uid": "src/components/layout/Footer.tsx:86:19",
+											"data-uid": "src/components/layout/Footer.tsx:88:19",
 											"data-prohibitions": "[editContent]",
 											className: "h-5 w-5 text-primary shrink-0"
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											"data-uid": "src/components/layout/Footer.tsx:87:19",
+											"data-uid": "src/components/layout/Footer.tsx:89:19",
 											"data-prohibitions": "[]",
-											children: "(11) 99245-9400"
+											children: "11 99245-9400"
 										})]
 									})
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
-									"data-uid": "src/components/layout/Footer.tsx:90:15",
+									"data-uid": "src/components/layout/Footer.tsx:92:15",
 									"data-prohibitions": "[]",
 									className: "flex items-start gap-3 text-sm text-muted-foreground",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(MapPin, {
-										"data-uid": "src/components/layout/Footer.tsx:91:17",
+										"data-uid": "src/components/layout/Footer.tsx:93:17",
 										"data-prohibitions": "[editContent]",
 										className: "h-5 w-5 text-primary shrink-0"
 									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-										"data-uid": "src/components/layout/Footer.tsx:92:17",
+										"data-uid": "src/components/layout/Footer.tsx:94:17",
 										"data-prohibitions": "[]",
 										children: [
 											"Rua Domingos Pires de Oliveira Dias, 32",
 											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {
-												"data-uid": "src/components/layout/Footer.tsx:94:19",
+												"data-uid": "src/components/layout/Footer.tsx:96:19",
 												"data-prohibitions": "[editContent]"
 											}),
 											"São Paulo - SP",
 											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {
-												"data-uid": "src/components/layout/Footer.tsx:96:19",
+												"data-uid": "src/components/layout/Footer.tsx:98:19",
 												"data-prohibitions": "[editContent]"
 											}),
 											"CEP: 04821-230"
@@ -24827,11 +24814,11 @@ function Footer() {
 					})
 				]
 			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				"data-uid": "src/components/layout/Footer.tsx:104:9",
+				"data-uid": "src/components/layout/Footer.tsx:106:9",
 				"data-prohibitions": "[editContent]",
 				className: "pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-					"data-uid": "src/components/layout/Footer.tsx:105:11",
+					"data-uid": "src/components/layout/Footer.tsx:107:11",
 					"data-prohibitions": "[editContent]",
 					className: "text-xs text-muted-foreground",
 					children: [
@@ -24840,17 +24827,17 @@ function Footer() {
 						" ALG Finanças Pessoais Ltda-me. Todos os direitos reservados."
 					]
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					"data-uid": "src/components/layout/Footer.tsx:109:11",
+					"data-uid": "src/components/layout/Footer.tsx:111:11",
 					"data-prohibitions": "[]",
 					className: "flex items-center gap-4 text-xs text-muted-foreground",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-						"data-uid": "src/components/layout/Footer.tsx:110:13",
+						"data-uid": "src/components/layout/Footer.tsx:112:13",
 						"data-prohibitions": "[]",
 						to: "#",
 						className: "hover:text-primary transition-colors",
 						children: "Política de Privacidade"
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-						"data-uid": "src/components/layout/Footer.tsx:113:13",
+						"data-uid": "src/components/layout/Footer.tsx:115:13",
 						"data-prohibitions": "[]",
 						to: "#",
 						className: "hover:text-primary transition-colors",
@@ -24997,7 +24984,7 @@ function Hero() {
 										"data-uid": "src/components/home/Hero.tsx:62:19",
 										"data-prohibitions": "[editContent]",
 										className: "mr-2 h-5 w-5 text-[#25D366]"
-									}), "Iniciar conversa"]
+									}), "Iniciar Conversa"]
 								})
 							})]
 						}),
@@ -25412,27 +25399,27 @@ var valuesList = [
 	{
 		title: "Responsabilidade",
 		description: "Agir com ética e comprometimento em todas as nossas ações.",
-		icon: Scale
+		icon: ShieldCheck
 	},
 	{
 		title: "Excelência",
 		description: "Buscar sempre a melhor solução para nossos clientes, com qualidade e eficiência.",
-		icon: Award
+		icon: TrendingUp
 	},
 	{
 		title: "Inovação",
 		description: "Estar à frente das tendências e oferecer ferramentas financeiras modernas e eficazes.",
-		icon: Lightbulb
+		icon: Rocket
 	},
 	{
 		title: "Transparência",
 		description: "Manter uma comunicação clara e aberta com nossos clientes.",
-		icon: Eye
+		icon: ChartNoAxesColumnIncreasing
 	},
 	{
 		title: "Zelo",
 		description: "Tratar as finanças dos nossos clientes com o mesmo cuidado e atenção que tratamos as nossas próprias.",
-		icon: HeartHandshake
+		icon: Landmark
 	}
 ];
 function Values() {
@@ -25460,7 +25447,7 @@ function Values() {
 							"data-uid": "src/components/home/Values.tsx:41:11",
 							"data-prohibitions": "[]",
 							className: "text-3xl md:text-5xl font-bold mt-2 mb-6 text-foreground",
-							children: "Valores que nos guiam"
+							children: "Nossos Valores"
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 							"data-uid": "src/components/home/Values.tsx:44:11",
@@ -33720,6 +33707,7 @@ var formSchema = object({
 });
 function ContactForm() {
 	const { toast } = useToast();
+	const [isSubmitting, setIsSubmitting] = (0, import_react.useState)(false);
 	const form = useForm({
 		resolver: a(formSchema),
 		defaultValues: {
@@ -33729,80 +33717,95 @@ function ContactForm() {
 			message: ""
 		}
 	});
-	function onSubmit(values) {
-		console.log(values);
-		toast({
-			title: "Solicitação enviada com sucesso!",
-			description: "Agradecemos o contato. Nossa equipe de especialistas da ALG Finanças Pessoais retornará em breve.",
-			duration: 5e3
-		});
-		form.reset();
+	async function onSubmit(values) {
+		setIsSubmitting(true);
+		try {
+			if (!(await fetch("/api/collections/leads/records", {
+				method: "POST",
+				headers: { "Content-Type": "application/json" },
+				body: JSON.stringify(values)
+			})).ok) throw new Error("Falha ao enviar");
+			toast({
+				title: "Solicitação enviada com sucesso!",
+				description: "Agradecemos o contato. Nossa equipe de especialistas da ALG Finanças Pessoais retornará em breve.",
+				duration: 5e3
+			});
+			form.reset();
+		} catch (error) {
+			toast({
+				title: "Erro ao enviar",
+				description: "Ocorreu um problema ao enviar sua solicitação. Tente novamente mais tarde.",
+				variant: "destructive"
+			});
+		} finally {
+			setIsSubmitting(false);
+		}
 	}
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Form, {
-		"data-uid": "src/components/contact/ContactForm.tsx:61:5",
-		"data-prohibitions": "[]",
+		"data-uid": "src/components/contact/ContactForm.tsx:83:5",
+		"data-prohibitions": "[editContent]",
 		...form,
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("form", {
-			"data-uid": "src/components/contact/ContactForm.tsx:62:7",
-			"data-prohibitions": "[]",
+			"data-uid": "src/components/contact/ContactForm.tsx:84:7",
+			"data-prohibitions": "[editContent]",
 			onSubmit: form.handleSubmit(onSubmit),
 			className: "space-y-6",
 			children: [
 				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					"data-uid": "src/components/contact/ContactForm.tsx:63:9",
+					"data-uid": "src/components/contact/ContactForm.tsx:85:9",
 					"data-prohibitions": "[]",
 					className: "grid grid-cols-1 md:grid-cols-2 gap-6",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormField, {
-						"data-uid": "src/components/contact/ContactForm.tsx:64:11",
+						"data-uid": "src/components/contact/ContactForm.tsx:86:11",
 						"data-prohibitions": "[editContent]",
 						control: form.control,
 						name: "name",
 						render: ({ field }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(FormItem, {
-							"data-uid": "src/components/contact/ContactForm.tsx:68:15",
+							"data-uid": "src/components/contact/ContactForm.tsx:90:15",
 							"data-prohibitions": "[]",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormLabel, {
-									"data-uid": "src/components/contact/ContactForm.tsx:69:17",
+									"data-uid": "src/components/contact/ContactForm.tsx:91:17",
 									"data-prohibitions": "[]",
 									className: "text-foreground",
 									children: "Nome Completo"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormControl, {
-									"data-uid": "src/components/contact/ContactForm.tsx:70:17",
+									"data-uid": "src/components/contact/ContactForm.tsx:92:17",
 									"data-prohibitions": "[]",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Input, {
-										"data-uid": "src/components/contact/ContactForm.tsx:71:19",
+										"data-uid": "src/components/contact/ContactForm.tsx:93:19",
 										"data-prohibitions": "[editContent]",
 										placeholder: "Seu nome",
 										...field
 									})
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormMessage, {
-									"data-uid": "src/components/contact/ContactForm.tsx:73:17",
+									"data-uid": "src/components/contact/ContactForm.tsx:95:17",
 									"data-prohibitions": "[editContent]"
 								})
 							]
 						})
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormField, {
-						"data-uid": "src/components/contact/ContactForm.tsx:77:11",
+						"data-uid": "src/components/contact/ContactForm.tsx:99:11",
 						"data-prohibitions": "[editContent]",
 						control: form.control,
 						name: "email",
 						render: ({ field }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(FormItem, {
-							"data-uid": "src/components/contact/ContactForm.tsx:81:15",
+							"data-uid": "src/components/contact/ContactForm.tsx:103:15",
 							"data-prohibitions": "[]",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormLabel, {
-									"data-uid": "src/components/contact/ContactForm.tsx:82:17",
+									"data-uid": "src/components/contact/ContactForm.tsx:104:17",
 									"data-prohibitions": "[]",
 									className: "text-foreground",
 									children: "E-mail"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormControl, {
-									"data-uid": "src/components/contact/ContactForm.tsx:83:17",
+									"data-uid": "src/components/contact/ContactForm.tsx:105:17",
 									"data-prohibitions": "[]",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Input, {
-										"data-uid": "src/components/contact/ContactForm.tsx:84:19",
+										"data-uid": "src/components/contact/ContactForm.tsx:106:19",
 										"data-prohibitions": "[editContent]",
 										placeholder: "seu.email@exemplo.com",
 										type: "email",
@@ -33810,7 +33813,7 @@ function ContactForm() {
 									})
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormMessage, {
-									"data-uid": "src/components/contact/ContactForm.tsx:86:17",
+									"data-uid": "src/components/contact/ContactForm.tsx:108:17",
 									"data-prohibitions": "[editContent]"
 								})
 							]
@@ -33818,102 +33821,102 @@ function ContactForm() {
 					})]
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					"data-uid": "src/components/contact/ContactForm.tsx:92:9",
+					"data-uid": "src/components/contact/ContactForm.tsx:114:9",
 					"data-prohibitions": "[]",
 					className: "grid grid-cols-1 md:grid-cols-2 gap-6",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormField, {
-						"data-uid": "src/components/contact/ContactForm.tsx:93:11",
+						"data-uid": "src/components/contact/ContactForm.tsx:115:11",
 						"data-prohibitions": "[editContent]",
 						control: form.control,
 						name: "phone",
 						render: ({ field }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(FormItem, {
-							"data-uid": "src/components/contact/ContactForm.tsx:97:15",
+							"data-uid": "src/components/contact/ContactForm.tsx:119:15",
 							"data-prohibitions": "[]",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormLabel, {
-									"data-uid": "src/components/contact/ContactForm.tsx:98:17",
+									"data-uid": "src/components/contact/ContactForm.tsx:120:17",
 									"data-prohibitions": "[]",
 									className: "text-foreground",
 									children: "Telefone / WhatsApp"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormControl, {
-									"data-uid": "src/components/contact/ContactForm.tsx:99:17",
+									"data-uid": "src/components/contact/ContactForm.tsx:121:17",
 									"data-prohibitions": "[]",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Input, {
-										"data-uid": "src/components/contact/ContactForm.tsx:100:19",
+										"data-uid": "src/components/contact/ContactForm.tsx:122:19",
 										"data-prohibitions": "[editContent]",
-										placeholder: "(00) 00000-0000",
+										placeholder: "11 99245-9400",
 										...field
 									})
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormMessage, {
-									"data-uid": "src/components/contact/ContactForm.tsx:102:17",
+									"data-uid": "src/components/contact/ContactForm.tsx:124:17",
 									"data-prohibitions": "[editContent]"
 								})
 							]
 						})
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormField, {
-						"data-uid": "src/components/contact/ContactForm.tsx:106:11",
+						"data-uid": "src/components/contact/ContactForm.tsx:128:11",
 						"data-prohibitions": "[editContent]",
 						control: form.control,
 						name: "service",
 						render: ({ field }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(FormItem, {
-							"data-uid": "src/components/contact/ContactForm.tsx:110:15",
+							"data-uid": "src/components/contact/ContactForm.tsx:132:15",
 							"data-prohibitions": "[]",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormLabel, {
-									"data-uid": "src/components/contact/ContactForm.tsx:111:17",
+									"data-uid": "src/components/contact/ContactForm.tsx:133:17",
 									"data-prohibitions": "[]",
 									className: "text-foreground",
 									children: "Área de Interesse"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Select, {
-									"data-uid": "src/components/contact/ContactForm.tsx:112:17",
+									"data-uid": "src/components/contact/ContactForm.tsx:134:17",
 									"data-prohibitions": "[]",
 									onValueChange: field.onChange,
 									defaultValue: field.value,
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormControl, {
-										"data-uid": "src/components/contact/ContactForm.tsx:113:19",
+										"data-uid": "src/components/contact/ContactForm.tsx:135:19",
 										"data-prohibitions": "[]",
 										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectTrigger, {
-											"data-uid": "src/components/contact/ContactForm.tsx:114:21",
+											"data-uid": "src/components/contact/ContactForm.tsx:136:21",
 											"data-prohibitions": "[]",
 											children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectValue, {
-												"data-uid": "src/components/contact/ContactForm.tsx:115:23",
+												"data-uid": "src/components/contact/ContactForm.tsx:137:23",
 												"data-prohibitions": "[editContent]",
 												placeholder: "Selecione um serviço"
 											})
 										})
 									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(SelectContent, {
-										"data-uid": "src/components/contact/ContactForm.tsx:118:19",
+										"data-uid": "src/components/contact/ContactForm.tsx:140:19",
 										"data-prohibitions": "[]",
 										children: [
 											/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItem, {
-												"data-uid": "src/components/contact/ContactForm.tsx:119:21",
+												"data-uid": "src/components/contact/ContactForm.tsx:141:21",
 												"data-prohibitions": "[]",
 												value: "planejamento",
 												children: "Planejamento Financeiro"
 											}),
 											/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItem, {
-												"data-uid": "src/components/contact/ContactForm.tsx:120:21",
+												"data-uid": "src/components/contact/ContactForm.tsx:142:21",
 												"data-prohibitions": "[]",
 												value: "gestao",
 												children: "Gestão de Controle Financeiro Pessoal"
 											}),
 											/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItem, {
-												"data-uid": "src/components/contact/ContactForm.tsx:121:21",
+												"data-uid": "src/components/contact/ContactForm.tsx:143:21",
 												"data-prohibitions": "[]",
 												value: "investimentos",
 												children: "Análise de Investimentos"
 											}),
 											/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItem, {
-												"data-uid": "src/components/contact/ContactForm.tsx:122:21",
+												"data-uid": "src/components/contact/ContactForm.tsx:144:21",
 												"data-prohibitions": "[]",
 												value: "protecao",
 												children: "Proteção Patrimonial"
 											}),
 											/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItem, {
-												"data-uid": "src/components/contact/ContactForm.tsx:123:21",
+												"data-uid": "src/components/contact/ContactForm.tsx:145:21",
 												"data-prohibitions": "[]",
 												value: "outro",
 												children: "Outro assunto"
@@ -33922,7 +33925,7 @@ function ContactForm() {
 									})]
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormMessage, {
-									"data-uid": "src/components/contact/ContactForm.tsx:126:17",
+									"data-uid": "src/components/contact/ContactForm.tsx:148:17",
 									"data-prohibitions": "[editContent]"
 								})
 							]
@@ -33930,25 +33933,25 @@ function ContactForm() {
 					})]
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormField, {
-					"data-uid": "src/components/contact/ContactForm.tsx:132:9",
+					"data-uid": "src/components/contact/ContactForm.tsx:154:9",
 					"data-prohibitions": "[editContent]",
 					control: form.control,
 					name: "message",
 					render: ({ field }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(FormItem, {
-						"data-uid": "src/components/contact/ContactForm.tsx:136:13",
+						"data-uid": "src/components/contact/ContactForm.tsx:158:13",
 						"data-prohibitions": "[]",
 						children: [
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormLabel, {
-								"data-uid": "src/components/contact/ContactForm.tsx:137:15",
+								"data-uid": "src/components/contact/ContactForm.tsx:159:15",
 								"data-prohibitions": "[]",
 								className: "text-foreground",
 								children: "Sua Mensagem"
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormControl, {
-								"data-uid": "src/components/contact/ContactForm.tsx:138:15",
+								"data-uid": "src/components/contact/ContactForm.tsx:160:15",
 								"data-prohibitions": "[]",
 								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Textarea, {
-									"data-uid": "src/components/contact/ContactForm.tsx:139:17",
+									"data-uid": "src/components/contact/ContactForm.tsx:161:17",
 									"data-prohibitions": "[editContent]",
 									placeholder: "Como podemos ajudar você a atingir seus objetivos financeiros?",
 									className: "min-h-[120px] resize-none",
@@ -33956,22 +33959,27 @@ function ContactForm() {
 								})
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormMessage, {
-								"data-uid": "src/components/contact/ContactForm.tsx:145:15",
+								"data-uid": "src/components/contact/ContactForm.tsx:167:15",
 								"data-prohibitions": "[editContent]"
 							})
 						]
 					})
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
-					"data-uid": "src/components/contact/ContactForm.tsx:150:9",
-					"data-prohibitions": "[]",
+					"data-uid": "src/components/contact/ContactForm.tsx:172:9",
+					"data-prohibitions": "[editContent]",
 					type: "submit",
+					disabled: isSubmitting,
 					className: "w-full md:w-auto h-12 px-8 bg-primary hover:bg-primary/90 text-primary-foreground",
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Send, {
-						"data-uid": "src/components/contact/ContactForm.tsx:154:11",
+					children: [isSubmitting ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(LoaderCircle, {
+						"data-uid": "src/components/contact/ContactForm.tsx:178:13",
+						"data-prohibitions": "[editContent]",
+						className: "mr-2 h-4 w-4 animate-spin"
+					}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Send, {
+						"data-uid": "src/components/contact/ContactForm.tsx:180:13",
 						"data-prohibitions": "[editContent]",
 						className: "mr-2 h-4 w-4"
-					}), "Enviar Solicitação"]
+					}), isSubmitting ? "Enviando..." : "Enviar Solicitação"]
 				})
 			]
 		})
@@ -34059,7 +34067,7 @@ function Contact() {
 													target: "_blank",
 													rel: "noopener noreferrer",
 													className: "text-lg font-semibold text-foreground hover:text-primary transition-colors",
-													children: "(11) 99245-9400"
+													children: "11 99245-9400"
 												})]
 											})]
 										}),
@@ -34160,7 +34168,7 @@ function Contact() {
 												"data-uid": "src/pages/Contact.tsx:86:23",
 												"data-prohibitions": "[editContent]",
 												className: "mr-2 h-5 w-5"
-											}), "Chamar no WhatsApp"]
+											}), "Iniciar Conversa"]
 										})
 									})]
 								})
@@ -34321,4 +34329,4 @@ var App = () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(BrowserRouter, {
 }));
 //#endregion
 
-//# sourceMappingURL=index-BTraqV_8.js.map
+//# sourceMappingURL=index-BbXvul4f.js.map

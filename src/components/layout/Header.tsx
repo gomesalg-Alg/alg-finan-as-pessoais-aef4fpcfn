@@ -38,7 +38,7 @@ export function Header() {
       )}
     >
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex items-center justify-between h-14">
+        <div className="flex items-center justify-between h-16 relative">
           {/* Left: Desktop Navigation / Mobile Menu Button */}
           <div className="flex-1 flex justify-start items-center">
             <nav className="hidden md:flex items-center gap-6">
@@ -65,15 +65,15 @@ export function Header() {
             </button>
           </div>
 
-          {/* Center: Centered Logo */}
-          <div className="flex-shrink-0 flex justify-center items-center">
+          {/* Center: Perfectly Centered Logo */}
+          <div className="absolute left-1/2 -translate-x-1/2 flex justify-center items-center">
             <Link to="/" className="flex flex-col items-center gap-1 group">
               <img
                 src={logoUrl}
                 alt="ALG Finanças Pessoais Logo"
                 className="h-10 w-10 md:h-12 md:w-12 object-cover rounded-full border-2 border-primary shadow-sm group-hover:scale-105 transition-transform duration-300"
               />
-              <span className="font-bold text-xs md:text-sm tracking-tight text-foreground hidden sm:block">
+              <span className="font-bold text-xs tracking-tight text-foreground hidden sm:block whitespace-nowrap">
                 ALG Finanças Pessoais
               </span>
             </Link>

@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
 import * as z from 'zod'
@@ -20,7 +21,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import { Send } from 'lucide-react'
+import { Send, Loader2 } from 'lucide-react'
 
 const formSchema = z.object({
   name: z.string().min(2, { message: 'Nome deve ter pelo menos 2 caracteres.' }),
@@ -32,6 +33,7 @@ const formSchema = z.object({
 
 export function ContactForm() {
   const { toast } = useToast()
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -43,18 +45,38 @@ export function ContactForm() {
     },
   })
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    // This is where you would normally send the data to your backend
-    console.log(values)
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    setIsSubmitting(true)
+    try {
+      const response = await fetch('/api/collections/leads/records', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(values),
+      })
 
-    toast({
-      title: 'Solicitação enviada com sucesso!',
-      description:
-        'Agradecemos o contato. Nossa equipe de especialistas da ALG Finanças Pessoais retornará em breve.',
-      duration: 5000,
-    })
+      if (!response.ok) {
+        throw new Error('Falha ao enviar')
+      }
 
-    form.reset()
+      toast({
+        title: 'Solicitação enviada com sucesso!',
+        description:
+          'Agradecemos o contato. Nossa equipe de especialistas da ALG Finanças Pessoais retornará em breve.',
+        duration: 5000,
+      })
+
+      form.reset()
+    } catch (error) {
+      toast({
+        title: 'Erro ao enviar',
+        description: 'Ocorreu um problema ao enviar sua solicitação. Tente novamente mais tarde.',
+        variant: 'destructive',
+      })
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -97,7 +119,7 @@ export function ContactForm() {
               <FormItem>
                 <FormLabel className="text-foreground">Telefone / WhatsApp</FormLabel>
                 <FormControl>
-                  <Input placeholder="(00) 00000-0000" {...field} />
+                  <Input placeholder="11 99245-9400" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -149,10 +171,15 @@ export function ContactForm() {
 
         <Button
           type="submit"
+          disabled={isSubmitting}
           className="w-full md:w-auto h-12 px-8 bg-primary hover:bg-primary/90 text-primary-foreground"
         >
-          <Send className="mr-2 h-4 w-4" />
-          Enviar Solicitação
+          {isSubmitting ? (
+            <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+          ) : (
+            <Send className="mr-2 h-4 w-4" />
+          )}
+          {isSubmitting ? 'Enviando...' : 'Enviar Solicitação'}
         </Button>
       </form>
     </Form>

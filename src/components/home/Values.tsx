@@ -1,32 +1,32 @@
-import { Scale, Award, Lightbulb, Eye, HeartHandshake } from 'lucide-react'
+import { ShieldCheck, TrendingUp, Rocket, BarChart, Landmark } from 'lucide-react'
 
 const valuesList = [
   {
     title: 'Responsabilidade',
     description: 'Agir com ética e comprometimento em todas as nossas ações.',
-    icon: Scale,
+    icon: ShieldCheck,
   },
   {
     title: 'Excelência',
     description: 'Buscar sempre a melhor solução para nossos clientes, com qualidade e eficiência.',
-    icon: Award,
+    icon: TrendingUp,
   },
   {
     title: 'Inovação',
     description:
       'Estar à frente das tendências e oferecer ferramentas financeiras modernas e eficazes.',
-    icon: Lightbulb,
+    icon: Rocket,
   },
   {
     title: 'Transparência',
     description: 'Manter uma comunicação clara e aberta com nossos clientes.',
-    icon: Eye,
+    icon: BarChart,
   },
   {
     title: 'Zelo',
     description:
       'Tratar as finanças dos nossos clientes com o mesmo cuidado e atenção que tratamos as nossas próprias.',
-    icon: HeartHandshake,
+    icon: Landmark,
   },
 ]
 
@@ -39,7 +39,7 @@ export function Values() {
             Nossos Pilares
           </span>
           <h2 className="text-3xl md:text-5xl font-bold mt-2 mb-6 text-foreground">
-            Valores que nos guiam
+            Nossos Valores
           </h2>
           <p className="text-lg text-muted-foreground">
             A fundação da ALG Finanças Pessoais é construída sobre princípios sólidos que orientam
@@ -54,7 +54,7 @@ export function Values() {
               <div
                 key={index}
                 className={`flex flex-col items-center text-center p-8 rounded-2xl bg-background hover:bg-secondary hover:shadow-2xl transition-all duration-300 border border-border hover:border-primary/30 group ${
-                  index === 3 ? 'lg:col-start-2 lg:col-span-1 lg:-ml-1/2' : '' // Center the last two in a 3-col grid
+                  index === 3 ? 'lg:col-start-2 lg:col-span-1 lg:-ml-1/2' : ''
                 } ${index === 4 ? 'lg:col-span-1' : ''}`}
               >
                 <div className="h-16 w-16 rounded-full bg-secondary flex items-center justify-center mb-6 shadow-lg shadow-black/20 group-hover:scale-110 transition-transform duration-300 group-hover:bg-primary">

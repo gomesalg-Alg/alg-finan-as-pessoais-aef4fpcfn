@@ -37,7 +37,7 @@ export default function Contact() {
                         rel="noopener noreferrer"
                         className="text-lg font-semibold text-foreground hover:text-primary transition-colors"
                       >
-                        (11) 99245-9400
+                        11 99245-9400
                       </a>
                     </div>
                   </div>
@@ -84,7 +84,7 @@ export default function Contact() {
                   >
                     <a href="https://wa.me/5511992459400" target="_blank" rel="noopener noreferrer">
                       <MessageCircle className="mr-2 h-5 w-5" />
-                      Chamar no WhatsApp
+                      Iniciar Conversa
                     </a>
                   </Button>
                 </div>

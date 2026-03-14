@@ -57,7 +57,9 @@ export function Footer() {
             <h3 className="text-foreground font-semibold mb-6 text-lg">Especialidades</h3>
             <ul className="space-y-4">
               <li className="text-sm text-muted-foreground">Planejamento Financeiro</li>
-              <li className="text-sm text-muted-foreground">Gestão de Controle Pessoal</li>
+              <li className="text-sm text-muted-foreground">
+                Gestão de Controle Financeiro Pessoal
+              </li>
               <li className="text-sm text-muted-foreground">Consultoria de Investimentos</li>
               <li className="text-sm text-muted-foreground">Organização de Dívidas</li>
             </ul>
@@ -84,7 +86,7 @@ export function Footer() {
                   className="flex items-start gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
                   <Phone className="h-5 w-5 text-primary shrink-0" />
-                  <span>(11) 99245-9400</span>
+                  <span>11 99245-9400</span>
                 </a>
               </li>
               <li className="flex items-start gap-3 text-sm text-muted-foreground">
