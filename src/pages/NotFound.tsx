@@ -16,7 +16,7 @@ const NotFound = () => {
         <p className="text-xl text-muted-foreground mb-8">
           Página não encontrada ou em construção.
         </p>
-        <Button asChild className="btn-gold">
+        <Button asChild className="bg-primary hover:bg-primary/90 text-primary-foreground">
           <Link to="/">Voltar ao Início</Link>
         </Button>
       </div>

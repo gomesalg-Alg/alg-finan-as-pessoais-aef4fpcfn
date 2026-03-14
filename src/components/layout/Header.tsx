@@ -34,71 +34,69 @@ export function Header() {
     <header
       className={cn(
         'fixed top-0 left-0 right-0 z-50 transition-all duration-300',
-        isScrolled ? 'glass-effect py-3' : 'bg-transparent py-5',
+        isScrolled ? 'glass-effect py-2' : 'bg-transparent py-4',
       )}
     >
       <div className="container mx-auto px-4 md:px-6">
-        <div className="flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-3 group">
-            <img
-              src={logoUrl}
-              alt="ALG Finanças Pessoais Logo"
-              className="h-10 w-10 object-cover rounded-full border-2 border-accent shadow-sm group-hover:scale-105 transition-transform duration-300"
-            />
-            <span
-              className={cn(
-                'font-bold text-xl tracking-tight transition-colors',
-                isScrolled ? 'text-primary' : 'text-primary md:text-white',
-              )}
+        <div className="flex items-center justify-between h-14">
+          {/* Left: Desktop Navigation / Mobile Menu Button */}
+          <div className="flex-1 flex justify-start items-center">
+            <nav className="hidden md:flex items-center gap-6">
+              {navigation.map((item) => (
+                <Link
+                  key={item.name}
+                  to={item.href}
+                  className={cn(
+                    'text-sm font-medium transition-colors hover:text-primary relative after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all hover:after:w-full',
+                    location.pathname === item.href
+                      ? 'text-primary after:w-full'
+                      : 'text-foreground/90',
+                  )}
+                >
+                  {item.name}
+                </Link>
+              ))}
+            </nav>
+            <button
+              className="md:hidden p-2 -ml-2 text-foreground"
+              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
             >
-              ALG Finanças Pessoais
-            </span>
-          </Link>
+              {mobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+          </div>
 
-          {/* Desktop Navigation */}
-          <nav className="hidden md:flex items-center gap-8">
-            {navigation.map((item) => (
-              <Link
-                key={item.name}
-                to={item.href}
-                className={cn(
-                  'text-sm font-medium transition-colors hover:text-accent relative after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-accent after:transition-all hover:after:w-full',
-                  isScrolled ? 'text-foreground/80' : 'text-white/90 hover:text-white',
-                  location.pathname === item.href &&
-                    (isScrolled ? 'text-primary after:w-full' : 'text-white after:w-full'),
-                )}
-              >
-                {item.name}
-              </Link>
-            ))}
+          {/* Center: Centered Logo */}
+          <div className="flex-shrink-0 flex justify-center items-center">
+            <Link to="/" className="flex flex-col items-center gap-1 group">
+              <img
+                src={logoUrl}
+                alt="ALG Finanças Pessoais Logo"
+                className="h-10 w-10 md:h-12 md:w-12 object-cover rounded-full border-2 border-primary shadow-sm group-hover:scale-105 transition-transform duration-300"
+              />
+              <span className="font-bold text-xs md:text-sm tracking-tight text-foreground hidden sm:block">
+                ALG Finanças Pessoais
+              </span>
+            </Link>
+          </div>
+
+          {/* Right: CTA */}
+          <div className="flex-1 flex justify-end items-center">
             <Button
               asChild
-              className={cn(
-                'shadow-lg hover:shadow-xl transition-all',
-                !isScrolled && 'bg-white text-primary hover:bg-white/90',
-              )}
+              className="shadow-lg hover:shadow-xl transition-all bg-primary text-primary-foreground hover:bg-primary/90"
             >
-              <Link to="/contato">Agendar Consultoria</Link>
+              <Link to="/contato">
+                <span className="hidden lg:inline">Solicitar Consultoria</span>
+                <span className="lg:hidden">Consultoria</span>
+              </Link>
             </Button>
-          </nav>
-
-          {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2 -mr-2 text-primary"
-            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          >
-            {mobileMenuOpen ? (
-              <X className={cn('h-6 w-6', !isScrolled && 'text-white')} />
-            ) : (
-              <Menu className={cn('h-6 w-6', !isScrolled && 'text-white')} />
-            )}
-          </button>
+          </div>
         </div>
       </div>
 
       {/* Mobile Navigation */}
       {mobileMenuOpen && (
-        <div className="md:hidden absolute top-full left-0 right-0 bg-white border-b border-border shadow-xl animate-fade-in-down">
+        <div className="md:hidden absolute top-full left-0 right-0 bg-background border-b border-border shadow-xl animate-fade-in-down">
           <div className="container mx-auto px-4 py-6 flex flex-col gap-4">
             {navigation.map((item) => (
               <Link
@@ -107,18 +105,13 @@ export function Header() {
                 className={cn(
                   'text-lg font-medium p-3 rounded-lg transition-colors',
                   location.pathname === item.href
-                    ? 'bg-primary/5 text-primary'
-                    : 'text-foreground/80 hover:bg-secondary/50 hover:text-primary',
+                    ? 'bg-primary/10 text-primary'
+                    : 'text-foreground/80 hover:bg-secondary hover:text-primary',
                 )}
               >
                 {item.name}
               </Link>
             ))}
-            <div className="pt-4 mt-2 border-t border-border">
-              <Button asChild className="w-full shadow-md">
-                <Link to="/contato">Agendar Consultoria</Link>
-              </Button>
-            </div>
           </div>
         </div>
       )}

@@ -24,10 +24,10 @@ const audiences = [
 
 export function Audience() {
   return (
-    <section className="py-24 bg-white">
+    <section className="py-24 bg-background border-t border-border">
       <div className="container mx-auto px-4 md:px-6">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">
             Para quem é a ALG Finanças Pessoais?
           </h2>
           <p className="text-lg text-muted-foreground">
@@ -42,13 +42,13 @@ export function Audience() {
             return (
               <Card
                 key={index}
-                className="border-none shadow-lg bg-secondary/20 hover:-translate-y-2 transition-transform duration-300"
+                className="border-border shadow-lg bg-card hover:-translate-y-2 transition-transform duration-300"
               >
                 <CardContent className="pt-8 text-center px-6">
-                  <div className="mx-auto h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+                  <div className="mx-auto h-16 w-16 rounded-full bg-secondary flex items-center justify-center mb-6">
                     <Icon className="h-8 w-8 text-primary" />
                   </div>
-                  <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                  <h3 className="text-xl font-bold mb-3 text-foreground">{item.title}</h3>
                   <p className="text-muted-foreground">{item.description}</p>
                 </CardContent>
               </Card>

@@ -68,7 +68,7 @@ export function ContactForm() {
               <FormItem>
                 <FormLabel className="text-foreground">Nome Completo</FormLabel>
                 <FormControl>
-                  <Input placeholder="Seu nome" className="bg-white" {...field} />
+                  <Input placeholder="Seu nome" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -81,12 +81,7 @@ export function ContactForm() {
               <FormItem>
                 <FormLabel className="text-foreground">E-mail</FormLabel>
                 <FormControl>
-                  <Input
-                    placeholder="seu.email@exemplo.com"
-                    type="email"
-                    className="bg-white"
-                    {...field}
-                  />
+                  <Input placeholder="seu.email@exemplo.com" type="email" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -102,7 +97,7 @@ export function ContactForm() {
               <FormItem>
                 <FormLabel className="text-foreground">Telefone / WhatsApp</FormLabel>
                 <FormControl>
-                  <Input placeholder="(00) 00000-0000" className="bg-white" {...field} />
+                  <Input placeholder="(00) 00000-0000" {...field} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -116,7 +111,7 @@ export function ContactForm() {
                 <FormLabel className="text-foreground">Área de Interesse</FormLabel>
                 <Select onValueChange={field.onChange} defaultValue={field.value}>
                   <FormControl>
-                    <SelectTrigger className="bg-white">
+                    <SelectTrigger>
                       <SelectValue placeholder="Selecione um serviço" />
                     </SelectTrigger>
                   </FormControl>
@@ -143,7 +138,7 @@ export function ContactForm() {
               <FormControl>
                 <Textarea
                   placeholder="Como podemos ajudar você a atingir seus objetivos financeiros?"
-                  className="min-h-[120px] bg-white resize-none"
+                  className="min-h-[120px] resize-none"
                   {...field}
                 />
               </FormControl>
@@ -154,7 +149,7 @@ export function ContactForm() {
 
         <Button
           type="submit"
-          className="w-full md:w-auto h-12 px-8 bg-primary hover:bg-primary/90 text-white"
+          className="w-full md:w-auto h-12 px-8 bg-primary hover:bg-primary/90 text-primary-foreground"
         >
           <Send className="mr-2 h-4 w-4" />
           Enviar Solicitação

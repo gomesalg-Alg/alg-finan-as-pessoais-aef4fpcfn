@@ -52,11 +52,11 @@ const services = [
 
 export function ServicesPreview() {
   return (
-    <section className="py-24 bg-secondary/30">
+    <section className="py-24 bg-background">
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <div className="max-w-2xl">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">Nossas Soluções</h2>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 text-foreground">Nossas Soluções</h2>
             <p className="text-lg text-muted-foreground">
               Na ALG Finanças Pessoais, oferecemos um portfólio completo de serviços desenhados para
               trazer clareza, controle e crescimento para sua vida financeira.
@@ -65,7 +65,7 @@ export function ServicesPreview() {
           <Button
             asChild
             variant="outline"
-            className="shrink-0 border-primary text-primary hover:bg-primary hover:text-white"
+            className="shrink-0 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
           >
             <Link to="/servicos">
               Ver todos os serviços
@@ -80,13 +80,13 @@ export function ServicesPreview() {
             return (
               <Card
                 key={index}
-                className="group hover:shadow-xl transition-all duration-300 border-border/50 hover:border-accent/50 bg-white"
+                className="group hover:shadow-xl transition-all duration-300 border-border hover:border-primary/50 bg-card"
               >
                 <CardHeader>
-                  <div className="h-12 w-12 rounded-lg bg-primary/5 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
-                    <Icon className="h-6 w-6 text-primary group-hover:text-white" />
+                  <div className="h-12 w-12 rounded-lg bg-secondary flex items-center justify-center mb-4 group-hover:bg-primary transition-colors duration-300">
+                    <Icon className="h-6 w-6 text-primary group-hover:text-primary-foreground" />
                   </div>
-                  <CardTitle className="text-xl">{service.title}</CardTitle>
+                  <CardTitle className="text-xl text-foreground">{service.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <CardDescription className="text-base text-muted-foreground">

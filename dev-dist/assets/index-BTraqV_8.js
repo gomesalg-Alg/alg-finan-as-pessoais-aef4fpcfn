@@ -24484,7 +24484,7 @@ function Header() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("header", {
 		"data-uid": "src/components/layout/Header.tsx:34:5",
 		"data-prohibitions": "[editContent]",
-		className: cn$1("fixed top-0 left-0 right-0 z-50 transition-all duration-300", isScrolled ? "glass-effect py-3" : "bg-transparent py-5"),
+		className: cn$1("fixed top-0 left-0 right-0 z-50 transition-all duration-300", isScrolled ? "glass-effect py-2" : "bg-transparent py-4"),
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			"data-uid": "src/components/layout/Header.tsx:40:7",
 			"data-prohibitions": "[editContent]",
@@ -24492,97 +24492,106 @@ function Header() {
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 				"data-uid": "src/components/layout/Header.tsx:41:9",
 				"data-prohibitions": "[editContent]",
-				className: "flex items-center justify-between",
+				className: "flex items-center justify-between h-14",
 				children: [
-					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
-						"data-uid": "src/components/layout/Header.tsx:42:11",
+					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+						"data-uid": "src/components/layout/Header.tsx:43:11",
 						"data-prohibitions": "[editContent]",
-						to: "/",
-						className: "flex items-center gap-3 group",
-						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
-							"data-uid": "src/components/layout/Header.tsx:43:13",
+						className: "flex-1 flex justify-start items-center",
+						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("nav", {
+							"data-uid": "src/components/layout/Header.tsx:44:13",
 							"data-prohibitions": "[editContent]",
-							src: logo_escolhido_alg_bc19d_default,
-							alt: "ALG Finanças Pessoais Logo",
-							className: "h-10 w-10 object-cover rounded-full border-2 border-accent shadow-sm group-hover:scale-105 transition-transform duration-300"
-						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-							"data-uid": "src/components/layout/Header.tsx:48:13",
+							className: "hidden md:flex items-center gap-6",
+							children: navigation$1.map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+								"data-uid": "src/components/layout/Header.tsx:46:17",
+								"data-prohibitions": "[editContent]",
+								to: item.href,
+								className: cn$1("text-sm font-medium transition-colors hover:text-primary relative after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-primary after:transition-all hover:after:w-full", location.pathname === item.href ? "text-primary after:w-full" : "text-foreground/90"),
+								children: item.name
+							}, item.name))
+						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
+							"data-uid": "src/components/layout/Header.tsx:60:13",
 							"data-prohibitions": "[editContent]",
-							className: cn$1("font-bold text-xl tracking-tight transition-colors", isScrolled ? "text-primary" : "text-primary md:text-white"),
-							children: "ALG Finanças Pessoais"
-						})]
-					}),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("nav", {
-						"data-uid": "src/components/layout/Header.tsx:59:11",
-						"data-prohibitions": "[editContent]",
-						className: "hidden md:flex items-center gap-8",
-						children: [navigation$1.map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-							"data-uid": "src/components/layout/Header.tsx:61:15",
-							"data-prohibitions": "[editContent]",
-							to: item.href,
-							className: cn$1("text-sm font-medium transition-colors hover:text-accent relative after:absolute after:bottom-[-4px] after:left-0 after:h-[2px] after:w-0 after:bg-accent after:transition-all hover:after:w-full", isScrolled ? "text-foreground/80" : "text-white/90 hover:text-white", location.pathname === item.href && (isScrolled ? "text-primary after:w-full" : "text-white after:w-full")),
-							children: item.name
-						}, item.name)), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
-							"data-uid": "src/components/layout/Header.tsx:74:13",
-							"data-prohibitions": "[editContent]",
-							asChild: true,
-							className: cn$1("shadow-lg hover:shadow-xl transition-all", !isScrolled && "bg-white text-primary hover:bg-white/90"),
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-								"data-uid": "src/components/layout/Header.tsx:81:15",
-								"data-prohibitions": "[]",
-								to: "/contato",
-								children: "Agendar Consultoria"
+							className: "md:hidden p-2 -ml-2 text-foreground",
+							onClick: () => setMobileMenuOpen(!mobileMenuOpen),
+							children: mobileMenuOpen ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(X, {
+								"data-uid": "src/components/layout/Header.tsx:64:33",
+								"data-prohibitions": "[editContent]",
+								className: "h-6 w-6"
+							}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Menu, {
+								"data-uid": "src/components/layout/Header.tsx:64:61",
+								"data-prohibitions": "[editContent]",
+								className: "h-6 w-6"
 							})
 						})]
 					}),
-					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("button", {
-						"data-uid": "src/components/layout/Header.tsx:86:11",
-						"data-prohibitions": "[editContent]",
-						className: "md:hidden p-2 -mr-2 text-primary",
-						onClick: () => setMobileMenuOpen(!mobileMenuOpen),
-						children: mobileMenuOpen ? /* @__PURE__ */ (0, import_jsx_runtime.jsx)(X, {
-							"data-uid": "src/components/layout/Header.tsx:91:15",
-							"data-prohibitions": "[editContent]",
-							className: cn$1("h-6 w-6", !isScrolled && "text-white")
-						}) : /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Menu, {
-							"data-uid": "src/components/layout/Header.tsx:93:15",
-							"data-prohibitions": "[editContent]",
-							className: cn$1("h-6 w-6", !isScrolled && "text-white")
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						"data-uid": "src/components/layout/Header.tsx:69:11",
+						"data-prohibitions": "[]",
+						className: "flex-shrink-0 flex justify-center items-center",
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
+							"data-uid": "src/components/layout/Header.tsx:70:13",
+							"data-prohibitions": "[]",
+							to: "/",
+							className: "flex flex-col items-center gap-1 group",
+							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
+								"data-uid": "src/components/layout/Header.tsx:71:15",
+								"data-prohibitions": "[editContent]",
+								src: logo_escolhido_alg_bc19d_default,
+								alt: "ALG Finanças Pessoais Logo",
+								className: "h-10 w-10 md:h-12 md:w-12 object-cover rounded-full border-2 border-primary shadow-sm group-hover:scale-105 transition-transform duration-300"
+							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								"data-uid": "src/components/layout/Header.tsx:76:15",
+								"data-prohibitions": "[]",
+								className: "font-bold text-xs md:text-sm tracking-tight text-foreground hidden sm:block",
+								children: "ALG Finanças Pessoais"
+							})]
+						})
+					}),
+					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+						"data-uid": "src/components/layout/Header.tsx:83:11",
+						"data-prohibitions": "[]",
+						className: "flex-1 flex justify-end items-center",
+						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
+							"data-uid": "src/components/layout/Header.tsx:84:13",
+							"data-prohibitions": "[]",
+							asChild: true,
+							className: "shadow-lg hover:shadow-xl transition-all bg-primary text-primary-foreground hover:bg-primary/90",
+							children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
+								"data-uid": "src/components/layout/Header.tsx:88:15",
+								"data-prohibitions": "[]",
+								to: "/contato",
+								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									"data-uid": "src/components/layout/Header.tsx:89:17",
+									"data-prohibitions": "[]",
+									className: "hidden lg:inline",
+									children: "Solicitar Consultoria"
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									"data-uid": "src/components/layout/Header.tsx:90:17",
+									"data-prohibitions": "[]",
+									className: "lg:hidden",
+									children: "Consultoria"
+								})]
+							})
 						})
 					})
 				]
 			})
 		}), mobileMenuOpen && /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			"data-uid": "src/components/layout/Header.tsx:101:9",
+			"data-uid": "src/components/layout/Header.tsx:99:9",
 			"data-prohibitions": "[editContent]",
-			className: "md:hidden absolute top-full left-0 right-0 bg-white border-b border-border shadow-xl animate-fade-in-down",
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				"data-uid": "src/components/layout/Header.tsx:102:11",
+			className: "md:hidden absolute top-full left-0 right-0 bg-background border-b border-border shadow-xl animate-fade-in-down",
+			children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				"data-uid": "src/components/layout/Header.tsx:100:11",
 				"data-prohibitions": "[editContent]",
 				className: "container mx-auto px-4 py-6 flex flex-col gap-4",
-				children: [navigation$1.map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-					"data-uid": "src/components/layout/Header.tsx:104:15",
+				children: navigation$1.map((item) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
+					"data-uid": "src/components/layout/Header.tsx:102:15",
 					"data-prohibitions": "[editContent]",
 					to: item.href,
-					className: cn$1("text-lg font-medium p-3 rounded-lg transition-colors", location.pathname === item.href ? "bg-primary/5 text-primary" : "text-foreground/80 hover:bg-secondary/50 hover:text-primary"),
+					className: cn$1("text-lg font-medium p-3 rounded-lg transition-colors", location.pathname === item.href ? "bg-primary/10 text-primary" : "text-foreground/80 hover:bg-secondary hover:text-primary"),
 					children: item.name
-				}, item.name)), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					"data-uid": "src/components/layout/Header.tsx:117:13",
-					"data-prohibitions": "[]",
-					className: "pt-4 mt-2 border-t border-border",
-					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
-						"data-uid": "src/components/layout/Header.tsx:118:15",
-						"data-prohibitions": "[]",
-						asChild: true,
-						className: "w-full shadow-md",
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-							"data-uid": "src/components/layout/Header.tsx:119:17",
-							"data-prohibitions": "[]",
-							to: "/contato",
-							children: "Agendar Consultoria"
-						})
-					})
-				})]
+				}, item.name))
 			})
 		})]
 	});
@@ -24593,7 +24602,7 @@ function Footer() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("footer", {
 		"data-uid": "src/components/layout/Footer.tsx:7:5",
 		"data-prohibitions": "[editContent]",
-		className: "bg-[#0B192C] text-slate-300 pt-16 pb-8 border-t border-white/10",
+		className: "bg-background border-t border-border pt-16 pb-8",
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			"data-uid": "src/components/layout/Footer.tsx:8:7",
 			"data-prohibitions": "[editContent]",
@@ -24618,30 +24627,30 @@ function Footer() {
 									"data-prohibitions": "[editContent]",
 									src: logo_escolhido_alg_bc19d_default,
 									alt: "ALG Finanças Pessoais Logo",
-									className: "h-12 w-12 object-cover rounded-full border border-white/20"
+									className: "h-12 w-12 object-cover rounded-full border border-primary/50"
 								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 									"data-uid": "src/components/layout/Footer.tsx:18:15",
 									"data-prohibitions": "[]",
-									className: "font-bold text-xl text-white tracking-tight",
-									children: "ALG Finanças"
+									className: "font-bold text-xl text-foreground tracking-tight",
+									children: "ALG Finanças Pessoais"
 								})]
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-								"data-uid": "src/components/layout/Footer.tsx:20:13",
+								"data-uid": "src/components/layout/Footer.tsx:22:13",
 								"data-prohibitions": "[]",
-								className: "text-sm leading-relaxed text-slate-400",
+								className: "text-sm leading-relaxed text-muted-foreground",
 								children: "Especialistas em Gestão de Controle Financeiro Pessoal, ajudando você a organizar, planejar e multiplicar seu patrimônio com segurança e inteligência."
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								"data-uid": "src/components/layout/Footer.tsx:24:13",
+								"data-uid": "src/components/layout/Footer.tsx:26:13",
 								"data-prohibitions": "[]",
-								className: "flex items-center gap-2 text-sm text-accent",
+								className: "flex items-center gap-2 text-sm text-primary",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Calendar, {
-									"data-uid": "src/components/layout/Footer.tsx:25:15",
+									"data-uid": "src/components/layout/Footer.tsx:27:15",
 									"data-prohibitions": "[editContent]",
 									className: "h-4 w-4"
 								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-									"data-uid": "src/components/layout/Footer.tsx:26:15",
+									"data-uid": "src/components/layout/Footer.tsx:28:15",
 									"data-prohibitions": "[]",
 									children: "Fundada em 30/10/2024"
 								})]
@@ -24649,15 +24658,15 @@ function Footer() {
 						]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						"data-uid": "src/components/layout/Footer.tsx:31:11",
+						"data-uid": "src/components/layout/Footer.tsx:33:11",
 						"data-prohibitions": "[editContent]",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-							"data-uid": "src/components/layout/Footer.tsx:32:13",
+							"data-uid": "src/components/layout/Footer.tsx:34:13",
 							"data-prohibitions": "[]",
-							className: "text-white font-semibold mb-6 text-lg",
+							className: "text-foreground font-semibold mb-6 text-lg",
 							children: "Navegação"
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
-							"data-uid": "src/components/layout/Footer.tsx:33:13",
+							"data-uid": "src/components/layout/Footer.tsx:35:13",
 							"data-prohibitions": "[editContent]",
 							className: "space-y-4",
 							children: [
@@ -24678,135 +24687,135 @@ function Footer() {
 									href: "/contato"
 								}
 							].map((link) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
-								"data-uid": "src/components/layout/Footer.tsx:40:17",
+								"data-uid": "src/components/layout/Footer.tsx:42:17",
 								"data-prohibitions": "[editContent]",
 								children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
-									"data-uid": "src/components/layout/Footer.tsx:41:19",
+									"data-uid": "src/components/layout/Footer.tsx:43:19",
 									"data-prohibitions": "[editContent]",
 									to: link.href,
-									className: "text-sm hover:text-accent transition-colors flex items-center gap-2 group",
+									className: "text-sm text-muted-foreground hover:text-primary transition-colors flex items-center gap-2 group",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowRight, {
-										"data-uid": "src/components/layout/Footer.tsx:45:21",
+										"data-uid": "src/components/layout/Footer.tsx:47:21",
 										"data-prohibitions": "[editContent]",
-										className: "h-3 w-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all text-accent"
+										className: "h-3 w-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all text-primary"
 									}), link.name]
 								})
 							}, link.name))
 						})]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						"data-uid": "src/components/layout/Footer.tsx:54:11",
+						"data-uid": "src/components/layout/Footer.tsx:56:11",
 						"data-prohibitions": "[]",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-							"data-uid": "src/components/layout/Footer.tsx:55:13",
+							"data-uid": "src/components/layout/Footer.tsx:57:13",
 							"data-prohibitions": "[]",
-							className: "text-white font-semibold mb-6 text-lg",
+							className: "text-foreground font-semibold mb-6 text-lg",
 							children: "Especialidades"
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("ul", {
-							"data-uid": "src/components/layout/Footer.tsx:56:13",
+							"data-uid": "src/components/layout/Footer.tsx:58:13",
 							"data-prohibitions": "[]",
 							className: "space-y-4",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
-									"data-uid": "src/components/layout/Footer.tsx:57:15",
-									"data-prohibitions": "[]",
-									className: "text-sm text-slate-400",
-									children: "Planejamento Financeiro"
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
-									"data-uid": "src/components/layout/Footer.tsx:58:15",
-									"data-prohibitions": "[]",
-									className: "text-sm text-slate-400",
-									children: "Gestão de Controle Pessoal"
-								}),
-								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
 									"data-uid": "src/components/layout/Footer.tsx:59:15",
 									"data-prohibitions": "[]",
-									className: "text-sm text-slate-400",
-									children: "Consultoria de Investimentos"
+									className: "text-sm text-muted-foreground",
+									children: "Planejamento Financeiro"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
 									"data-uid": "src/components/layout/Footer.tsx:60:15",
 									"data-prohibitions": "[]",
-									className: "text-sm text-slate-400",
+									className: "text-sm text-muted-foreground",
+									children: "Gestão de Controle Pessoal"
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
+									"data-uid": "src/components/layout/Footer.tsx:61:15",
+									"data-prohibitions": "[]",
+									className: "text-sm text-muted-foreground",
+									children: "Consultoria de Investimentos"
+								}),
+								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
+									"data-uid": "src/components/layout/Footer.tsx:62:15",
+									"data-prohibitions": "[]",
+									className: "text-sm text-muted-foreground",
 									children: "Organização de Dívidas"
 								})
 							]
 						})]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						"data-uid": "src/components/layout/Footer.tsx:65:11",
+						"data-uid": "src/components/layout/Footer.tsx:67:11",
 						"data-prohibitions": "[]",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-							"data-uid": "src/components/layout/Footer.tsx:66:13",
+							"data-uid": "src/components/layout/Footer.tsx:68:13",
 							"data-prohibitions": "[]",
-							className: "text-white font-semibold mb-6 text-lg",
+							className: "text-foreground font-semibold mb-6 text-lg",
 							children: "Contato"
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("ul", {
-							"data-uid": "src/components/layout/Footer.tsx:67:13",
+							"data-uid": "src/components/layout/Footer.tsx:69:13",
 							"data-prohibitions": "[]",
 							className: "space-y-4",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
-									"data-uid": "src/components/layout/Footer.tsx:68:15",
+									"data-uid": "src/components/layout/Footer.tsx:70:15",
 									"data-prohibitions": "[]",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
-										"data-uid": "src/components/layout/Footer.tsx:69:17",
+										"data-uid": "src/components/layout/Footer.tsx:71:17",
 										"data-prohibitions": "[]",
 										href: "mailto:gomesalg@gmail.com",
-										className: "flex items-start gap-3 text-sm hover:text-accent transition-colors",
+										className: "flex items-start gap-3 text-sm text-muted-foreground hover:text-primary transition-colors",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Mail, {
-											"data-uid": "src/components/layout/Footer.tsx:73:19",
+											"data-uid": "src/components/layout/Footer.tsx:75:19",
 											"data-prohibitions": "[editContent]",
-											className: "h-5 w-5 text-accent shrink-0"
+											className: "h-5 w-5 text-primary shrink-0"
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											"data-uid": "src/components/layout/Footer.tsx:74:19",
+											"data-uid": "src/components/layout/Footer.tsx:76:19",
 											"data-prohibitions": "[]",
 											children: "gomesalg@gmail.com"
 										})]
 									})
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("li", {
-									"data-uid": "src/components/layout/Footer.tsx:77:15",
+									"data-uid": "src/components/layout/Footer.tsx:79:15",
 									"data-prohibitions": "[]",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
-										"data-uid": "src/components/layout/Footer.tsx:78:17",
+										"data-uid": "src/components/layout/Footer.tsx:80:17",
 										"data-prohibitions": "[]",
 										href: "https://wa.me/5511992459400",
 										target: "_blank",
 										rel: "noopener noreferrer",
-										className: "flex items-start gap-3 text-sm hover:text-accent transition-colors",
+										className: "flex items-start gap-3 text-sm text-muted-foreground hover:text-primary transition-colors",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Phone, {
-											"data-uid": "src/components/layout/Footer.tsx:84:19",
+											"data-uid": "src/components/layout/Footer.tsx:86:19",
 											"data-prohibitions": "[editContent]",
-											className: "h-5 w-5 text-accent shrink-0"
+											className: "h-5 w-5 text-primary shrink-0"
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											"data-uid": "src/components/layout/Footer.tsx:85:19",
+											"data-uid": "src/components/layout/Footer.tsx:87:19",
 											"data-prohibitions": "[]",
 											children: "(11) 99245-9400"
 										})]
 									})
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
-									"data-uid": "src/components/layout/Footer.tsx:88:15",
+									"data-uid": "src/components/layout/Footer.tsx:90:15",
 									"data-prohibitions": "[]",
-									className: "flex items-start gap-3 text-sm text-slate-400",
+									className: "flex items-start gap-3 text-sm text-muted-foreground",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(MapPin, {
-										"data-uid": "src/components/layout/Footer.tsx:89:17",
+										"data-uid": "src/components/layout/Footer.tsx:91:17",
 										"data-prohibitions": "[editContent]",
-										className: "h-5 w-5 text-accent shrink-0"
+										className: "h-5 w-5 text-primary shrink-0"
 									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
-										"data-uid": "src/components/layout/Footer.tsx:90:17",
+										"data-uid": "src/components/layout/Footer.tsx:92:17",
 										"data-prohibitions": "[]",
 										children: [
 											"Rua Domingos Pires de Oliveira Dias, 32",
 											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {
-												"data-uid": "src/components/layout/Footer.tsx:92:19",
+												"data-uid": "src/components/layout/Footer.tsx:94:19",
 												"data-prohibitions": "[editContent]"
 											}),
 											"São Paulo - SP",
 											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {
-												"data-uid": "src/components/layout/Footer.tsx:94:19",
+												"data-uid": "src/components/layout/Footer.tsx:96:19",
 												"data-prohibitions": "[editContent]"
 											}),
 											"CEP: 04821-230"
@@ -24818,33 +24827,33 @@ function Footer() {
 					})
 				]
 			}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				"data-uid": "src/components/layout/Footer.tsx:102:9",
+				"data-uid": "src/components/layout/Footer.tsx:104:9",
 				"data-prohibitions": "[editContent]",
-				className: "pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4",
+				className: "pt-8 border-t border-border flex flex-col md:flex-row items-center justify-between gap-4",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-					"data-uid": "src/components/layout/Footer.tsx:103:11",
+					"data-uid": "src/components/layout/Footer.tsx:105:11",
 					"data-prohibitions": "[editContent]",
-					className: "text-xs text-slate-500",
+					className: "text-xs text-muted-foreground",
 					children: [
 						"© ",
 						(/* @__PURE__ */ new Date()).getFullYear(),
 						" ALG Finanças Pessoais Ltda-me. Todos os direitos reservados."
 					]
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					"data-uid": "src/components/layout/Footer.tsx:107:11",
+					"data-uid": "src/components/layout/Footer.tsx:109:11",
 					"data-prohibitions": "[]",
-					className: "flex items-center gap-4 text-xs text-slate-500",
+					className: "flex items-center gap-4 text-xs text-muted-foreground",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-						"data-uid": "src/components/layout/Footer.tsx:108:13",
+						"data-uid": "src/components/layout/Footer.tsx:110:13",
 						"data-prohibitions": "[]",
 						to: "#",
-						className: "hover:text-white transition-colors",
+						className: "hover:text-primary transition-colors",
 						children: "Política de Privacidade"
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-						"data-uid": "src/components/layout/Footer.tsx:111:13",
+						"data-uid": "src/components/layout/Footer.tsx:113:13",
 						"data-prohibitions": "[]",
 						to: "#",
-						className: "hover:text-white transition-colors",
+						className: "hover:text-primary transition-colors",
 						children: "Termos de Uso"
 					})]
 				})]
@@ -24895,17 +24904,17 @@ function Hero() {
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					"data-uid": "src/components/home/Hero.tsx:11:9",
 					"data-prohibitions": "[editContent]",
-					className: "absolute -top-40 -right-40 w-96 h-96 bg-accent/20 rounded-full blur-[100px]"
+					className: "absolute -top-40 -right-40 w-96 h-96 bg-primary/10 rounded-full blur-[100px]"
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					"data-uid": "src/components/home/Hero.tsx:12:9",
 					"data-prohibitions": "[editContent]",
-					className: "absolute bottom-0 left-0 w-[500px] h-[500px] bg-primary/40 rounded-full blur-[120px]"
+					className: "absolute bottom-0 left-0 w-[500px] h-[500px] bg-secondary/30 rounded-full blur-[120px]"
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					"data-uid": "src/components/home/Hero.tsx:15:9",
 					"data-prohibitions": "[editContent]",
-					className: "absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMSIgZmlsbD0icmdiYSgyNTUsIDI1NSwgMjU1LCAwLjA1KSIvPjwvc3ZnPg==')] opacity-50"
+					className: "absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNDAiIGhlaWdodD0iNDAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGNpcmNsZSBjeD0iMjAiIGN5PSIyMCIgcj0iMSIgZmlsbD0icmdiYSgyNTUsIDI1NSwgMjU1LCAwLjA1KSIvPjwvc3ZnPg==')] opacity-30"
 				})
 			]
 		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
@@ -24924,17 +24933,17 @@ function Hero() {
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							"data-uid": "src/components/home/Hero.tsx:21:13",
 							"data-prohibitions": "[]",
-							className: "inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/10 border border-white/20 text-accent text-sm font-medium mb-6 animate-fade-in-up",
+							className: "inline-flex items-center gap-2 px-3 py-1 rounded-full bg-secondary/50 border border-border text-primary text-sm font-medium mb-6 animate-fade-in-up",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 								"data-uid": "src/components/home/Hero.tsx:22:15",
 								"data-prohibitions": "[editContent]",
-								className: "flex h-2 w-2 rounded-full bg-accent animate-pulse"
+								className: "flex h-2 w-2 rounded-full bg-primary animate-pulse"
 							}), "Gestão de Controle Financeiro Pessoal"]
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h1", {
 							"data-uid": "src/components/home/Hero.tsx:26:13",
 							"data-prohibitions": "[]",
-							className: "text-4xl md:text-5xl lg:text-7xl font-bold text-white leading-tight mb-6 animate-fade-in-up",
+							className: "text-4xl md:text-5xl lg:text-7xl font-bold text-foreground leading-tight mb-6 animate-fade-in-up",
 							style: { animationDelay: "100ms" },
 							children: ["Controle absoluto do seu ", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 								"data-uid": "src/components/home/Hero.tsx:30:40",
@@ -24946,7 +24955,7 @@ function Hero() {
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 							"data-uid": "src/components/home/Hero.tsx:33:13",
 							"data-prohibitions": "[]",
-							className: "text-lg md:text-xl text-slate-300 mb-8 leading-relaxed max-w-2xl animate-fade-in-up",
+							className: "text-lg md:text-xl text-muted-foreground mb-8 leading-relaxed max-w-2xl animate-fade-in-up",
 							style: { animationDelay: "200ms" },
 							children: "A ALG Finanças Pessoais oferece estratégias personalizadas de análise e liderança para transformar seus recursos em patrimônio sólido e duradouro."
 						}),
@@ -24960,7 +24969,7 @@ function Hero() {
 								"data-prohibitions": "[]",
 								asChild: true,
 								size: "lg",
-								className: "h-14 px-8 text-base bg-accent hover:bg-accent/90 text-primary-foreground font-semibold shadow-lg shadow-accent/20 border-0",
+								className: "h-14 px-8 text-base bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/20 border-0",
 								children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
 									"data-uid": "src/components/home/Hero.tsx:50:17",
 									"data-prohibitions": "[]",
@@ -24977,7 +24986,7 @@ function Hero() {
 								asChild: true,
 								variant: "outline",
 								size: "lg",
-								className: "h-14 px-8 text-base bg-white/5 border-white/20 text-white hover:bg-white/10 hover:text-white",
+								className: "h-14 px-8 text-base border-border bg-card/50 hover:bg-secondary text-foreground",
 								children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
 									"data-uid": "src/components/home/Hero.tsx:61:17",
 									"data-prohibitions": "[]",
@@ -24987,7 +24996,7 @@ function Hero() {
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(MessageCircle, {
 										"data-uid": "src/components/home/Hero.tsx:62:19",
 										"data-prohibitions": "[editContent]",
-										className: "mr-2 h-5 w-5 text-green-400"
+										className: "mr-2 h-5 w-5 text-[#25D366]"
 									}), "Iniciar conversa"]
 								})
 							})]
@@ -24995,7 +25004,7 @@ function Hero() {
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							"data-uid": "src/components/home/Hero.tsx:68:13",
 							"data-prohibitions": "[]",
-							className: "mt-12 flex items-center gap-6 text-sm text-slate-400 animate-fade-in-up",
+							className: "mt-12 flex items-center gap-6 text-sm text-muted-foreground animate-fade-in-up",
 							style: { animationDelay: "400ms" },
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -25005,7 +25014,7 @@ function Hero() {
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 										"data-uid": "src/components/home/Hero.tsx:73:17",
 										"data-prohibitions": "[]",
-										className: "text-2xl font-bold text-white",
+										className: "text-2xl font-bold text-foreground",
 										children: "100%"
 									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 										"data-uid": "src/components/home/Hero.tsx:74:17",
@@ -25016,7 +25025,7 @@ function Hero() {
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 									"data-uid": "src/components/home/Hero.tsx:76:15",
 									"data-prohibitions": "[editContent]",
-									className: "h-10 w-px bg-white/20"
+									className: "h-10 w-px bg-border"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 									"data-uid": "src/components/home/Hero.tsx:77:15",
@@ -25025,7 +25034,7 @@ function Hero() {
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 										"data-uid": "src/components/home/Hero.tsx:78:17",
 										"data-prohibitions": "[]",
-										className: "text-2xl font-bold text-white",
+										className: "text-2xl font-bold text-foreground",
 										children: "Transparência"
 									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 										"data-uid": "src/components/home/Hero.tsx:79:17",
@@ -25044,24 +25053,24 @@ function Hero() {
 					children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 						"data-uid": "src/components/home/Hero.tsx:88:13",
 						"data-prohibitions": "[]",
-						className: "relative w-full max-w-md aspect-square rounded-full border border-white/10 bg-white/5 flex items-center justify-center p-12 shadow-2xl backdrop-blur-sm",
+						className: "relative w-full max-w-md aspect-square rounded-full border border-border bg-card/30 flex items-center justify-center p-12 shadow-2xl backdrop-blur-sm",
 						children: [
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 								"data-uid": "src/components/home/Hero.tsx:89:15",
 								"data-prohibitions": "[editContent]",
-								className: "absolute inset-0 rounded-full border border-accent/30 animate-[spin_60s_linear_infinite]"
+								className: "absolute inset-0 rounded-full border border-primary/30 animate-[spin_60s_linear_infinite]"
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 								"data-uid": "src/components/home/Hero.tsx:90:15",
 								"data-prohibitions": "[editContent]",
-								className: "absolute inset-8 rounded-full border border-white/10 animate-[spin_40s_linear_infinite_reverse]"
+								className: "absolute inset-8 rounded-full border border-border animate-[spin_40s_linear_infinite_reverse]"
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
 								"data-uid": "src/components/home/Hero.tsx:91:15",
 								"data-prohibitions": "[editContent]",
 								src: logo_escolhido_alg_bc19d_default,
 								alt: "ALG Finanças Pessoais",
-								className: "w-full h-full object-cover rounded-full shadow-2xl z-10 border-4 border-[#1E2022]"
+								className: "w-full h-full object-cover rounded-full shadow-2xl z-10 border-4 border-card"
 							})
 						]
 					})
@@ -25076,7 +25085,7 @@ function Duality() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("section", {
 		"data-uid": "src/components/home/Duality.tsx:7:5",
 		"data-prohibitions": "[editContent]",
-		className: "py-24 bg-gradient-primary text-white",
+		className: "py-24 bg-card border-y border-border",
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			"data-uid": "src/components/home/Duality.tsx:8:7",
 			"data-prohibitions": "[editContent]",
@@ -25089,12 +25098,12 @@ function Duality() {
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
 						"data-uid": "src/components/home/Duality.tsx:10:11",
 						"data-prohibitions": "[]",
-						className: "text-3xl md:text-5xl font-bold mb-6",
+						className: "text-3xl md:text-5xl font-bold mb-6 text-foreground",
 						children: "A Escolha é Sua"
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 						"data-uid": "src/components/home/Duality.tsx:11:11",
 						"data-prohibitions": "[]",
-						className: "text-lg text-slate-300",
+						className: "text-lg text-muted-foreground",
 						children: "A diferença entre sobreviver financeiramente e construir verdadeira riqueza está na qualidade das suas decisões e na gestão do seu controle financeiro pessoal."
 					})]
 				}),
@@ -25105,15 +25114,15 @@ function Duality() {
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 						"data-uid": "src/components/home/Duality.tsx:19:11",
 						"data-prohibitions": "[editContent]",
-						className: "bg-white/5 border border-white/10 rounded-2xl p-8 md:p-10 backdrop-blur-sm",
+						className: "bg-background border border-border rounded-2xl p-8 md:p-10 shadow-lg",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h3", {
 							"data-uid": "src/components/home/Duality.tsx:20:13",
 							"data-prohibitions": "[]",
-							className: "text-2xl font-bold mb-6 text-slate-300 flex items-center gap-3",
+							className: "text-2xl font-bold mb-6 text-foreground flex items-center gap-3",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleX, {
 								"data-uid": "src/components/home/Duality.tsx:21:15",
 								"data-prohibitions": "[editContent]",
-								className: "h-6 w-6 text-red-400"
+								className: "h-6 w-6 text-destructive"
 							}), "Sem Gestão Profissional"]
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
 							"data-uid": "src/components/home/Duality.tsx:24:13",
@@ -25128,15 +25137,15 @@ function Duality() {
 							].map((item, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
 								"data-uid": "src/components/home/Duality.tsx:32:17",
 								"data-prohibitions": "[editContent]",
-								className: "flex items-start gap-3 text-slate-400",
+								className: "flex items-start gap-3 text-muted-foreground",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 									"data-uid": "src/components/home/Duality.tsx:33:19",
 									"data-prohibitions": "[]",
-									className: "h-6 w-6 rounded-full bg-red-400/10 flex items-center justify-center shrink-0 mt-0.5",
+									className: "h-6 w-6 rounded-full bg-destructive/10 flex items-center justify-center shrink-0 mt-0.5",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 										"data-uid": "src/components/home/Duality.tsx:34:21",
 										"data-prohibitions": "[editContent]",
-										className: "h-2 w-2 rounded-full bg-red-400"
+										className: "h-2 w-2 rounded-full bg-destructive"
 									})
 								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 									"data-uid": "src/components/home/Duality.tsx:36:19",
@@ -25148,22 +25157,22 @@ function Duality() {
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 						"data-uid": "src/components/home/Duality.tsx:43:11",
 						"data-prohibitions": "[editContent]",
-						className: "bg-white rounded-2xl p-8 md:p-10 text-foreground shadow-2xl relative overflow-hidden",
+						className: "bg-secondary border border-border rounded-2xl p-8 md:p-10 text-foreground shadow-2xl relative overflow-hidden",
 						children: [
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 								"data-uid": "src/components/home/Duality.tsx:44:13",
 								"data-prohibitions": "[editContent]",
-								className: "absolute top-0 right-0 w-32 h-32 bg-accent/10 rounded-full -mr-16 -mt-16 blur-2xl"
+								className: "absolute top-0 right-0 w-32 h-32 bg-primary/10 rounded-full -mr-16 -mt-16 blur-2xl"
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h3", {
 								"data-uid": "src/components/home/Duality.tsx:45:13",
 								"data-prohibitions": "[]",
-								className: "text-2xl font-bold mb-6 text-primary flex items-center gap-3 relative z-10",
+								className: "text-2xl font-bold mb-6 text-foreground flex items-center gap-3 relative z-10",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleCheck, {
 									"data-uid": "src/components/home/Duality.tsx:46:15",
 									"data-prohibitions": "[editContent]",
-									className: "h-6 w-6 text-accent"
-								}), "Com a ALG Finanças"]
+									className: "h-6 w-6 text-primary"
+								}), "Com a ALG Finanças Pessoais"]
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("ul", {
 								"data-uid": "src/components/home/Duality.tsx:49:13",
@@ -25182,11 +25191,11 @@ function Duality() {
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 										"data-uid": "src/components/home/Duality.tsx:58:19",
 										"data-prohibitions": "[]",
-										className: "h-6 w-6 rounded-full bg-accent/20 flex items-center justify-center shrink-0 mt-0.5",
+										className: "h-6 w-6 rounded-full bg-primary/20 flex items-center justify-center shrink-0 mt-0.5",
 										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleCheck, {
 											"data-uid": "src/components/home/Duality.tsx:59:21",
 											"data-prohibitions": "[editContent]",
-											className: "h-4 w-4 text-accent"
+											className: "h-4 w-4 text-primary"
 										})
 									}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 										"data-uid": "src/components/home/Duality.tsx:61:19",
@@ -25207,7 +25216,7 @@ function Duality() {
 						"data-prohibitions": "[]",
 						asChild: true,
 						size: "lg",
-						className: "h-14 px-8 text-base bg-accent hover:bg-accent/90 text-primary-foreground shadow-lg",
+						className: "h-14 px-8 text-base bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg",
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
 							"data-uid": "src/components/home/Duality.tsx:74:13",
 							"data-prohibitions": "[]",
@@ -25312,7 +25321,7 @@ function ServicesPreview() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("section", {
 		"data-uid": "src/components/home/ServicesPreview.tsx:55:5",
 		"data-prohibitions": "[editContent]",
-		className: "py-24 bg-secondary/30",
+		className: "py-24 bg-background",
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			"data-uid": "src/components/home/ServicesPreview.tsx:56:7",
 			"data-prohibitions": "[editContent]",
@@ -25328,7 +25337,7 @@ function ServicesPreview() {
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
 						"data-uid": "src/components/home/ServicesPreview.tsx:59:13",
 						"data-prohibitions": "[]",
-						className: "text-3xl md:text-4xl font-bold mb-4",
+						className: "text-3xl md:text-4xl font-bold mb-4 text-foreground",
 						children: "Nossas Soluções"
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 						"data-uid": "src/components/home/ServicesPreview.tsx:60:13",
@@ -25341,7 +25350,7 @@ function ServicesPreview() {
 					"data-prohibitions": "[]",
 					asChild: true,
 					variant: "outline",
-					className: "shrink-0 border-primary text-primary hover:bg-primary hover:text-white",
+					className: "shrink-0 border-primary text-primary hover:bg-primary hover:text-primary-foreground",
 					children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
 						"data-uid": "src/components/home/ServicesPreview.tsx:70:13",
 						"data-prohibitions": "[]",
@@ -25362,23 +25371,23 @@ function ServicesPreview() {
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Card, {
 						"data-uid": "src/components/home/ServicesPreview.tsx:81:15",
 						"data-prohibitions": "[editContent]",
-						className: "group hover:shadow-xl transition-all duration-300 border-border/50 hover:border-accent/50 bg-white",
+						className: "group hover:shadow-xl transition-all duration-300 border-border hover:border-primary/50 bg-card",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(CardHeader, {
 							"data-uid": "src/components/home/ServicesPreview.tsx:85:17",
 							"data-prohibitions": "[editContent]",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 								"data-uid": "src/components/home/ServicesPreview.tsx:86:19",
 								"data-prohibitions": "[]",
-								className: "h-12 w-12 rounded-lg bg-primary/5 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-colors duration-300",
+								className: "h-12 w-12 rounded-lg bg-secondary flex items-center justify-center mb-4 group-hover:bg-primary transition-colors duration-300",
 								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon, {
 									"data-uid": "src/components/home/ServicesPreview.tsx:87:21",
 									"data-prohibitions": "[editContent]",
-									className: "h-6 w-6 text-primary group-hover:text-white"
+									className: "h-6 w-6 text-primary group-hover:text-primary-foreground"
 								})
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardTitle, {
 								"data-uid": "src/components/home/ServicesPreview.tsx:89:19",
 								"data-prohibitions": "[editContent]",
-								className: "text-xl",
+								className: "text-xl text-foreground",
 								children: service.title
 							})]
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CardContent, {
@@ -25430,7 +25439,7 @@ function Values() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
 		"data-uid": "src/components/home/Values.tsx:35:5",
 		"data-prohibitions": "[editContent]",
-		className: "py-24 bg-white relative overflow-hidden border-t border-border",
+		className: "py-24 bg-card relative overflow-hidden border-t border-border",
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 				"data-uid": "src/components/home/Values.tsx:36:7",
@@ -25444,13 +25453,13 @@ function Values() {
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 							"data-uid": "src/components/home/Values.tsx:38:11",
 							"data-prohibitions": "[]",
-							className: "text-accent font-semibold tracking-wider uppercase text-sm",
+							className: "text-primary font-semibold tracking-wider uppercase text-sm",
 							children: "Nossos Pilares"
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
 							"data-uid": "src/components/home/Values.tsx:41:11",
 							"data-prohibitions": "[]",
-							className: "text-3xl md:text-5xl font-bold mt-2 mb-6 text-primary",
+							className: "text-3xl md:text-5xl font-bold mt-2 mb-6 text-foreground",
 							children: "Valores que nos guiam"
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
@@ -25469,27 +25478,27 @@ function Values() {
 						return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							"data-uid": "src/components/home/Values.tsx:54:15",
 							"data-prohibitions": "[editContent]",
-							className: `flex flex-col items-center text-center p-8 rounded-2xl bg-secondary/20 hover:bg-white hover:shadow-2xl transition-all duration-300 border border-transparent hover:border-accent/20 group ${index === 3 ? "lg:col-start-2 lg:col-span-1 lg:-ml-1/2" : ""} ${index === 4 ? "lg:col-span-1" : ""}`,
+							className: `flex flex-col items-center text-center p-8 rounded-2xl bg-background hover:bg-secondary hover:shadow-2xl transition-all duration-300 border border-border hover:border-primary/30 group ${index === 3 ? "lg:col-start-2 lg:col-span-1 lg:-ml-1/2" : ""} ${index === 4 ? "lg:col-span-1" : ""}`,
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 									"data-uid": "src/components/home/Values.tsx:60:17",
 									"data-prohibitions": "[]",
-									className: "h-16 w-16 rounded-full bg-primary flex items-center justify-center mb-6 shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300",
+									className: "h-16 w-16 rounded-full bg-secondary flex items-center justify-center mb-6 shadow-lg shadow-black/20 group-hover:scale-110 transition-transform duration-300 group-hover:bg-primary",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon, {
 										"data-uid": "src/components/home/Values.tsx:61:19",
 										"data-prohibitions": "[editContent]",
-										className: "h-8 w-8 text-white",
+										className: "h-8 w-8 text-foreground group-hover:text-primary-foreground",
 										strokeWidth: 1.5
 									})
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-									"data-uid": "src/components/home/Values.tsx:63:17",
+									"data-uid": "src/components/home/Values.tsx:66:17",
 									"data-prohibitions": "[editContent]",
 									className: "text-2xl font-bold mb-3 text-foreground",
 									children: value.title
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-									"data-uid": "src/components/home/Values.tsx:64:17",
+									"data-uid": "src/components/home/Values.tsx:67:17",
 									"data-prohibitions": "[editContent]",
 									className: "text-muted-foreground leading-relaxed",
 									children: value.description
@@ -25500,14 +25509,14 @@ function Values() {
 				})]
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				"data-uid": "src/components/home/Values.tsx:72:7",
+				"data-uid": "src/components/home/Values.tsx:75:7",
 				"data-prohibitions": "[editContent]",
-				className: "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-secondary/50 rounded-full pointer-events-none opacity-20"
+				className: "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-border/50 rounded-full pointer-events-none opacity-20"
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				"data-uid": "src/components/home/Values.tsx:73:7",
+				"data-uid": "src/components/home/Values.tsx:76:7",
 				"data-prohibitions": "[editContent]",
-				className: "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] border border-secondary/30 rounded-full pointer-events-none opacity-20"
+				className: "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] border border-border/30 rounded-full pointer-events-none opacity-20"
 			})
 		]
 	});
@@ -25535,7 +25544,7 @@ function Audience() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("section", {
 		"data-uid": "src/components/home/Audience.tsx:27:5",
 		"data-prohibitions": "[editContent]",
-		className: "py-24 bg-white",
+		className: "py-24 bg-background border-t border-border",
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 			"data-uid": "src/components/home/Audience.tsx:28:7",
 			"data-prohibitions": "[editContent]",
@@ -25547,7 +25556,7 @@ function Audience() {
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
 					"data-uid": "src/components/home/Audience.tsx:30:11",
 					"data-prohibitions": "[]",
-					className: "text-3xl md:text-4xl font-bold mb-4",
+					className: "text-3xl md:text-4xl font-bold mb-4 text-foreground",
 					children: "Para quem é a ALG Finanças Pessoais?"
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 					"data-uid": "src/components/home/Audience.tsx:33:11",
@@ -25564,7 +25573,7 @@ function Audience() {
 					return /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Card, {
 						"data-uid": "src/components/home/Audience.tsx:43:15",
 						"data-prohibitions": "[editContent]",
-						className: "border-none shadow-lg bg-secondary/20 hover:-translate-y-2 transition-transform duration-300",
+						className: "border-border shadow-lg bg-card hover:-translate-y-2 transition-transform duration-300",
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(CardContent, {
 							"data-uid": "src/components/home/Audience.tsx:47:17",
 							"data-prohibitions": "[editContent]",
@@ -25573,7 +25582,7 @@ function Audience() {
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 									"data-uid": "src/components/home/Audience.tsx:48:19",
 									"data-prohibitions": "[]",
-									className: "mx-auto h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center mb-6",
+									className: "mx-auto h-16 w-16 rounded-full bg-secondary flex items-center justify-center mb-6",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon, {
 										"data-uid": "src/components/home/Audience.tsx:49:21",
 										"data-prohibitions": "[editContent]",
@@ -25583,7 +25592,7 @@ function Audience() {
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
 									"data-uid": "src/components/home/Audience.tsx:51:19",
 									"data-prohibitions": "[editContent]",
-									className: "text-xl font-bold mb-3",
+									className: "text-xl font-bold mb-3 text-foreground",
 									children: item.title
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
@@ -25678,12 +25687,12 @@ function Services() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		"data-uid": "src/pages/Services.tsx:66:5",
 		"data-prohibitions": "[editContent]",
-		className: "pt-24 pb-16",
+		className: "pt-24 pb-16 bg-background min-h-screen",
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("section", {
 				"data-uid": "src/pages/Services.tsx:67:7",
 				"data-prohibitions": "[]",
-				className: "py-16 md:py-24 bg-primary text-white",
+				className: "py-16 md:py-24 bg-gradient-primary border-b border-border",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					"data-uid": "src/pages/Services.tsx:68:9",
 					"data-prohibitions": "[]",
@@ -25695,12 +25704,12 @@ function Services() {
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
 							"data-uid": "src/pages/Services.tsx:70:13",
 							"data-prohibitions": "[]",
-							className: "text-4xl md:text-5xl font-bold mb-6",
+							className: "text-4xl md:text-5xl font-bold mb-6 text-foreground",
 							children: "Nossas Soluções"
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 							"data-uid": "src/pages/Services.tsx:71:13",
 							"data-prohibitions": "[]",
-							className: "text-lg md:text-xl text-slate-300 leading-relaxed",
+							className: "text-lg md:text-xl text-muted-foreground leading-relaxed",
 							children: "Na ALG Finanças Pessoais, oferecemos serviços especializados em Gestão de Controle Financeiro Pessoal que cobrem todos os aspectos da sua vida financeira."
 						})]
 					})
@@ -25732,15 +25741,15 @@ function Services() {
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 										"data-uid": "src/pages/Services.tsx:92:21",
 										"data-prohibitions": "[]",
-										className: "aspect-video bg-secondary/30 rounded-2xl border border-border flex items-center justify-center p-12 relative overflow-hidden group",
+										className: "aspect-video bg-card rounded-2xl border border-border flex items-center justify-center p-12 relative overflow-hidden group shadow-lg",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 											"data-uid": "src/pages/Services.tsx:93:23",
 											"data-prohibitions": "[editContent]",
-											className: "absolute inset-0 bg-gradient-to-br from-primary/5 to-accent/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+											className: "absolute inset-0 bg-gradient-to-br from-primary/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon, {
 											"data-uid": "src/pages/Services.tsx:94:23",
 											"data-prohibitions": "[editContent]",
-											className: "w-32 h-32 text-primary/20 group-hover:scale-110 transition-transform duration-500"
+											className: "w-32 h-32 text-primary/40 group-hover:text-primary/80 group-hover:scale-110 transition-all duration-500"
 										})]
 									})
 								}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -25751,7 +25760,7 @@ function Services() {
 										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 											"data-uid": "src/pages/Services.tsx:99:21",
 											"data-prohibitions": "[]",
-											className: "inline-flex items-center justify-center h-12 w-12 rounded-xl bg-primary/10 text-primary mb-2",
+											className: "inline-flex items-center justify-center h-12 w-12 rounded-xl bg-secondary text-primary mb-2",
 											children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Icon, {
 												"data-uid": "src/pages/Services.tsx:100:23",
 												"data-prohibitions": "[editContent]",
@@ -25761,7 +25770,7 @@ function Services() {
 										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
 											"data-uid": "src/pages/Services.tsx:102:21",
 											"data-prohibitions": "[editContent]",
-											className: "text-3xl font-bold text-primary",
+											className: "text-3xl font-bold text-foreground",
 											children: service.title
 										}),
 										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
@@ -25777,29 +25786,29 @@ function Services() {
 											children: service.details.map((detail, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
 												"data-uid": "src/pages/Services.tsx:108:25",
 												"data-prohibitions": "[editContent]",
-												className: "flex items-center gap-3 text-foreground font-medium",
+												className: "flex items-center gap-3 text-muted-foreground font-medium",
 												children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-													"data-uid": "src/pages/Services.tsx:109:27",
+													"data-uid": "src/pages/Services.tsx:112:27",
 													"data-prohibitions": "[editContent]",
-													className: "h-2 w-2 rounded-full bg-accent"
+													className: "h-2 w-2 rounded-full bg-primary"
 												}), detail]
 											}, i))
 										}),
 										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-											"data-uid": "src/pages/Services.tsx:114:21",
+											"data-uid": "src/pages/Services.tsx:117:21",
 											"data-prohibitions": "[]",
 											className: "pt-6",
 											children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
-												"data-uid": "src/pages/Services.tsx:115:23",
+												"data-uid": "src/pages/Services.tsx:118:23",
 												"data-prohibitions": "[]",
 												asChild: true,
-												className: "bg-primary hover:bg-primary/90",
+												className: "bg-primary hover:bg-primary/90 text-primary-foreground",
 												children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
-													"data-uid": "src/pages/Services.tsx:116:25",
+													"data-uid": "src/pages/Services.tsx:122:25",
 													"data-prohibitions": "[]",
 													to: "/contato",
 													children: ["Agendar Análise", /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowRight, {
-														"data-uid": "src/pages/Services.tsx:118:27",
+														"data-uid": "src/pages/Services.tsx:124:27",
 														"data-prohibitions": "[editContent]",
 														className: "ml-2 h-4 w-4"
 													})]
@@ -25814,34 +25823,34 @@ function Services() {
 				})
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("section", {
-				"data-uid": "src/pages/Services.tsx:131:7",
+				"data-uid": "src/pages/Services.tsx:137:7",
 				"data-prohibitions": "[]",
-				className: "py-16 md:py-24 bg-secondary/30",
+				className: "py-16 md:py-24 bg-card border-t border-border",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					"data-uid": "src/pages/Services.tsx:132:9",
+					"data-uid": "src/pages/Services.tsx:138:9",
 					"data-prohibitions": "[]",
 					className: "container mx-auto px-4 md:px-6 text-center max-w-4xl",
 					children: [
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
-							"data-uid": "src/pages/Services.tsx:133:11",
+							"data-uid": "src/pages/Services.tsx:139:11",
 							"data-prohibitions": "[]",
-							className: "text-3xl md:text-4xl font-bold mb-6",
+							className: "text-3xl md:text-4xl font-bold mb-6 text-foreground",
 							children: "Pronto para assumir o controle?"
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-							"data-uid": "src/pages/Services.tsx:134:11",
+							"data-uid": "src/pages/Services.tsx:142:11",
 							"data-prohibitions": "[]",
 							className: "text-lg text-muted-foreground mb-8",
 							children: "Agende uma reunião inicial gratuita com um de nossos especialistas em Gestão de Controle Financeiro Pessoal e descubra como podemos ajudar a otimizar seus resultados."
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
-							"data-uid": "src/pages/Services.tsx:138:11",
+							"data-uid": "src/pages/Services.tsx:146:11",
 							"data-prohibitions": "[]",
 							asChild: true,
 							size: "lg",
-							className: "h-14 px-8 text-base bg-accent hover:bg-accent/90 text-primary-foreground shadow-lg",
+							className: "h-14 px-8 text-base bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg",
 							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-								"data-uid": "src/pages/Services.tsx:143:13",
+								"data-uid": "src/pages/Services.tsx:151:13",
 								"data-prohibitions": "[]",
 								to: "/contato",
 								children: "Quero falar com um especialista"
@@ -25859,12 +25868,12 @@ function About() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 		"data-uid": "src/pages/About.tsx:6:5",
 		"data-prohibitions": "[editContent]",
-		className: "pt-24 pb-16",
+		className: "pt-24 pb-16 bg-background min-h-screen",
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("section", {
 				"data-uid": "src/pages/About.tsx:8:7",
 				"data-prohibitions": "[]",
-				className: "py-16 md:py-24 bg-secondary/30",
+				className: "py-16 md:py-24 bg-card border-b border-border",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					"data-uid": "src/pages/About.tsx:9:9",
 					"data-prohibitions": "[]",
@@ -25876,7 +25885,7 @@ function About() {
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
 							"data-uid": "src/pages/About.tsx:11:13",
 							"data-prohibitions": "[]",
-							className: "text-4xl md:text-5xl font-bold mb-6 text-primary",
+							className: "text-4xl md:text-5xl font-bold mb-6 text-foreground",
 							children: "Sobre a ALG Finanças Pessoais"
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 							"data-uid": "src/pages/About.tsx:14:13",
@@ -25906,13 +25915,13 @@ function About() {
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 								"data-uid": "src/pages/About.tsx:27:15",
 								"data-prohibitions": "[editContent]",
-								className: "absolute inset-0 bg-accent/10 rounded-3xl transform -rotate-3 scale-105"
+								className: "absolute inset-0 bg-primary/10 rounded-3xl transform -rotate-3 scale-105"
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
 								"data-uid": "src/pages/About.tsx:28:15",
 								"data-prohibitions": "[editContent]",
 								src: logo_escolhido_alg_bc19d_default,
 								alt: "ALG Finanças Pessoais",
-								className: "relative rounded-3xl shadow-xl w-full max-w-md mx-auto object-cover border-4 border-white"
+								className: "relative rounded-3xl shadow-xl w-full max-w-md mx-auto object-cover border-4 border-card"
 							})]
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							"data-uid": "src/pages/About.tsx:34:13",
@@ -25922,7 +25931,7 @@ function About() {
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
 									"data-uid": "src/pages/About.tsx:35:15",
 									"data-prohibitions": "[]",
-									className: "text-3xl font-bold text-primary",
+									className: "text-3xl font-bold text-foreground",
 									children: "Nossa História"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
@@ -25949,11 +25958,11 @@ function About() {
 									].map((item, i) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
 										"data-uid": "src/pages/About.tsx:53:19",
 										"data-prohibitions": "[editContent]",
-										className: "flex items-center gap-3 text-foreground font-medium",
+										className: "flex items-center gap-3 text-muted-foreground font-medium",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleCheck, {
 											"data-uid": "src/pages/About.tsx:54:21",
 											"data-prohibitions": "[editContent]",
-											className: "h-5 w-5 text-accent"
+											className: "h-5 w-5 text-primary"
 										}), item]
 									}, i))
 								})
@@ -25965,7 +25974,7 @@ function About() {
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("section", {
 				"data-uid": "src/pages/About.tsx:65:7",
 				"data-prohibitions": "[]",
-				className: "py-16 md:py-24 bg-primary text-white",
+				className: "py-16 md:py-24 bg-gradient-primary border-t border-border",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 					"data-uid": "src/pages/About.tsx:66:9",
 					"data-prohibitions": "[]",
@@ -25977,46 +25986,46 @@ function About() {
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							"data-uid": "src/pages/About.tsx:68:13",
 							"data-prohibitions": "[]",
-							className: "bg-white/5 border border-white/10 rounded-2xl p-8 md:p-12 backdrop-blur-sm",
+							className: "bg-card border border-border rounded-2xl p-8 md:p-12 shadow-lg",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Target, {
 									"data-uid": "src/pages/About.tsx:69:15",
 									"data-prohibitions": "[editContent]",
-									className: "h-12 w-12 text-accent mb-6"
+									className: "h-12 w-12 text-primary mb-6"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
 									"data-uid": "src/pages/About.tsx:70:15",
 									"data-prohibitions": "[]",
-									className: "text-2xl font-bold mb-4",
+									className: "text-2xl font-bold mb-4 text-foreground",
 									children: "Nossa Missão"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 									"data-uid": "src/pages/About.tsx:71:15",
 									"data-prohibitions": "[]",
-									className: "text-slate-300 leading-relaxed text-lg",
+									className: "text-muted-foreground leading-relaxed text-lg",
 									children: "Proporcionar tranquilidade e segurança financeira aos nossos clientes através de um planejamento personalizado, estratégico e transparente, garantindo a construção e preservação do seu patrimônio."
 								})
 							]
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							"data-uid": "src/pages/About.tsx:77:13",
 							"data-prohibitions": "[]",
-							className: "bg-white/5 border border-white/10 rounded-2xl p-8 md:p-12 backdrop-blur-sm",
+							className: "bg-card border border-border rounded-2xl p-8 md:p-12 shadow-lg",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Eye, {
 									"data-uid": "src/pages/About.tsx:78:15",
 									"data-prohibitions": "[editContent]",
-									className: "h-12 w-12 text-accent mb-6"
+									className: "h-12 w-12 text-primary mb-6"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
 									"data-uid": "src/pages/About.tsx:79:15",
 									"data-prohibitions": "[]",
-									className: "text-2xl font-bold mb-4",
+									className: "text-2xl font-bold mb-4 text-foreground",
 									children: "Nossa Visão"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 									"data-uid": "src/pages/About.tsx:80:15",
 									"data-prohibitions": "[]",
-									className: "text-slate-300 leading-relaxed text-lg",
+									className: "text-muted-foreground leading-relaxed text-lg",
 									children: "Ser reconhecida como a principal referência em Gestão de Controle Financeiro Pessoal, transformando a relação das pessoas com o dinheiro e impactando positivamente gerações."
 								})
 							]
@@ -33765,7 +33774,6 @@ function ContactForm() {
 										"data-uid": "src/components/contact/ContactForm.tsx:71:19",
 										"data-prohibitions": "[editContent]",
 										placeholder: "Seu nome",
-										className: "bg-white",
 										...field
 									})
 								}),
@@ -33798,12 +33806,11 @@ function ContactForm() {
 										"data-prohibitions": "[editContent]",
 										placeholder: "seu.email@exemplo.com",
 										type: "email",
-										className: "bg-white",
 										...field
 									})
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormMessage, {
-									"data-uid": "src/components/contact/ContactForm.tsx:91:17",
+									"data-uid": "src/components/contact/ContactForm.tsx:86:17",
 									"data-prohibitions": "[editContent]"
 								})
 							]
@@ -33811,104 +33818,102 @@ function ContactForm() {
 					})]
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					"data-uid": "src/components/contact/ContactForm.tsx:97:9",
+					"data-uid": "src/components/contact/ContactForm.tsx:92:9",
 					"data-prohibitions": "[]",
 					className: "grid grid-cols-1 md:grid-cols-2 gap-6",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormField, {
-						"data-uid": "src/components/contact/ContactForm.tsx:98:11",
+						"data-uid": "src/components/contact/ContactForm.tsx:93:11",
 						"data-prohibitions": "[editContent]",
 						control: form.control,
 						name: "phone",
 						render: ({ field }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(FormItem, {
-							"data-uid": "src/components/contact/ContactForm.tsx:102:15",
+							"data-uid": "src/components/contact/ContactForm.tsx:97:15",
 							"data-prohibitions": "[]",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormLabel, {
-									"data-uid": "src/components/contact/ContactForm.tsx:103:17",
+									"data-uid": "src/components/contact/ContactForm.tsx:98:17",
 									"data-prohibitions": "[]",
 									className: "text-foreground",
 									children: "Telefone / WhatsApp"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormControl, {
-									"data-uid": "src/components/contact/ContactForm.tsx:104:17",
+									"data-uid": "src/components/contact/ContactForm.tsx:99:17",
 									"data-prohibitions": "[]",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Input, {
-										"data-uid": "src/components/contact/ContactForm.tsx:105:19",
+										"data-uid": "src/components/contact/ContactForm.tsx:100:19",
 										"data-prohibitions": "[editContent]",
 										placeholder: "(00) 00000-0000",
-										className: "bg-white",
 										...field
 									})
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormMessage, {
-									"data-uid": "src/components/contact/ContactForm.tsx:107:17",
+									"data-uid": "src/components/contact/ContactForm.tsx:102:17",
 									"data-prohibitions": "[editContent]"
 								})
 							]
 						})
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormField, {
-						"data-uid": "src/components/contact/ContactForm.tsx:111:11",
+						"data-uid": "src/components/contact/ContactForm.tsx:106:11",
 						"data-prohibitions": "[editContent]",
 						control: form.control,
 						name: "service",
 						render: ({ field }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(FormItem, {
-							"data-uid": "src/components/contact/ContactForm.tsx:115:15",
+							"data-uid": "src/components/contact/ContactForm.tsx:110:15",
 							"data-prohibitions": "[]",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormLabel, {
-									"data-uid": "src/components/contact/ContactForm.tsx:116:17",
+									"data-uid": "src/components/contact/ContactForm.tsx:111:17",
 									"data-prohibitions": "[]",
 									className: "text-foreground",
 									children: "Área de Interesse"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Select, {
-									"data-uid": "src/components/contact/ContactForm.tsx:117:17",
+									"data-uid": "src/components/contact/ContactForm.tsx:112:17",
 									"data-prohibitions": "[]",
 									onValueChange: field.onChange,
 									defaultValue: field.value,
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormControl, {
-										"data-uid": "src/components/contact/ContactForm.tsx:118:19",
+										"data-uid": "src/components/contact/ContactForm.tsx:113:19",
 										"data-prohibitions": "[]",
 										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectTrigger, {
-											"data-uid": "src/components/contact/ContactForm.tsx:119:21",
+											"data-uid": "src/components/contact/ContactForm.tsx:114:21",
 											"data-prohibitions": "[]",
-											className: "bg-white",
 											children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectValue, {
-												"data-uid": "src/components/contact/ContactForm.tsx:120:23",
+												"data-uid": "src/components/contact/ContactForm.tsx:115:23",
 												"data-prohibitions": "[editContent]",
 												placeholder: "Selecione um serviço"
 											})
 										})
 									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(SelectContent, {
-										"data-uid": "src/components/contact/ContactForm.tsx:123:19",
+										"data-uid": "src/components/contact/ContactForm.tsx:118:19",
 										"data-prohibitions": "[]",
 										children: [
 											/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItem, {
-												"data-uid": "src/components/contact/ContactForm.tsx:124:21",
+												"data-uid": "src/components/contact/ContactForm.tsx:119:21",
 												"data-prohibitions": "[]",
 												value: "planejamento",
 												children: "Planejamento Financeiro"
 											}),
 											/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItem, {
-												"data-uid": "src/components/contact/ContactForm.tsx:125:21",
+												"data-uid": "src/components/contact/ContactForm.tsx:120:21",
 												"data-prohibitions": "[]",
 												value: "gestao",
 												children: "Gestão de Controle Financeiro Pessoal"
 											}),
 											/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItem, {
-												"data-uid": "src/components/contact/ContactForm.tsx:126:21",
+												"data-uid": "src/components/contact/ContactForm.tsx:121:21",
 												"data-prohibitions": "[]",
 												value: "investimentos",
 												children: "Análise de Investimentos"
 											}),
 											/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItem, {
-												"data-uid": "src/components/contact/ContactForm.tsx:127:21",
+												"data-uid": "src/components/contact/ContactForm.tsx:122:21",
 												"data-prohibitions": "[]",
 												value: "protecao",
 												children: "Proteção Patrimonial"
 											}),
 											/* @__PURE__ */ (0, import_jsx_runtime.jsx)(SelectItem, {
-												"data-uid": "src/components/contact/ContactForm.tsx:128:21",
+												"data-uid": "src/components/contact/ContactForm.tsx:123:21",
 												"data-prohibitions": "[]",
 												value: "outro",
 												children: "Outro assunto"
@@ -33917,7 +33922,7 @@ function ContactForm() {
 									})]
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormMessage, {
-									"data-uid": "src/components/contact/ContactForm.tsx:131:17",
+									"data-uid": "src/components/contact/ContactForm.tsx:126:17",
 									"data-prohibitions": "[editContent]"
 								})
 							]
@@ -33925,45 +33930,45 @@ function ContactForm() {
 					})]
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormField, {
-					"data-uid": "src/components/contact/ContactForm.tsx:137:9",
+					"data-uid": "src/components/contact/ContactForm.tsx:132:9",
 					"data-prohibitions": "[editContent]",
 					control: form.control,
 					name: "message",
 					render: ({ field }) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(FormItem, {
-						"data-uid": "src/components/contact/ContactForm.tsx:141:13",
+						"data-uid": "src/components/contact/ContactForm.tsx:136:13",
 						"data-prohibitions": "[]",
 						children: [
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormLabel, {
-								"data-uid": "src/components/contact/ContactForm.tsx:142:15",
+								"data-uid": "src/components/contact/ContactForm.tsx:137:15",
 								"data-prohibitions": "[]",
 								className: "text-foreground",
 								children: "Sua Mensagem"
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormControl, {
-								"data-uid": "src/components/contact/ContactForm.tsx:143:15",
+								"data-uid": "src/components/contact/ContactForm.tsx:138:15",
 								"data-prohibitions": "[]",
 								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Textarea, {
-									"data-uid": "src/components/contact/ContactForm.tsx:144:17",
+									"data-uid": "src/components/contact/ContactForm.tsx:139:17",
 									"data-prohibitions": "[editContent]",
 									placeholder: "Como podemos ajudar você a atingir seus objetivos financeiros?",
-									className: "min-h-[120px] bg-white resize-none",
+									className: "min-h-[120px] resize-none",
 									...field
 								})
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(FormMessage, {
-								"data-uid": "src/components/contact/ContactForm.tsx:150:15",
+								"data-uid": "src/components/contact/ContactForm.tsx:145:15",
 								"data-prohibitions": "[editContent]"
 							})
 						]
 					})
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Button, {
-					"data-uid": "src/components/contact/ContactForm.tsx:155:9",
+					"data-uid": "src/components/contact/ContactForm.tsx:150:9",
 					"data-prohibitions": "[]",
 					type: "submit",
-					className: "w-full md:w-auto h-12 px-8 bg-primary hover:bg-primary/90 text-white",
+					className: "w-full md:w-auto h-12 px-8 bg-primary hover:bg-primary/90 text-primary-foreground",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Send, {
-						"data-uid": "src/components/contact/ContactForm.tsx:159:11",
+						"data-uid": "src/components/contact/ContactForm.tsx:154:11",
 						"data-prohibitions": "[editContent]",
 						className: "mr-2 h-4 w-4"
 					}), "Enviar Solicitação"]
@@ -33978,7 +33983,7 @@ function Contact() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 		"data-uid": "src/pages/Contact.tsx:7:5",
 		"data-prohibitions": "[editContent]",
-		className: "pt-24 pb-16 min-h-screen bg-secondary/20",
+		className: "pt-24 pb-16 min-h-screen bg-background",
 		children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 			"data-uid": "src/pages/Contact.tsx:8:7",
 			"data-prohibitions": "[editContent]",
@@ -33994,7 +33999,7 @@ function Contact() {
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h1", {
 						"data-uid": "src/pages/Contact.tsx:11:13",
 						"data-prohibitions": "[]",
-						className: "text-4xl md:text-5xl font-bold mb-6 text-primary",
+						className: "text-4xl md:text-5xl font-bold mb-6 text-foreground",
 						children: "Vamos conversar"
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 						"data-uid": "src/pages/Contact.tsx:12:13",
@@ -34013,12 +34018,12 @@ function Contact() {
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							"data-uid": "src/pages/Contact.tsx:22:15",
 							"data-prohibitions": "[]",
-							className: "bg-white p-8 rounded-2xl shadow-sm border border-border",
+							className: "bg-card p-8 rounded-2xl shadow-lg border border-border",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
 									"data-uid": "src/pages/Contact.tsx:23:17",
 									"data-prohibitions": "[]",
-									className: "text-xl font-bold mb-6",
+									className: "text-xl font-bold mb-6 text-foreground",
 									children: "Informações de Contato"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
@@ -34033,7 +34038,7 @@ function Contact() {
 											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 												"data-uid": "src/pages/Contact.tsx:27:21",
 												"data-prohibitions": "[]",
-												className: "h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0",
+												className: "h-10 w-10 rounded-full bg-secondary flex items-center justify-center shrink-0",
 												children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Phone, {
 													"data-uid": "src/pages/Contact.tsx:28:23",
 													"data-prohibitions": "[editContent]",
@@ -34053,7 +34058,7 @@ function Contact() {
 													href: "https://wa.me/5511992459400",
 													target: "_blank",
 													rel: "noopener noreferrer",
-													className: "text-lg font-semibold hover:text-accent transition-colors",
+													className: "text-lg font-semibold text-foreground hover:text-primary transition-colors",
 													children: "(11) 99245-9400"
 												})]
 											})]
@@ -34065,7 +34070,7 @@ function Contact() {
 											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 												"data-uid": "src/pages/Contact.tsx:46:21",
 												"data-prohibitions": "[]",
-												className: "h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0",
+												className: "h-10 w-10 rounded-full bg-secondary flex items-center justify-center shrink-0",
 												children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Mail, {
 													"data-uid": "src/pages/Contact.tsx:47:23",
 													"data-prohibitions": "[editContent]",
@@ -34083,7 +34088,7 @@ function Contact() {
 													"data-uid": "src/pages/Contact.tsx:51:23",
 													"data-prohibitions": "[]",
 													href: "mailto:gomesalg@gmail.com",
-													className: "text-lg font-semibold hover:text-accent transition-colors break-all",
+													className: "text-lg font-semibold text-foreground hover:text-primary transition-colors break-all",
 													children: "gomesalg@gmail.com"
 												})]
 											})]
@@ -34095,7 +34100,7 @@ function Contact() {
 											children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 												"data-uid": "src/pages/Contact.tsx:61:21",
 												"data-prohibitions": "[]",
-												className: "h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0",
+												className: "h-10 w-10 rounded-full bg-secondary flex items-center justify-center shrink-0",
 												children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MapPin, {
 													"data-uid": "src/pages/Contact.tsx:62:23",
 													"data-prohibitions": "[editContent]",
@@ -34112,7 +34117,7 @@ function Contact() {
 												}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
 													"data-uid": "src/pages/Contact.tsx:68:23",
 													"data-prohibitions": "[]",
-													className: "text-base font-medium leading-relaxed",
+													className: "text-base font-medium text-foreground leading-relaxed",
 													children: [
 														"Rua Domingos Pires de Oliveira Dias, 32",
 														/* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {
@@ -34144,7 +34149,7 @@ function Contact() {
 										"data-uid": "src/pages/Contact.tsx:81:19",
 										"data-prohibitions": "[]",
 										asChild: true,
-										className: "w-full bg-[#25D366] hover:bg-[#128C7E] text-white shadow-md",
+										className: "w-full bg-[#25D366] hover:bg-[#128C7E] text-white shadow-md border-0",
 										children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("a", {
 											"data-uid": "src/pages/Contact.tsx:85:21",
 											"data-prohibitions": "[]",
@@ -34164,11 +34169,11 @@ function Contact() {
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 						"data-uid": "src/pages/Contact.tsx:95:13",
 						"data-prohibitions": "[]",
-						className: "lg:col-span-2 bg-white p-8 md:p-10 rounded-2xl shadow-sm border border-border",
+						className: "lg:col-span-2 bg-card p-8 md:p-10 rounded-2xl shadow-lg border border-border",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
 							"data-uid": "src/pages/Contact.tsx:96:15",
 							"data-prohibitions": "[]",
-							className: "text-2xl font-bold mb-6",
+							className: "text-2xl font-bold mb-6 text-foreground",
 							children: "Solicitar Consultoria"
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ContactForm, {
 							"data-uid": "src/pages/Contact.tsx:97:15",
@@ -34212,7 +34217,7 @@ var NotFound = () => {
 					"data-uid": "src/pages/NotFound.tsx:19:9",
 					"data-prohibitions": "[]",
 					asChild: true,
-					className: "btn-gold",
+					className: "bg-primary hover:bg-primary/90 text-primary-foreground",
 					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
 						"data-uid": "src/pages/NotFound.tsx:20:11",
 						"data-prohibitions": "[]",
@@ -34316,4 +34321,4 @@ var App = () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(BrowserRouter, {
 }));
 //#endregion
 
-//# sourceMappingURL=index-DTKRUhm5.js.map
+//# sourceMappingURL=index-BTraqV_8.js.map

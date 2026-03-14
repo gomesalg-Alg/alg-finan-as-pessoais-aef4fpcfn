@@ -32,13 +32,13 @@ const valuesList = [
 
 export function Values() {
   return (
-    <section className="py-24 bg-white relative overflow-hidden border-t border-border">
+    <section className="py-24 bg-card relative overflow-hidden border-t border-border">
       <div className="container mx-auto px-4 md:px-6 relative z-10">
         <div className="text-center max-w-3xl mx-auto mb-16">
-          <span className="text-accent font-semibold tracking-wider uppercase text-sm">
+          <span className="text-primary font-semibold tracking-wider uppercase text-sm">
             Nossos Pilares
           </span>
-          <h2 className="text-3xl md:text-5xl font-bold mt-2 mb-6 text-primary">
+          <h2 className="text-3xl md:text-5xl font-bold mt-2 mb-6 text-foreground">
             Valores que nos guiam
           </h2>
           <p className="text-lg text-muted-foreground">
@@ -53,12 +53,15 @@ export function Values() {
             return (
               <div
                 key={index}
-                className={`flex flex-col items-center text-center p-8 rounded-2xl bg-secondary/20 hover:bg-white hover:shadow-2xl transition-all duration-300 border border-transparent hover:border-accent/20 group ${
+                className={`flex flex-col items-center text-center p-8 rounded-2xl bg-background hover:bg-secondary hover:shadow-2xl transition-all duration-300 border border-border hover:border-primary/30 group ${
                   index === 3 ? 'lg:col-start-2 lg:col-span-1 lg:-ml-1/2' : '' // Center the last two in a 3-col grid
                 } ${index === 4 ? 'lg:col-span-1' : ''}`}
               >
-                <div className="h-16 w-16 rounded-full bg-primary flex items-center justify-center mb-6 shadow-lg shadow-primary/20 group-hover:scale-110 transition-transform duration-300">
-                  <Icon className="h-8 w-8 text-white" strokeWidth={1.5} />
+                <div className="h-16 w-16 rounded-full bg-secondary flex items-center justify-center mb-6 shadow-lg shadow-black/20 group-hover:scale-110 transition-transform duration-300 group-hover:bg-primary">
+                  <Icon
+                    className="h-8 w-8 text-foreground group-hover:text-primary-foreground"
+                    strokeWidth={1.5}
+                  />
                 </div>
                 <h3 className="text-2xl font-bold mb-3 text-foreground">{value.title}</h3>
                 <p className="text-muted-foreground leading-relaxed">{value.description}</p>
@@ -69,8 +72,8 @@ export function Values() {
       </div>
 
       {/* Decorative background circle */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-secondary/50 rounded-full pointer-events-none opacity-20" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] border border-secondary/30 rounded-full pointer-events-none opacity-20" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-border/50 rounded-full pointer-events-none opacity-20" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[1200px] h-[1200px] border border-border/30 rounded-full pointer-events-none opacity-20" />
     </section>
   )
 }

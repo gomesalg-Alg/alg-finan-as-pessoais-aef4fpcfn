@@ -23,13 +23,13 @@ const steps = [
 
 export function ProcessTimeline() {
   return (
-    <section className="py-24 bg-secondary/30">
+    <section className="py-24 bg-card border-t border-border">
       <div className="container max-w-4xl">
-        <h2 className="text-3xl md:text-4xl font-display font-bold mb-16 text-center">
+        <h2 className="text-3xl md:text-4xl font-display font-bold mb-16 text-center text-foreground">
           Nosso <span className="text-primary">Processo</span>
         </h2>
 
-        <div className="relative border-l border-border/50 ml-4 md:ml-8 space-y-12">
+        <div className="relative border-l border-border ml-4 md:ml-8 space-y-12">
           {steps.map((step, idx) => (
             <div key={idx} className="relative pl-10 md:pl-16 group">
               <div className="absolute -left-[17px] top-1 h-8 w-8 rounded-full bg-background border-2 border-primary flex items-center justify-center group-hover:scale-110 group-hover:bg-primary group-hover:text-primary-foreground transition-all duration-300">
