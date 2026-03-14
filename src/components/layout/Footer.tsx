@@ -9,14 +9,14 @@ export function Footer() {
       <div className="container grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
         <div className="flex flex-col gap-4">
           <div className="flex items-center gap-2">
-            <div className="flex h-8 w-8 items-center justify-center rounded-full bg-primary">
-              <span className="font-display font-bold text-background text-sm">ALG</span>
+            <div className="flex h-10 w-14 items-center justify-center rounded-md bg-gradient-to-br from-primary to-emerald-700">
+              <span className="font-display font-bold text-background text-sm">AlLG</span>
             </div>
             <span className="font-display font-bold text-lg">Finanças Pessoais</span>
           </div>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            Planejamento e Controle de Finanças Pessoais. Transformando números em conquistas
-            pessoais com excelência e zelo.
+          <p className="text-sm text-muted-foreground leading-relaxed mt-2">
+            Gestão de Controle Financeiro Pessoal. Transformando números em conquistas pessoais com
+            excelência e zelo.
           </p>
           <div className="flex gap-4 mt-2">
             <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
@@ -64,17 +64,30 @@ export function Footer() {
         <div className="flex flex-col gap-4">
           <h3 className="font-display font-semibold text-foreground">Contato</h3>
           <ul className="flex flex-col gap-3 text-sm text-muted-foreground">
-            <li className="flex items-center gap-3">
-              <MapPin className="h-4 w-4 text-primary" />
-              São Paulo, SP - Brasil
+            <li className="flex items-start gap-3">
+              <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+              <span>
+                Rua Domingos Pires de Oliveira Dias, 32
+                <br />
+                São Paulo - SP
+                <br />
+                CEP: 04821-230
+              </span>
             </li>
             <li className="flex items-center gap-3">
-              <Phone className="h-4 w-4 text-primary" />
-              +55 (11) 99999-9999
+              <Phone className="h-5 w-5 text-primary shrink-0" />
+              <a
+                href="https://wa.me/5511992459400"
+                target="_blank"
+                rel="noreferrer"
+                className="hover:text-primary transition-colors"
+              >
+                (11) 99245-9400
+              </a>
             </li>
             <li className="flex items-center gap-3">
-              <Mail className="h-4 w-4 text-primary" />
-              contato@algfinancas.com.br
+              <Mail className="h-5 w-5 text-primary shrink-0" />
+              <span>contato@allgfinancas.com.br</span>
             </li>
           </ul>
         </div>
@@ -98,10 +111,13 @@ export function Footer() {
         </div>
       </div>
 
-      <div className="container mt-16 pt-8 border-t border-border/40 text-center text-sm text-muted-foreground">
+      <div className="container mt-16 pt-8 border-t border-border/40 flex flex-col md:flex-row items-center justify-between text-sm text-muted-foreground gap-4 text-center md:text-left">
         <p>
-          ALG Planejamento e Controle de Finanças Pessoais Ltda-me © {new Date().getFullYear()}.
+          AlLG Planejamento e Controle de Finanças Pessoais Ltda-me © {new Date().getFullYear()}.
           Todos os direitos reservados.
+        </p>
+        <p className="font-medium bg-secondary/50 px-4 py-1.5 rounded-full">
+          Fundada em 30/10/2024
         </p>
       </div>
     </footer>

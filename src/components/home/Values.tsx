@@ -1,6 +1,33 @@
-import { CheckCircle2 } from 'lucide-react'
+import { Shield, Star, Lightbulb, Eye, HeartHandshake } from 'lucide-react'
+import { Card, CardContent } from '@/components/ui/card'
 
-const values = ['Responsabilidade', 'Excelência', 'Inovação', 'Transparência', 'Zelo']
+const values = [
+  {
+    title: 'Responsabilidade',
+    desc: 'Agir com ética e comprometimento em todas as nossas ações.',
+    icon: Shield,
+  },
+  {
+    title: 'Excelência',
+    desc: 'Buscar sempre a melhor solução para nossos clientes, com qualidade e eficiência.',
+    icon: Star,
+  },
+  {
+    title: 'Inovação',
+    desc: 'Estar à frente das tendências e oferecer ferramentas financeiras modernas e eficazes.',
+    icon: Lightbulb,
+  },
+  {
+    title: 'Transparência',
+    desc: 'Manter uma comunicação clara e aberta com nossos clientes.',
+    icon: Eye,
+  },
+  {
+    title: 'Zelo',
+    desc: 'Tratar as finanças dos nossos clientes com o mesmo cuidado e atenção que tratamos as nossas próprias.',
+    icon: HeartHandshake,
+  },
+]
 
 export function Values() {
   return (
@@ -17,22 +44,19 @@ export function Values() {
           </p>
         </div>
 
-        <div className="flex flex-wrap justify-center gap-6 md:gap-8">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
           {values.map((val, idx) => (
-            <div
+            <Card
               key={idx}
-              className="flex flex-col items-center gap-3 w-32 md:w-40 animate-fade-in-up"
+              className="card-glass border-t-2 border-t-primary/50 animate-fade-in-up card-hover bg-secondary/30"
               style={{ animationDelay: `${idx * 100}ms` }}
             >
-              <div className="h-16 w-16 rounded-2xl bg-secondary border border-border flex items-center justify-center transform rotate-45 hover:rotate-0 hover:border-primary transition-all duration-300">
-                <div className="transform -rotate-45 hover:rotate-0 transition-transform duration-300">
-                  <CheckCircle2 className="h-8 w-8 text-primary" />
-                </div>
-              </div>
-              <span className="font-display font-semibold text-sm tracking-wide uppercase text-center">
-                {val}
-              </span>
-            </div>
+              <CardContent className="p-6">
+                <val.icon className="h-8 w-8 text-primary mb-4" />
+                <h3 className="font-display font-bold text-lg mb-2">{val.title}</h3>
+                <p className="text-muted-foreground text-sm leading-relaxed">{val.desc}</p>
+              </CardContent>
+            </Card>
           ))}
         </div>
       </div>

@@ -1,7 +1,6 @@
 import { ContactForm } from '@/components/contact/ContactForm'
 import { Card, CardContent } from '@/components/ui/card'
 import { MapPin, Phone, Mail, Clock } from 'lucide-react'
-import { Button } from '@/components/ui/button'
 
 export default function Contact() {
   return (
@@ -38,10 +37,15 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="font-medium">Telefone / WhatsApp</p>
-                    <p className="text-muted-foreground text-sm mt-1">+55 (11) 99999-9999</p>
-                    <Button variant="link" className="text-primary p-0 h-auto mt-1 text-sm">
+                    <p className="text-muted-foreground text-sm mt-1">(11) 99245-9400</p>
+                    <a
+                      href="https://wa.me/5511992459400"
+                      target="_blank"
+                      rel="noreferrer"
+                      className="text-primary text-sm hover:underline mt-1 inline-block"
+                    >
                       Iniciar conversa
-                    </Button>
+                    </a>
                   </div>
                 </div>
 
@@ -51,7 +55,9 @@ export default function Contact() {
                   </div>
                   <div>
                     <p className="font-medium">E-mail Corporativo</p>
-                    <p className="text-muted-foreground text-sm mt-1">contato@algfinancas.com.br</p>
+                    <p className="text-muted-foreground text-sm mt-1">
+                      contato@allgfinancas.com.br
+                    </p>
                   </div>
                 </div>
 
@@ -60,11 +66,13 @@ export default function Contact() {
                     <MapPin className="h-5 w-5 text-primary" />
                   </div>
                   <div>
-                    <p className="font-medium">Escritório Central</p>
+                    <p className="font-medium">Sede Operacional</p>
                     <p className="text-muted-foreground text-sm mt-1">
-                      Av. Faria Lima, 1000 - Itaim Bibi
+                      Rua Domingos Pires de Oliveira Dias, 32
                       <br />
-                      São Paulo, SP - 01452-000
+                      São Paulo - SP
+                      <br />
+                      CEP: 04821-230
                     </p>
                   </div>
                 </div>
@@ -88,11 +96,11 @@ export default function Contact() {
             {/* Map Placeholder */}
             <div className="rounded-xl overflow-hidden border border-border/50 h-[300px] relative">
               <img
-                src="https://img.usecurling.com/p/600/400?q=city%20map&color=black"
+                src="https://img.usecurling.com/p/600/400?q=sao%20paulo%20map&color=black"
                 alt="Localização no mapa"
-                className="w-full h-full object-cover opacity-70"
+                className="w-full h-full object-cover opacity-70 grayscale"
               />
-              <div className="absolute inset-0 bg-background/20 mix-blend-multiply" />
+              <div className="absolute inset-0 bg-background/40 mix-blend-multiply" />
               <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-background p-3 rounded-full shadow-lg border border-primary/20">
                 <MapPin className="h-6 w-6 text-primary" />
               </div>

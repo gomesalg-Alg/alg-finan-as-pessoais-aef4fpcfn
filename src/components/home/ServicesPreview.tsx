@@ -20,7 +20,7 @@ const services = [
     id: 'risco',
     title: 'Análise de Risco',
     icon: ShieldAlert,
-    desc: 'Identificação e mitigação de vulnerabilidades financeiras no seu patrimônio.',
+    desc: 'Identificação e mitigação de vulnerabilidades no seu controle financeiro.',
   },
   {
     id: 'educacao',
@@ -40,7 +40,7 @@ export function ServicesPreview() {
               Nossas <span className="text-primary">Especialidades</span>
             </h2>
             <p className="text-muted-foreground">
-              Soluções completas para estruturar, proteger e multiplicar seu patrimônio com
+              Soluções completas para estruturar, proteger e multiplicar suas finanças com
               inteligência.
             </p>
           </div>
@@ -63,7 +63,7 @@ export function ServicesPreview() {
             >
               <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/90 z-10" />
               <img
-                src={`https://img.usecurling.com/p/400/400?q=finance&color=black&seed=${service.id}`}
+                src={`https://img.usecurling.com/p/400/400?q=finance&color=green&seed=${service.id}`}
                 alt={service.title}
                 className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity group-hover:scale-105 duration-700"
               />

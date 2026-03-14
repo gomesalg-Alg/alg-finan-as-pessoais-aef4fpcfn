@@ -20,10 +20,10 @@ export function Header() {
     <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/80 backdrop-blur-md">
       <div className="container flex h-20 items-center justify-between">
         <div className="flex items-center gap-2">
-          <Link to="/" className="flex items-center gap-2 group">
-            <div className="relative flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent overflow-hidden">
-              <span className="font-display font-bold text-background text-lg z-10">ALG</span>
-              <div className="absolute inset-0 animate-shine" />
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="relative flex h-12 w-16 items-center justify-center rounded-md bg-gradient-to-br from-primary to-emerald-700 overflow-hidden shadow-lg border border-primary/20">
+              <span className="font-display font-extrabold text-background text-lg z-10">AlLG</span>
+              <div className="absolute inset-0 animate-shine opacity-50" />
             </div>
             <span className="font-display font-bold text-xl tracking-tight hidden sm:inline-block">
               Finanças <span className="text-primary">Pessoais</span>
@@ -45,7 +45,7 @@ export function Header() {
               {route.name}
             </Link>
           ))}
-          <Button asChild className="btn-gold rounded-full px-6">
+          <Button asChild className="btn-primary rounded-full px-6">
             <Link to="/contato">Solicitar Consultoria</Link>
           </Button>
         </nav>
@@ -78,7 +78,7 @@ export function Header() {
                     {route.name}
                   </Link>
                 ))}
-                <Button asChild className="btn-gold w-full mt-4">
+                <Button asChild className="btn-primary w-full mt-4">
                   <Link to="/contato" onClick={() => setIsOpen(false)}>
                     Solicitar Consultoria
                   </Link>

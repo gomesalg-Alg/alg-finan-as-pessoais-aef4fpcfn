@@ -19139,15 +19139,6 @@ var ChevronUp = createLucideIcon("chevron-up", [["path", {
 	d: "m18 15-6-6-6 6",
 	key: "153udz"
 }]]);
-var CircleCheck = createLucideIcon("circle-check", [["circle", {
-	cx: "12",
-	cy: "12",
-	r: "10",
-	key: "1mglay"
-}], ["path", {
-	d: "m9 12 2 2 4-4",
-	key: "dzmm74"
-}]]);
 var Clock = createLucideIcon("clock", [["circle", {
 	cx: "12",
 	cy: "12",
@@ -19165,6 +19156,15 @@ var Compass = createLucideIcon("compass", [["circle", {
 }], ["path", {
 	d: "m16.24 7.76-1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z",
 	key: "9ktpf1"
+}]]);
+var Eye = createLucideIcon("eye", [["path", {
+	d: "M2.062 12.348a1 1 0 0 1 0-.696 10.75 10.75 0 0 1 19.876 0 1 1 0 0 1 0 .696 10.75 10.75 0 0 1-19.876 0",
+	key: "1nclc0"
+}], ["circle", {
+	cx: "12",
+	cy: "12",
+	r: "3",
+	key: "1v7zrd"
 }]]);
 var Facebook = createLucideIcon("facebook", [["path", {
 	d: "M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z",
@@ -19210,6 +19210,10 @@ var Handshake = createLucideIcon("handshake", [
 		key: "1ep09j"
 	}]
 ]);
+var HeartHandshake = createLucideIcon("heart-handshake", [["path", {
+	d: "M19.414 14.414C21 12.828 22 11.5 22 9.5a5.5 5.5 0 0 0-9.591-3.676.6.6 0 0 1-.818.001A5.5 5.5 0 0 0 2 9.5c0 2.3 1.5 4 3 5.5l5.535 5.362a2 2 0 0 0 2.879.052 2.12 2.12 0 0 0-.004-3 2.124 2.124 0 1 0 3-3 2.124 2.124 0 0 0 3.004 0 2 2 0 0 0 0-2.828l-1.881-1.882a2.41 2.41 0 0 0-3.409 0l-1.71 1.71a2 2 0 0 1-2.828 0 2 2 0 0 1 0-2.828l2.823-2.762",
+	key: "17lmqv"
+}]]);
 var HeartPulse = createLucideIcon("heart-pulse", [["path", {
 	d: "M2 9.5a5.5 5.5 0 0 1 9.591-3.676.56.56 0 0 0 .818 0A5.49 5.49 0 0 1 22 9.5c0 2.29-1.5 4-3 5.5l-5.492 5.313a2 2 0 0 1-3 .019L5 15c-1.5-1.5-3-3.2-3-5.5",
 	key: "mvr1a0"
@@ -19267,6 +19271,20 @@ var Landmark = createLucideIcon("landmark", [
 	["path", {
 		d: "M6 18v-7",
 		key: "1ivflk"
+	}]
+]);
+var Lightbulb = createLucideIcon("lightbulb", [
+	["path", {
+		d: "M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.7.7 1.3 1.5 1.5 2.5",
+		key: "1gvzjb"
+	}],
+	["path", {
+		d: "M9 18h6",
+		key: "x1upvd"
+	}],
+	["path", {
+		d: "M10 22h4",
+		key: "ceow96"
 	}]
 ]);
 var Linkedin = createLucideIcon("linkedin", [
@@ -19353,6 +19371,10 @@ var ShieldCheck = createLucideIcon("shield-check", [["path", {
 }], ["path", {
 	d: "m9 12 2 2 4-4",
 	key: "dzmm74"
+}]]);
+var Shield = createLucideIcon("shield", [["path", {
+	d: "M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1z",
+	key: "oel41y"
 }]]);
 var Star = createLucideIcon("star", [["path", {
 	d: "M11.525 2.295a.53.53 0 0 1 .95 0l2.31 4.679a2.123 2.123 0 0 0 1.595 1.16l5.166.756a.53.53 0 0 1 .294.904l-3.736 3.638a2.123 2.123 0 0 0-.611 1.878l.882 5.14a.53.53 0 0 1-.771.56l-4.618-2.428a2.122 2.122 0 0 0-1.973 0L6.396 21.01a.53.53 0 0 1-.77-.56l.881-5.139a2.122 2.122 0 0 0-.611-1.879L2.16 9.795a.53.53 0 0 1 .294-.906l5.165-.755a2.122 2.122 0 0 0 1.597-1.16z",
@@ -25921,20 +25943,20 @@ function Header() {
 						"data-uid": "src/components/layout/Header.tsx:23:11",
 						"data-prohibitions": "[]",
 						to: "/",
-						className: "flex items-center gap-2 group",
+						className: "flex items-center gap-3 group",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							"data-uid": "src/components/layout/Header.tsx:24:13",
 							"data-prohibitions": "[]",
-							className: "relative flex h-10 w-10 items-center justify-center rounded-full bg-gradient-to-br from-primary to-accent overflow-hidden",
+							className: "relative flex h-12 w-16 items-center justify-center rounded-md bg-gradient-to-br from-primary to-emerald-700 overflow-hidden shadow-lg border border-primary/20",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 								"data-uid": "src/components/layout/Header.tsx:25:15",
 								"data-prohibitions": "[]",
-								className: "font-display font-bold text-background text-lg z-10",
-								children: "ALG"
+								className: "font-display font-extrabold text-background text-lg z-10",
+								children: "AlLG"
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 								"data-uid": "src/components/layout/Header.tsx:26:15",
 								"data-prohibitions": "[editContent]",
-								className: "absolute inset-0 animate-shine"
+								className: "absolute inset-0 animate-shine opacity-50"
 							})]
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
 							"data-uid": "src/components/layout/Header.tsx:28:13",
@@ -25963,7 +25985,7 @@ function Header() {
 						"data-uid": "src/components/layout/Header.tsx:48:11",
 						"data-prohibitions": "[]",
 						asChild: true,
-						className: "btn-gold rounded-full px-6",
+						className: "btn-primary rounded-full px-6",
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
 							"data-uid": "src/components/layout/Header.tsx:49:13",
 							"data-prohibitions": "[]",
@@ -26027,7 +26049,7 @@ function Header() {
 									"data-uid": "src/components/layout/Header.tsx:81:17",
 									"data-prohibitions": "[]",
 									asChild: true,
-									className: "btn-gold w-full mt-4",
+									className: "btn-primary w-full mt-4",
 									children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
 										"data-uid": "src/components/layout/Header.tsx:82:19",
 										"data-prohibitions": "[]",
@@ -26081,12 +26103,12 @@ function Footer() {
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
 								"data-uid": "src/components/layout/Footer.tsx:12:13",
 								"data-prohibitions": "[]",
-								className: "flex h-8 w-8 items-center justify-center rounded-full bg-primary",
+								className: "flex h-10 w-14 items-center justify-center rounded-md bg-gradient-to-br from-primary to-emerald-700",
 								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 									"data-uid": "src/components/layout/Footer.tsx:13:15",
 									"data-prohibitions": "[]",
 									className: "font-display font-bold text-background text-sm",
-									children: "ALG"
+									children: "AlLG"
 								})
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
 								"data-uid": "src/components/layout/Footer.tsx:15:13",
@@ -26098,8 +26120,8 @@ function Footer() {
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 							"data-uid": "src/components/layout/Footer.tsx:17:11",
 							"data-prohibitions": "[]",
-							className: "text-sm text-muted-foreground leading-relaxed",
-							children: "Planejamento e Controle de Finanças Pessoais. Transformando números em conquistas pessoais com excelência e zelo."
+							className: "text-sm text-muted-foreground leading-relaxed mt-2",
+							children: "Gestão de Controle Financeiro Pessoal. Transformando números em conquistas pessoais com excelência e zelo."
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
 							"data-uid": "src/components/layout/Footer.tsx:21:11",
@@ -26205,66 +26227,94 @@ function Footer() {
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
 								"data-uid": "src/components/layout/Footer.tsx:67:13",
 								"data-prohibitions": "[]",
-								className: "flex items-center gap-3",
+								className: "flex items-start gap-3",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(MapPin, {
 									"data-uid": "src/components/layout/Footer.tsx:68:15",
 									"data-prohibitions": "[editContent]",
-									className: "h-4 w-4 text-primary"
-								}), "São Paulo, SP - Brasil"]
+									className: "h-5 w-5 text-primary shrink-0 mt-0.5"
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("span", {
+									"data-uid": "src/components/layout/Footer.tsx:69:15",
+									"data-prohibitions": "[]",
+									children: [
+										"Rua Domingos Pires de Oliveira Dias, 32",
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {
+											"data-uid": "src/components/layout/Footer.tsx:71:17",
+											"data-prohibitions": "[editContent]"
+										}),
+										"São Paulo - SP",
+										/* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {
+											"data-uid": "src/components/layout/Footer.tsx:73:17",
+											"data-prohibitions": "[editContent]"
+										}),
+										"CEP: 04821-230"
+									]
+								})]
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
-								"data-uid": "src/components/layout/Footer.tsx:71:13",
+								"data-uid": "src/components/layout/Footer.tsx:77:13",
 								"data-prohibitions": "[]",
 								className: "flex items-center gap-3",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Phone, {
-									"data-uid": "src/components/layout/Footer.tsx:72:15",
+									"data-uid": "src/components/layout/Footer.tsx:78:15",
 									"data-prohibitions": "[editContent]",
-									className: "h-4 w-4 text-primary"
-								}), "+55 (11) 99999-9999"]
+									className: "h-5 w-5 text-primary shrink-0"
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+									"data-uid": "src/components/layout/Footer.tsx:79:15",
+									"data-prohibitions": "[]",
+									href: "https://wa.me/5511992459400",
+									target: "_blank",
+									rel: "noreferrer",
+									className: "hover:text-primary transition-colors",
+									children: "(11) 99245-9400"
+								})]
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
-								"data-uid": "src/components/layout/Footer.tsx:75:13",
+								"data-uid": "src/components/layout/Footer.tsx:88:13",
 								"data-prohibitions": "[]",
 								className: "flex items-center gap-3",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Mail, {
-									"data-uid": "src/components/layout/Footer.tsx:76:15",
+									"data-uid": "src/components/layout/Footer.tsx:89:15",
 									"data-prohibitions": "[editContent]",
-									className: "h-4 w-4 text-primary"
-								}), "contato@algfinancas.com.br"]
+									className: "h-5 w-5 text-primary shrink-0"
+								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+									"data-uid": "src/components/layout/Footer.tsx:90:15",
+									"data-prohibitions": "[]",
+									children: "contato@allgfinancas.com.br"
+								})]
 							})
 						]
 					})]
 				}),
 				/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					"data-uid": "src/components/layout/Footer.tsx:82:9",
+					"data-uid": "src/components/layout/Footer.tsx:95:9",
 					"data-prohibitions": "[]",
 					className: "flex flex-col gap-4",
 					children: [
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-							"data-uid": "src/components/layout/Footer.tsx:83:11",
+							"data-uid": "src/components/layout/Footer.tsx:96:11",
 							"data-prohibitions": "[]",
 							className: "font-display font-semibold text-foreground",
 							children: "Newsletter"
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-							"data-uid": "src/components/layout/Footer.tsx:84:11",
+							"data-uid": "src/components/layout/Footer.tsx:97:11",
 							"data-prohibitions": "[]",
 							className: "text-sm text-muted-foreground",
 							children: "Receba dicas financeiras exclusivas."
 						}),
 						/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("form", {
-							"data-uid": "src/components/layout/Footer.tsx:85:11",
+							"data-uid": "src/components/layout/Footer.tsx:98:11",
 							"data-prohibitions": "[]",
 							className: "flex gap-2",
 							onSubmit: (e) => e.preventDefault(),
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Input, {
-								"data-uid": "src/components/layout/Footer.tsx:86:13",
+								"data-uid": "src/components/layout/Footer.tsx:99:13",
 								"data-prohibitions": "[editContent]",
 								type: "email",
 								placeholder: "Seu e-mail",
 								className: "bg-secondary/50 border-border"
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
-								"data-uid": "src/components/layout/Footer.tsx:91:13",
+								"data-uid": "src/components/layout/Footer.tsx:104:13",
 								"data-prohibitions": "[]",
 								type: "submit",
 								className: "bg-primary text-primary-foreground hover:bg-primary/90",
@@ -26274,19 +26324,24 @@ function Footer() {
 					]
 				})
 			]
-		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			"data-uid": "src/components/layout/Footer.tsx:101:7",
+		}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
+			"data-uid": "src/components/layout/Footer.tsx:114:7",
 			"data-prohibitions": "[editContent]",
-			className: "container mt-16 pt-8 border-t border-border/40 text-center text-sm text-muted-foreground",
-			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-				"data-uid": "src/components/layout/Footer.tsx:102:9",
+			className: "container mt-16 pt-8 border-t border-border/40 flex flex-col md:flex-row items-center justify-between text-sm text-muted-foreground gap-4 text-center md:text-left",
+			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
+				"data-uid": "src/components/layout/Footer.tsx:115:9",
 				"data-prohibitions": "[editContent]",
 				children: [
-					"ALG Planejamento e Controle de Finanças Pessoais Ltda-me © ",
+					"AlLG Planejamento e Controle de Finanças Pessoais Ltda-me © ",
 					(/* @__PURE__ */ new Date()).getFullYear(),
 					". Todos os direitos reservados."
 				]
-			})
+			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+				"data-uid": "src/components/layout/Footer.tsx:119:9",
+				"data-prohibitions": "[]",
+				className: "font-medium bg-secondary/50 px-4 py-1.5 rounded-full",
+				children: "Fundada em 30/10/2024"
+			})]
 		})]
 	});
 }
@@ -26336,69 +26391,84 @@ function Hero() {
 				"data-prohibitions": "[editContent]",
 				className: "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-primary/10 rounded-full blur-[120px] pointer-events-none"
 			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
+				"data-uid": "src/components/home/Hero.tsx:13:7",
+				"data-prohibitions": "[]",
+				className: "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full max-w-[1000px] opacity-[0.03] pointer-events-none flex items-center justify-center select-none",
+				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+					"data-uid": "src/components/home/Hero.tsx:14:9",
+					"data-prohibitions": "[]",
+					className: "font-display font-black text-[250px] md:text-[350px] leading-none text-primary",
+					children: "AlLG"
+				})
+			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				"data-uid": "src/components/home/Hero.tsx:12:7",
+				"data-uid": "src/components/home/Hero.tsx:19:7",
 				"data-prohibitions": "[]",
 				className: "container relative z-10 flex flex-col items-center text-center",
 				children: [
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						"data-uid": "src/components/home/Hero.tsx:13:9",
+						"data-uid": "src/components/home/Hero.tsx:20:9",
 						"data-prohibitions": "[]",
 						className: "inline-flex items-center rounded-full border border-primary/30 bg-primary/10 px-3 py-1 text-sm font-medium text-primary mb-8 animate-fade-in-down",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-							"data-uid": "src/components/home/Hero.tsx:14:11",
+							"data-uid": "src/components/home/Hero.tsx:21:11",
 							"data-prohibitions": "[editContent]",
 							className: "flex h-2 w-2 rounded-full bg-primary mr-2 animate-pulse"
-						}), "Excelência em Gestão Patrimonial"]
+						}), "Excelência em Gestão de Controle Financeiro Pessoal"]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h1", {
-						"data-uid": "src/components/home/Hero.tsx:18:9",
+						"data-uid": "src/components/home/Hero.tsx:25:9",
 						"data-prohibitions": "[]",
 						className: "max-w-4xl text-4xl md:text-6xl lg:text-7xl font-display font-bold tracking-tight mb-6 animate-fade-in-up",
-						children: ["Transformando números em ", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-							"data-uid": "src/components/home/Hero.tsx:19:36",
-							"data-prohibitions": "[]",
-							className: "text-gradient-gold",
-							children: "conquistas pessoais."
-						})]
+						children: [
+							"Transformando números em",
+							" ",
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
+								"data-uid": "src/components/home/Hero.tsx:27:11",
+								"data-prohibitions": "[]",
+								className: "text-gradient-primary",
+								children: "conquistas pessoais."
+							})
+						]
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-						"data-uid": "src/components/home/Hero.tsx:22:9",
+						"data-uid": "src/components/home/Hero.tsx:30:9",
 						"data-prohibitions": "[]",
 						className: "max-w-2xl text-lg md:text-xl text-muted-foreground mb-10 animate-fade-in-up",
 						style: { animationDelay: "100ms" },
 						children: "Oferecemos planejamento financeiro personalizado e soluções inovadoras para sua estabilidade e realização a longo prazo."
 					}),
 					/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						"data-uid": "src/components/home/Hero.tsx:30:9",
+						"data-uid": "src/components/home/Hero.tsx:38:9",
 						"data-prohibitions": "[]",
 						className: "flex flex-col sm:flex-row gap-4 w-full sm:w-auto animate-fade-in-up",
 						style: { animationDelay: "200ms" },
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
-							"data-uid": "src/components/home/Hero.tsx:34:11",
+							"data-uid": "src/components/home/Hero.tsx:42:11",
 							"data-prohibitions": "[]",
 							asChild: true,
 							size: "lg",
-							className: "btn-gold h-14 px-8 text-base",
+							className: "btn-primary h-14 px-8 text-base",
 							children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(Link, {
-								"data-uid": "src/components/home/Hero.tsx:35:13",
+								"data-uid": "src/components/home/Hero.tsx:43:13",
 								"data-prohibitions": "[]",
 								to: "/servicos",
 								children: ["Conheça nossos serviços", /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ArrowRight, {
-									"data-uid": "src/components/home/Hero.tsx:37:15",
+									"data-uid": "src/components/home/Hero.tsx:45:15",
 									"data-prohibitions": "[editContent]",
 									className: "ml-2 h-5 w-5"
 								})]
 							})
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
-							"data-uid": "src/components/home/Hero.tsx:40:11",
+							"data-uid": "src/components/home/Hero.tsx:48:11",
 							"data-prohibitions": "[]",
 							asChild: true,
 							variant: "outline",
 							size: "lg",
 							className: "h-14 px-8 text-base border-primary/50 hover:bg-primary/10",
 							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Link, {
-								"data-uid": "src/components/home/Hero.tsx:46:13",
+								"data-uid": "src/components/home/Hero.tsx:54:13",
 								"data-prohibitions": "[]",
 								to: "/contato",
 								children: "Fale com um especialista"
@@ -26823,7 +26893,7 @@ var rationalFeatures = [
 	{
 		title: "Liderança de Mercado",
 		icon: TrendingUp,
-		desc: "Estratégias avançadas para posicionar seu patrimônio à frente."
+		desc: "Estratégias avançadas para posicionar seu planejamento à frente."
 	},
 	{
 		title: "Gestão de Recursos",
@@ -26869,7 +26939,7 @@ function Duality() {
 						"data-uid": "src/components/home/Duality.tsx:47:24",
 						"data-prohibitions": "[]",
 						className: "text-primary",
-						children: "ALG"
+						children: "AlLG"
 					})]
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
 					"data-uid": "src/components/home/Duality.tsx:49:11",
@@ -27013,7 +27083,7 @@ var services = [
 		id: "risco",
 		title: "Análise de Risco",
 		icon: ShieldAlert,
-		desc: "Identificação e mitigação de vulnerabilidades financeiras no seu patrimônio."
+		desc: "Identificação e mitigação de vulnerabilidades no seu controle financeiro."
 	},
 	{
 		id: "educacao",
@@ -27053,7 +27123,7 @@ function ServicesPreview() {
 						"data-uid": "src/components/home/ServicesPreview.tsx:42:13",
 						"data-prohibitions": "[]",
 						className: "text-muted-foreground",
-						children: "Soluções completas para estruturar, proteger e multiplicar seu patrimônio com inteligência."
+						children: "Soluções completas para estruturar, proteger e multiplicar suas finanças com inteligência."
 					})]
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
 					"data-uid": "src/components/home/ServicesPreview.tsx:47:11",
@@ -27089,7 +27159,7 @@ function ServicesPreview() {
 						/* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
 							"data-uid": "src/components/home/ServicesPreview.tsx:65:15",
 							"data-prohibitions": "[editContent]",
-							src: `https://img.usecurling.com/p/400/400?q=finance&color=black&seed=${service.id}`,
+							src: `https://img.usecurling.com/p/400/400?q=finance&color=green&seed=${service.id}`,
 							alt: service.title,
 							className: "absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity group-hover:scale-105 duration-700"
 						}),
@@ -27131,74 +27201,98 @@ function ServicesPreview() {
 //#endregion
 //#region src/components/home/Values.tsx
 var values = [
-	"Responsabilidade",
-	"Excelência",
-	"Inovação",
-	"Transparência",
-	"Zelo"
+	{
+		title: "Responsabilidade",
+		desc: "Agir com ética e comprometimento em todas as nossas ações.",
+		icon: Shield
+	},
+	{
+		title: "Excelência",
+		desc: "Buscar sempre a melhor solução para nossos clientes, com qualidade e eficiência.",
+		icon: Star
+	},
+	{
+		title: "Inovação",
+		desc: "Estar à frente das tendências e oferecer ferramentas financeiras modernas e eficazes.",
+		icon: Lightbulb
+	},
+	{
+		title: "Transparência",
+		desc: "Manter uma comunicação clara e aberta com nossos clientes.",
+		icon: Eye
+	},
+	{
+		title: "Zelo",
+		desc: "Tratar as finanças dos nossos clientes com o mesmo cuidado e atenção que tratamos as nossas próprias.",
+		icon: HeartHandshake
+	}
 ];
 function Values() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("section", {
-		"data-uid": "src/components/home/Values.tsx:7:5",
+		"data-uid": "src/components/home/Values.tsx:34:5",
 		"data-prohibitions": "[editContent]",
 		className: "py-24 bg-background relative overflow-hidden border-y border-border/40",
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-			"data-uid": "src/components/home/Values.tsx:8:7",
+			"data-uid": "src/components/home/Values.tsx:35:7",
 			"data-prohibitions": "[editContent]",
 			className: "absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-primary/5 via-background to-background pointer-events-none"
 		}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-			"data-uid": "src/components/home/Values.tsx:9:7",
+			"data-uid": "src/components/home/Values.tsx:36:7",
 			"data-prohibitions": "[editContent]",
 			className: "container relative z-10",
 			children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				"data-uid": "src/components/home/Values.tsx:10:9",
+				"data-uid": "src/components/home/Values.tsx:37:9",
 				"data-prohibitions": "[]",
 				className: "text-center mb-16",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h2", {
-					"data-uid": "src/components/home/Values.tsx:11:11",
+					"data-uid": "src/components/home/Values.tsx:38:11",
 					"data-prohibitions": "[]",
 					className: "text-3xl md:text-4xl font-display font-bold mb-4",
 					children: ["Nossos ", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-						"data-uid": "src/components/home/Values.tsx:12:20",
+						"data-uid": "src/components/home/Values.tsx:39:20",
 						"data-prohibitions": "[]",
 						className: "text-primary",
 						children: "Valores"
 					})]
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-					"data-uid": "src/components/home/Values.tsx:14:11",
+					"data-uid": "src/components/home/Values.tsx:41:11",
 					"data-prohibitions": "[]",
 					className: "text-muted-foreground max-w-2xl mx-auto",
 					children: "Os pilares que sustentam cada recomendação e estratégia que entregamos aos nossos clientes."
 				})]
 			}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-				"data-uid": "src/components/home/Values.tsx:20:9",
+				"data-uid": "src/components/home/Values.tsx:47:9",
 				"data-prohibitions": "[editContent]",
-				className: "flex flex-wrap justify-center gap-6 md:gap-8",
-				children: values.map((val, idx) => /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					"data-uid": "src/components/home/Values.tsx:22:13",
+				className: "grid sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto",
+				children: values.map((val, idx) => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Card, {
+					"data-uid": "src/components/home/Values.tsx:49:13",
 					"data-prohibitions": "[editContent]",
-					className: "flex flex-col items-center gap-3 w-32 md:w-40 animate-fade-in-up",
+					className: "card-glass border-t-2 border-t-primary/50 animate-fade-in-up card-hover bg-secondary/30",
 					style: { animationDelay: `${idx * 100}ms` },
-					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-						"data-uid": "src/components/home/Values.tsx:27:15",
-						"data-prohibitions": "[]",
-						className: "h-16 w-16 rounded-2xl bg-secondary border border-border flex items-center justify-center transform rotate-45 hover:rotate-0 hover:border-primary transition-all duration-300",
-						children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-							"data-uid": "src/components/home/Values.tsx:28:17",
-							"data-prohibitions": "[]",
-							className: "transform -rotate-45 hover:rotate-0 transition-transform duration-300",
-							children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(CircleCheck, {
-								"data-uid": "src/components/home/Values.tsx:29:19",
-								"data-prohibitions": "[editContent]",
-								className: "h-8 w-8 text-primary"
-							})
-						})
-					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-						"data-uid": "src/components/home/Values.tsx:32:15",
+					children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(CardContent, {
+						"data-uid": "src/components/home/Values.tsx:54:15",
 						"data-prohibitions": "[editContent]",
-						className: "font-display font-semibold text-sm tracking-wide uppercase text-center",
-						children: val
-					})]
+						className: "p-6",
+						children: [
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)(val.icon, {
+								"data-uid": "src/components/home/Values.tsx:55:17",
+								"data-prohibitions": "[editContent]",
+								className: "h-8 w-8 text-primary mb-4"
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
+								"data-uid": "src/components/home/Values.tsx:56:17",
+								"data-prohibitions": "[editContent]",
+								className: "font-display font-bold text-lg mb-2",
+								children: val.title
+							}),
+							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
+								"data-uid": "src/components/home/Values.tsx:57:17",
+								"data-prohibitions": "[editContent]",
+								className: "text-muted-foreground text-sm leading-relaxed",
+								children: val.desc
+							})
+						]
+					})
 				}, idx))
 			})]
 		})]
@@ -28830,12 +28924,12 @@ var personas = [
 	{
 		title: "Famílias",
 		icon: Users,
-		desc: "Construção de patrimônio geracional, educação financeira para filhos e segurança."
+		desc: "Construção de controle financeiro geracional, educação financeira para filhos e segurança."
 	},
 	{
 		title: "Investidores",
 		icon: Landmark,
-		desc: "Otimização de carteira, análise avançada de riscos e busca por alpha sustentável."
+		desc: "Otimização de carteira, análise avançada de riscos e busca por estabilidade financeira sustentável."
 	}
 ];
 function Audience() {
@@ -29044,12 +29138,12 @@ var catalog = [
 	{
 		title: "Consultoria em Investimentos",
 		icon: ChartLine,
-		content: "Foco no crescimento seguro do seu patrimônio. Estruturamos carteiras diversificadas, otimizando a relação risco-retorno com base em cenários macroeconômicos e no seu perfil investidor."
+		content: "Foco no crescimento financeiro com segurança. Estruturamos carteiras diversificadas, otimizando a relação risco-retorno com base em cenários macroeconômicos e no seu perfil investidor."
 	},
 	{
 		title: "Análise de Risco",
 		icon: ShieldAlert,
-		content: "Proteção é tão importante quanto rentabilidade. Avaliamos vulnerabilidades patrimoniais, estruturamos proteções sucessórias e securitárias para blindar suas conquistas contra imprevistos."
+		content: "Proteção é tão importante quanto rentabilidade. Avaliamos vulnerabilidades financeiras, estruturamos proteções e seguros para blindar suas conquistas contra imprevistos."
 	},
 	{
 		title: "Educação Financeira",
@@ -29085,7 +29179,7 @@ function Services() {
 						"data-uid": "src/pages/Services.tsx:41:11",
 						"data-prohibitions": "[]",
 						className: "text-lg text-muted-foreground",
-						children: "Soluções integradas desenhadas para proporcionar clareza, segurança e crescimento patrimonial contínuo."
+						children: "Soluções integradas desenhadas para proporcionar clareza, segurança e excelência em Gestão de Controle Financeiro Pessoal."
 					})]
 				})
 			}),
@@ -29144,82 +29238,82 @@ function Services() {
 //#region src/pages/About.tsx
 function About() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		"data-uid": "src/pages/About.tsx:6:5",
+		"data-uid": "src/pages/About.tsx:7:5",
 		"data-prohibitions": "[editContent]",
 		className: "pb-24",
 		children: [
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("section", {
-				"data-uid": "src/pages/About.tsx:8:7",
+				"data-uid": "src/pages/About.tsx:9:7",
 				"data-prohibitions": "[]",
 				className: "pt-24 pb-16 bg-gradient-to-b from-secondary/50 to-background",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					"data-uid": "src/pages/About.tsx:9:9",
+					"data-uid": "src/pages/About.tsx:10:9",
 					"data-prohibitions": "[]",
 					className: "container text-center max-w-3xl",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h1", {
-						"data-uid": "src/pages/About.tsx:10:11",
+						"data-uid": "src/pages/About.tsx:11:11",
 						"data-prohibitions": "[]",
 						className: "text-4xl md:text-5xl font-display font-bold mb-6",
 						children: ["Sobre a ", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-							"data-uid": "src/pages/About.tsx:11:21",
+							"data-uid": "src/pages/About.tsx:12:21",
 							"data-prohibitions": "[]",
 							className: "text-primary",
-							children: "ALG"
+							children: "AlLG"
 						})]
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-						"data-uid": "src/pages/About.tsx:13:11",
+						"data-uid": "src/pages/About.tsx:14:11",
 						"data-prohibitions": "[]",
 						className: "text-lg text-muted-foreground",
-						children: "Nascemos da convicção de que a gestão patrimonial deve ser técnica e humana."
+						children: "Nascemos da convicção de que a gestão de controle financeiro pessoal deve ser técnica e humana."
 					})]
 				})
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("section", {
-				"data-uid": "src/pages/About.tsx:20:7",
+				"data-uid": "src/pages/About.tsx:22:7",
 				"data-prohibitions": "[]",
 				className: "py-16 container max-w-4xl",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					"data-uid": "src/pages/About.tsx:21:9",
+					"data-uid": "src/pages/About.tsx:23:9",
 					"data-prohibitions": "[]",
 					className: "prose prose-invert prose-lg mx-auto",
 					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-						"data-uid": "src/pages/About.tsx:22:11",
+						"data-uid": "src/pages/About.tsx:24:11",
 						"data-prohibitions": "[]",
 						className: "text-muted-foreground leading-relaxed text-center",
-						children: "A ALG Planejamento e Controle de Finanças Pessoais Ltda-me foi fundada com um propósito claro: transcender as planilhas. Compreendemos que por trás de cada número existe um projeto de vida, uma família, um sonho. Nossa trajetória é marcada pela união da mais alta precisão analítica do mercado com um atendimento genuinamente dedicado e transparente."
+						children: "A AlLG Planejamento e Controle de Finanças Pessoais Ltda-me foi fundada com um propósito claro: transcender as planilhas. Compreendemos que por trás de cada número existe um projeto de vida, uma família, um sonho. Nossa trajetória é marcada pela união da mais alta precisão analítica do mercado com um atendimento genuinamente dedicado e transparente."
 					})
 				})
 			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("section", {
-				"data-uid": "src/pages/About.tsx:33:7",
+				"data-uid": "src/pages/About.tsx:35:7",
 				"data-prohibitions": "[]",
-				className: "py-16 container",
+				className: "py-8 container",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					"data-uid": "src/pages/About.tsx:34:9",
+					"data-uid": "src/pages/About.tsx:36:9",
 					"data-prohibitions": "[]",
 					className: "grid md:grid-cols-2 gap-8 max-w-5xl mx-auto",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Card, {
-						"data-uid": "src/pages/About.tsx:35:11",
+						"data-uid": "src/pages/About.tsx:37:11",
 						"data-prohibitions": "[]",
 						className: "card-glass overflow-hidden border-t-4 border-t-primary",
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(CardContent, {
-							"data-uid": "src/pages/About.tsx:36:13",
+							"data-uid": "src/pages/About.tsx:38:13",
 							"data-prohibitions": "[]",
 							className: "p-8 flex flex-col items-center text-center h-full",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Target, {
-									"data-uid": "src/pages/About.tsx:37:15",
+									"data-uid": "src/pages/About.tsx:39:15",
 									"data-prohibitions": "[editContent]",
 									className: "h-12 w-12 text-primary mb-6"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
-									"data-uid": "src/pages/About.tsx:38:15",
+									"data-uid": "src/pages/About.tsx:40:15",
 									"data-prohibitions": "[]",
 									className: "text-2xl font-display font-bold mb-4",
 									children: "Nossa Missão"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-									"data-uid": "src/pages/About.tsx:39:15",
+									"data-uid": "src/pages/About.tsx:41:15",
 									"data-prohibitions": "[]",
 									className: "text-muted-foreground",
 									children: "\"Oferecemos planejamento financeiro personalizado e soluções inovadoras para sua estabilidade e realização.\""
@@ -29227,201 +29321,205 @@ function About() {
 							]
 						})
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Card, {
-						"data-uid": "src/pages/About.tsx:46:11",
+						"data-uid": "src/pages/About.tsx:48:11",
 						"data-prohibitions": "[]",
-						className: "card-glass overflow-hidden border-t-4 border-t-[#cbd5e1]",
+						className: "card-glass overflow-hidden border-t-4 border-t-accent",
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(CardContent, {
-							"data-uid": "src/pages/About.tsx:47:13",
+							"data-uid": "src/pages/About.tsx:49:13",
 							"data-prohibitions": "[]",
 							className: "p-8 flex flex-col items-center text-center h-full",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Flag, {
-									"data-uid": "src/pages/About.tsx:48:15",
+									"data-uid": "src/pages/About.tsx:50:15",
 									"data-prohibitions": "[editContent]",
-									className: "h-12 w-12 text-[#cbd5e1] mb-6"
+									className: "h-12 w-12 text-accent mb-6"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h2", {
-									"data-uid": "src/pages/About.tsx:49:15",
+									"data-uid": "src/pages/About.tsx:51:15",
 									"data-prohibitions": "[]",
 									className: "text-2xl font-display font-bold mb-4",
 									children: "Nossa Visão"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-									"data-uid": "src/pages/About.tsx:50:15",
+									"data-uid": "src/pages/About.tsx:52:15",
 									"data-prohibitions": "[]",
 									className: "text-muted-foreground",
-									children: "\"Ser referência nacional em gestão patrimonial, reconhecida pela excelência técnica e pela transformação positiva na vida dos nossos clientes.\""
+									children: "\"Ser referência nacional em gestão de controle financeiro pessoal, reconhecida pela excelência técnica e pela transformação positiva na vida dos nossos clientes.\""
 								})
 							]
 						})
 					})]
 				})
 			}),
+			/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Values, {
+				"data-uid": "src/pages/About.tsx:62:7",
+				"data-prohibitions": "[editContent]"
+			}),
 			/* @__PURE__ */ (0, import_jsx_runtime.jsx)("section", {
-				"data-uid": "src/pages/About.tsx:60:7",
+				"data-uid": "src/pages/About.tsx:65:7",
 				"data-prohibitions": "[]",
-				className: "py-24 bg-secondary/30 mt-8 border-y border-border/40",
+				className: "py-24 bg-secondary/30 border-y border-border/40",
 				children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					"data-uid": "src/pages/About.tsx:61:9",
+					"data-uid": "src/pages/About.tsx:66:9",
 					"data-prohibitions": "[]",
 					className: "container max-w-5xl",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						"data-uid": "src/pages/About.tsx:62:11",
+						"data-uid": "src/pages/About.tsx:67:11",
 						"data-prohibitions": "[]",
 						className: "text-center mb-16",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h2", {
-							"data-uid": "src/pages/About.tsx:63:13",
+							"data-uid": "src/pages/About.tsx:68:13",
 							"data-prohibitions": "[]",
 							className: "text-3xl font-display font-bold mb-4",
 							children: ["O Significado de ", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-								"data-uid": "src/pages/About.tsx:64:32",
+								"data-uid": "src/pages/About.tsx:69:32",
 								"data-prohibitions": "[]",
 								className: "text-primary",
-								children: "ALG"
+								children: "AlLG"
 							})]
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-							"data-uid": "src/pages/About.tsx:66:13",
+							"data-uid": "src/pages/About.tsx:71:13",
 							"data-prohibitions": "[]",
 							className: "text-muted-foreground",
 							children: "Uma dualidade perfeita entre a razão e a emoção."
 						})]
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						"data-uid": "src/pages/About.tsx:71:11",
+						"data-uid": "src/pages/About.tsx:76:11",
 						"data-prohibitions": "[]",
 						className: "grid md:grid-cols-2 gap-12",
 						children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							"data-uid": "src/pages/About.tsx:72:13",
+							"data-uid": "src/pages/About.tsx:77:13",
 							"data-prohibitions": "[]",
 							className: "space-y-6",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								"data-uid": "src/pages/About.tsx:73:15",
+								"data-uid": "src/pages/About.tsx:78:15",
 								"data-prohibitions": "[]",
 								className: "flex items-center gap-4 mb-8",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Brain, {
-									"data-uid": "src/pages/About.tsx:74:17",
+									"data-uid": "src/pages/About.tsx:79:17",
 									"data-prohibitions": "[editContent]",
-									className: "h-8 w-8 text-[#cbd5e1]"
+									className: "h-8 w-8 text-muted-foreground"
 								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-									"data-uid": "src/pages/About.tsx:75:17",
+									"data-uid": "src/pages/About.tsx:80:17",
 									"data-prohibitions": "[]",
-									className: "text-2xl font-display font-bold border-b border-border/50 pb-2 flex-1 text-[#cbd5e1]",
+									className: "text-2xl font-display font-bold border-b border-border/50 pb-2 flex-1 text-foreground",
 									children: "O Racional"
 								})]
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("ul", {
-								"data-uid": "src/pages/About.tsx:79:15",
+								"data-uid": "src/pages/About.tsx:84:15",
 								"data-prohibitions": "[]",
 								className: "space-y-6",
 								children: [
 									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
-										"data-uid": "src/pages/About.tsx:80:17",
+										"data-uid": "src/pages/About.tsx:85:17",
 										"data-prohibitions": "[]",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", {
-											"data-uid": "src/pages/About.tsx:81:19",
+											"data-uid": "src/pages/About.tsx:86:19",
 											"data-prohibitions": "[]",
-											className: "text-lg font-display text-foreground block mb-1",
+											className: "text-lg font-display text-primary block mb-1",
 											children: "A - Análise Financeira"
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											"data-uid": "src/pages/About.tsx:84:19",
+											"data-uid": "src/pages/About.tsx:89:19",
 											"data-prohibitions": "[]",
 											className: "text-muted-foreground text-sm",
 											children: "Rigor técnico na avaliação de cenários e modelagem de carteiras."
 										})]
 									}),
 									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
-										"data-uid": "src/pages/About.tsx:88:17",
+										"data-uid": "src/pages/About.tsx:93:17",
 										"data-prohibitions": "[]",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", {
-											"data-uid": "src/pages/About.tsx:89:19",
+											"data-uid": "src/pages/About.tsx:94:19",
 											"data-prohibitions": "[]",
-											className: "text-lg font-display text-foreground block mb-1",
+											className: "text-lg font-display text-primary block mb-1",
 											children: "L - Liderança de Mercado"
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											"data-uid": "src/pages/About.tsx:92:19",
+											"data-uid": "src/pages/About.tsx:97:19",
 											"data-prohibitions": "[]",
 											className: "text-muted-foreground text-sm",
-											children: "Estratégias proativas para manter o portfólio à frente das tendências."
+											children: "Estratégias proativas para manter seu planejamento à frente das tendências."
 										})]
 									}),
 									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
-										"data-uid": "src/pages/About.tsx:96:17",
+										"data-uid": "src/pages/About.tsx:101:17",
 										"data-prohibitions": "[]",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", {
-											"data-uid": "src/pages/About.tsx:97:19",
+											"data-uid": "src/pages/About.tsx:102:19",
 											"data-prohibitions": "[]",
-											className: "text-lg font-display text-foreground block mb-1",
+											className: "text-lg font-display text-primary block mb-1",
 											children: "G - Gestão de Recursos"
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											"data-uid": "src/pages/About.tsx:100:19",
+											"data-uid": "src/pages/About.tsx:105:19",
 											"data-prohibitions": "[]",
 											className: "text-muted-foreground text-sm",
-											children: "Alocação eficiente, proteção e otimização fiscal do patrimônio."
+											children: "Alocação eficiente, proteção e otimização do controle financeiro."
 										})]
 									})
 								]
 							})]
 						}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-							"data-uid": "src/pages/About.tsx:107:13",
+							"data-uid": "src/pages/About.tsx:112:13",
 							"data-prohibitions": "[]",
 							className: "space-y-6",
 							children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-								"data-uid": "src/pages/About.tsx:108:15",
+								"data-uid": "src/pages/About.tsx:113:15",
 								"data-prohibitions": "[]",
 								className: "flex items-center gap-4 mb-8",
 								children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(HeartPulse, {
-									"data-uid": "src/pages/About.tsx:109:17",
+									"data-uid": "src/pages/About.tsx:114:17",
 									"data-prohibitions": "[editContent]",
-									className: "h-8 w-8 text-primary"
+									className: "h-8 w-8 text-accent"
 								}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-									"data-uid": "src/pages/About.tsx:110:17",
+									"data-uid": "src/pages/About.tsx:115:17",
 									"data-prohibitions": "[]",
-									className: "text-2xl font-display font-bold border-b border-border/50 pb-2 flex-1 text-primary",
+									className: "text-2xl font-display font-bold border-b border-border/50 pb-2 flex-1 text-accent",
 									children: "O Emocional"
 								})]
 							}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("ul", {
-								"data-uid": "src/pages/About.tsx:114:15",
+								"data-uid": "src/pages/About.tsx:119:15",
 								"data-prohibitions": "[]",
 								className: "space-y-6",
 								children: [
 									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
-										"data-uid": "src/pages/About.tsx:115:17",
+										"data-uid": "src/pages/About.tsx:120:17",
 										"data-prohibitions": "[]",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", {
-											"data-uid": "src/pages/About.tsx:116:19",
+											"data-uid": "src/pages/About.tsx:121:19",
 											"data-prohibitions": "[]",
-											className: "text-lg font-display text-foreground block mb-1",
+											className: "text-lg font-display text-accent block mb-1",
 											children: "A - Amor"
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											"data-uid": "src/pages/About.tsx:119:19",
+											"data-uid": "src/pages/About.tsx:122:19",
 											"data-prohibitions": "[]",
 											className: "text-muted-foreground text-sm",
 											children: "Dedicação real ao propósito e bem-estar financeiro de cada cliente."
 										})]
 									}),
 									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
-										"data-uid": "src/pages/About.tsx:123:17",
+										"data-uid": "src/pages/About.tsx:126:17",
 										"data-prohibitions": "[]",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", {
-											"data-uid": "src/pages/About.tsx:124:19",
+											"data-uid": "src/pages/About.tsx:127:19",
 											"data-prohibitions": "[]",
-											className: "text-lg font-display text-foreground block mb-1",
+											className: "text-lg font-display text-accent block mb-1",
 											children: "L - Lealdade"
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											"data-uid": "src/pages/About.tsx:127:19",
+											"data-uid": "src/pages/About.tsx:130:19",
 											"data-prohibitions": "[]",
 											className: "text-muted-foreground text-sm",
 											children: "Compromisso inegociável com a ética e a parceria de longo prazo."
 										})]
 									}),
 									/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("li", {
-										"data-uid": "src/pages/About.tsx:131:17",
+										"data-uid": "src/pages/About.tsx:134:17",
 										"data-prohibitions": "[]",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("strong", {
-											"data-uid": "src/pages/About.tsx:132:19",
+											"data-uid": "src/pages/About.tsx:135:19",
 											"data-prohibitions": "[]",
-											className: "text-lg font-display text-foreground block mb-1",
+											className: "text-lg font-display text-accent block mb-1",
 											children: "G - Gratidão"
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-											"data-uid": "src/pages/About.tsx:135:19",
+											"data-uid": "src/pages/About.tsx:138:19",
 											"data-prohibitions": "[]",
 											className: "text-muted-foreground text-sm",
 											children: "Reconhecimento do privilégio de guiar famílias rumo à independência."
@@ -36360,202 +36458,209 @@ function ContactForm() {
 //#region src/pages/Contact.tsx
 function Contact() {
 	return /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-		"data-uid": "src/pages/Contact.tsx:8:5",
+		"data-uid": "src/pages/Contact.tsx:7:5",
 		"data-prohibitions": "[editContent]",
 		className: "pb-24",
 		children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("section", {
-			"data-uid": "src/pages/Contact.tsx:10:7",
+			"data-uid": "src/pages/Contact.tsx:9:7",
 			"data-prohibitions": "[]",
 			className: "pt-24 pb-16 bg-gradient-to-b from-secondary/50 to-background",
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				"data-uid": "src/pages/Contact.tsx:11:9",
+				"data-uid": "src/pages/Contact.tsx:10:9",
 				"data-prohibitions": "[]",
 				className: "container text-center max-w-3xl",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("h1", {
-					"data-uid": "src/pages/Contact.tsx:12:11",
+					"data-uid": "src/pages/Contact.tsx:11:11",
 					"data-prohibitions": "[]",
 					className: "text-4xl md:text-5xl font-display font-bold mb-6",
 					children: ["Fale com um ", /* @__PURE__ */ (0, import_jsx_runtime.jsx)("span", {
-						"data-uid": "src/pages/Contact.tsx:13:25",
+						"data-uid": "src/pages/Contact.tsx:12:25",
 						"data-prohibitions": "[]",
 						className: "text-primary",
 						children: "Especialista"
 					})]
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-					"data-uid": "src/pages/Contact.tsx:15:11",
+					"data-uid": "src/pages/Contact.tsx:14:11",
 					"data-prohibitions": "[]",
 					className: "text-lg text-muted-foreground",
 					children: "Dê o primeiro passo para a transformação da sua vida financeira. Estamos prontos para entender seu momento."
 				})]
 			})
 		}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("section", {
-			"data-uid": "src/pages/Contact.tsx:22:7",
+			"data-uid": "src/pages/Contact.tsx:21:7",
 			"data-prohibitions": "[editContent]",
 			className: "container py-12",
 			children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-				"data-uid": "src/pages/Contact.tsx:23:9",
+				"data-uid": "src/pages/Contact.tsx:22:9",
 				"data-prohibitions": "[editContent]",
 				className: "grid lg:grid-cols-5 gap-12",
 				children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-					"data-uid": "src/pages/Contact.tsx:25:11",
+					"data-uid": "src/pages/Contact.tsx:24:11",
 					"data-prohibitions": "[]",
 					className: "lg:col-span-3",
 					children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(ContactForm, {
-						"data-uid": "src/pages/Contact.tsx:26:13",
+						"data-uid": "src/pages/Contact.tsx:25:13",
 						"data-prohibitions": "[editContent]"
 					})
 				}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-					"data-uid": "src/pages/Contact.tsx:30:11",
+					"data-uid": "src/pages/Contact.tsx:29:11",
 					"data-prohibitions": "[editContent]",
 					className: "lg:col-span-2 space-y-8",
 					children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Card, {
-						"data-uid": "src/pages/Contact.tsx:31:13",
+						"data-uid": "src/pages/Contact.tsx:30:13",
 						"data-prohibitions": "[]",
 						className: "card-glass border-border/40",
 						children: /* @__PURE__ */ (0, import_jsx_runtime.jsxs)(CardContent, {
-							"data-uid": "src/pages/Contact.tsx:32:15",
+							"data-uid": "src/pages/Contact.tsx:31:15",
 							"data-prohibitions": "[]",
 							className: "p-6 space-y-6",
 							children: [
 								/* @__PURE__ */ (0, import_jsx_runtime.jsx)("h3", {
-									"data-uid": "src/pages/Contact.tsx:33:17",
+									"data-uid": "src/pages/Contact.tsx:32:17",
 									"data-prohibitions": "[]",
 									className: "font-display font-semibold text-xl mb-4",
 									children: "Informações de Contato"
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-									"data-uid": "src/pages/Contact.tsx:35:17",
+									"data-uid": "src/pages/Contact.tsx:34:17",
 									"data-prohibitions": "[]",
 									className: "flex items-start gap-4",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-										"data-uid": "src/pages/Contact.tsx:36:19",
+										"data-uid": "src/pages/Contact.tsx:35:19",
 										"data-prohibitions": "[]",
 										className: "bg-primary/10 p-2 rounded-md shrink-0",
 										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Phone, {
-											"data-uid": "src/pages/Contact.tsx:37:21",
+											"data-uid": "src/pages/Contact.tsx:36:21",
 											"data-prohibitions": "[editContent]",
 											className: "h-5 w-5 text-primary"
 										})
 									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-										"data-uid": "src/pages/Contact.tsx:39:19",
+										"data-uid": "src/pages/Contact.tsx:38:19",
 										"data-prohibitions": "[]",
 										children: [
 											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-												"data-uid": "src/pages/Contact.tsx:40:21",
+												"data-uid": "src/pages/Contact.tsx:39:21",
 												"data-prohibitions": "[]",
 												className: "font-medium",
 												children: "Telefone / WhatsApp"
 											}),
 											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-												"data-uid": "src/pages/Contact.tsx:41:21",
+												"data-uid": "src/pages/Contact.tsx:40:21",
 												"data-prohibitions": "[]",
 												className: "text-muted-foreground text-sm mt-1",
-												children: "+55 (11) 99999-9999"
+												children: "(11) 99245-9400"
 											}),
-											/* @__PURE__ */ (0, import_jsx_runtime.jsx)(Button, {
-												"data-uid": "src/pages/Contact.tsx:42:21",
+											/* @__PURE__ */ (0, import_jsx_runtime.jsx)("a", {
+												"data-uid": "src/pages/Contact.tsx:41:21",
 												"data-prohibitions": "[]",
-												variant: "link",
-												className: "text-primary p-0 h-auto mt-1 text-sm",
+												href: "https://wa.me/5511992459400",
+												target: "_blank",
+												rel: "noreferrer",
+												className: "text-primary text-sm hover:underline mt-1 inline-block",
 												children: "Iniciar conversa"
 											})
 										]
 									})]
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-									"data-uid": "src/pages/Contact.tsx:48:17",
+									"data-uid": "src/pages/Contact.tsx:52:17",
 									"data-prohibitions": "[]",
 									className: "flex items-start gap-4",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-										"data-uid": "src/pages/Contact.tsx:49:19",
+										"data-uid": "src/pages/Contact.tsx:53:19",
 										"data-prohibitions": "[]",
 										className: "bg-primary/10 p-2 rounded-md shrink-0",
 										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Mail, {
-											"data-uid": "src/pages/Contact.tsx:50:21",
+											"data-uid": "src/pages/Contact.tsx:54:21",
 											"data-prohibitions": "[editContent]",
 											className: "h-5 w-5 text-primary"
 										})
 									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-										"data-uid": "src/pages/Contact.tsx:52:19",
+										"data-uid": "src/pages/Contact.tsx:56:19",
 										"data-prohibitions": "[]",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-											"data-uid": "src/pages/Contact.tsx:53:21",
+											"data-uid": "src/pages/Contact.tsx:57:21",
 											"data-prohibitions": "[]",
 											className: "font-medium",
 											children: "E-mail Corporativo"
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-											"data-uid": "src/pages/Contact.tsx:54:21",
+											"data-uid": "src/pages/Contact.tsx:58:21",
 											"data-prohibitions": "[]",
 											className: "text-muted-foreground text-sm mt-1",
-											children: "contato@algfinancas.com.br"
+											children: "contato@allgfinancas.com.br"
 										})]
 									})]
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-									"data-uid": "src/pages/Contact.tsx:58:17",
+									"data-uid": "src/pages/Contact.tsx:64:17",
 									"data-prohibitions": "[]",
 									className: "flex items-start gap-4",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-										"data-uid": "src/pages/Contact.tsx:59:19",
+										"data-uid": "src/pages/Contact.tsx:65:19",
 										"data-prohibitions": "[]",
 										className: "bg-primary/10 p-2 rounded-md shrink-0",
 										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MapPin, {
-											"data-uid": "src/pages/Contact.tsx:60:21",
+											"data-uid": "src/pages/Contact.tsx:66:21",
 											"data-prohibitions": "[editContent]",
 											className: "h-5 w-5 text-primary"
 										})
 									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-										"data-uid": "src/pages/Contact.tsx:62:19",
+										"data-uid": "src/pages/Contact.tsx:68:19",
 										"data-prohibitions": "[]",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-											"data-uid": "src/pages/Contact.tsx:63:21",
+											"data-uid": "src/pages/Contact.tsx:69:21",
 											"data-prohibitions": "[]",
 											className: "font-medium",
-											children: "Escritório Central"
+											children: "Sede Operacional"
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-											"data-uid": "src/pages/Contact.tsx:64:21",
+											"data-uid": "src/pages/Contact.tsx:70:21",
 											"data-prohibitions": "[]",
 											className: "text-muted-foreground text-sm mt-1",
 											children: [
-												"Av. Faria Lima, 1000 - Itaim Bibi",
+												"Rua Domingos Pires de Oliveira Dias, 32",
 												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {
-													"data-uid": "src/pages/Contact.tsx:66:23",
+													"data-uid": "src/pages/Contact.tsx:72:23",
 													"data-prohibitions": "[editContent]"
 												}),
-												"São Paulo, SP - 01452-000"
+												"São Paulo - SP",
+												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {
+													"data-uid": "src/pages/Contact.tsx:74:23",
+													"data-prohibitions": "[editContent]"
+												}),
+												"CEP: 04821-230"
 											]
 										})]
 									})]
 								}),
 								/* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-									"data-uid": "src/pages/Contact.tsx:72:17",
+									"data-uid": "src/pages/Contact.tsx:80:17",
 									"data-prohibitions": "[]",
 									className: "flex items-start gap-4",
 									children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-										"data-uid": "src/pages/Contact.tsx:73:19",
+										"data-uid": "src/pages/Contact.tsx:81:19",
 										"data-prohibitions": "[]",
 										className: "bg-primary/10 p-2 rounded-md shrink-0",
 										children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(Clock, {
-											"data-uid": "src/pages/Contact.tsx:74:21",
+											"data-uid": "src/pages/Contact.tsx:82:21",
 											"data-prohibitions": "[editContent]",
 											className: "h-5 w-5 text-primary"
 										})
 									}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-										"data-uid": "src/pages/Contact.tsx:76:19",
+										"data-uid": "src/pages/Contact.tsx:84:19",
 										"data-prohibitions": "[]",
 										children: [/* @__PURE__ */ (0, import_jsx_runtime.jsx)("p", {
-											"data-uid": "src/pages/Contact.tsx:77:21",
+											"data-uid": "src/pages/Contact.tsx:85:21",
 											"data-prohibitions": "[]",
 											className: "font-medium",
 											children: "Horário de Atendimento"
 										}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("p", {
-											"data-uid": "src/pages/Contact.tsx:78:21",
+											"data-uid": "src/pages/Contact.tsx:86:21",
 											"data-prohibitions": "[]",
 											className: "text-muted-foreground text-sm mt-1",
 											children: [
 												"Segunda a Sexta",
 												/* @__PURE__ */ (0, import_jsx_runtime.jsx)("br", {
-													"data-uid": "src/pages/Contact.tsx:80:23",
+													"data-uid": "src/pages/Contact.tsx:88:23",
 													"data-prohibitions": "[editContent]"
 												}),
 												"09:00 às 18:00"
@@ -36566,28 +36671,28 @@ function Contact() {
 							]
 						})
 					}), /* @__PURE__ */ (0, import_jsx_runtime.jsxs)("div", {
-						"data-uid": "src/pages/Contact.tsx:89:13",
+						"data-uid": "src/pages/Contact.tsx:97:13",
 						"data-prohibitions": "[]",
 						className: "rounded-xl overflow-hidden border border-border/50 h-[300px] relative",
 						children: [
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("img", {
-								"data-uid": "src/pages/Contact.tsx:90:15",
+								"data-uid": "src/pages/Contact.tsx:98:15",
 								"data-prohibitions": "[editContent]",
-								src: "https://img.usecurling.com/p/600/400?q=city%20map&color=black",
+								src: "https://img.usecurling.com/p/600/400?q=sao%20paulo%20map&color=black",
 								alt: "Localização no mapa",
-								className: "w-full h-full object-cover opacity-70"
+								className: "w-full h-full object-cover opacity-70 grayscale"
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-								"data-uid": "src/pages/Contact.tsx:95:15",
+								"data-uid": "src/pages/Contact.tsx:103:15",
 								"data-prohibitions": "[editContent]",
-								className: "absolute inset-0 bg-background/20 mix-blend-multiply"
+								className: "absolute inset-0 bg-background/40 mix-blend-multiply"
 							}),
 							/* @__PURE__ */ (0, import_jsx_runtime.jsx)("div", {
-								"data-uid": "src/pages/Contact.tsx:96:15",
+								"data-uid": "src/pages/Contact.tsx:104:15",
 								"data-prohibitions": "[]",
 								className: "absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-background p-3 rounded-full shadow-lg border border-primary/20",
 								children: /* @__PURE__ */ (0, import_jsx_runtime.jsx)(MapPin, {
-									"data-uid": "src/pages/Contact.tsx:97:17",
+									"data-uid": "src/pages/Contact.tsx:105:17",
 									"data-prohibitions": "[editContent]",
 									className: "h-6 w-6 text-primary"
 								})
@@ -36735,4 +36840,4 @@ var App = () => /* @__PURE__ */ (0, import_jsx_runtime.jsx)(BrowserRouter, {
 }));
 //#endregion
 
-//# sourceMappingURL=index-CsCtDlTO.js.map
+//# sourceMappingURL=index-C_YGpCcB.js.map

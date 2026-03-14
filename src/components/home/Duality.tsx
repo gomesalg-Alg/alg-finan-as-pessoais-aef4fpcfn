@@ -11,7 +11,7 @@ const rationalFeatures = [
   {
     title: 'Liderança de Mercado',
     icon: TrendingUp,
-    desc: 'Estratégias avançadas para posicionar seu patrimônio à frente.',
+    desc: 'Estratégias avançadas para posicionar seu planejamento à frente.',
   },
   {
     title: 'Gestão de Recursos',
@@ -44,7 +44,7 @@ export function Duality() {
       <div className="container max-w-5xl">
         <div className="text-center mb-16">
           <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-            A Essência <span className="text-primary">ALG</span>
+            A Essência <span className="text-primary">AlLG</span>
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
             Nosso método equilibra a precisão dos números com a compreensão dos seus sonhos.

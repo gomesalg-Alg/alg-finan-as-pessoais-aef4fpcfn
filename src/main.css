@@ -6,34 +6,34 @@
 
 @layer base {
   :root {
-    /* Enforcing the Dark/Gold Theme as default */
-    --background: 213 27% 10%;
-    --foreground: 214 32% 90%;
+    /* Emerald Green and Navy Theme */
+    --background: 222 47% 11%;
+    --foreground: 210 40% 98%;
 
-    --card: 213 27% 14%;
-    --card-foreground: 214 32% 90%;
+    --card: 222 47% 14%;
+    --card-foreground: 210 40% 98%;
 
-    --popover: 213 27% 12%;
-    --popover-foreground: 214 32% 90%;
+    --popover: 222 47% 12%;
+    --popover-foreground: 210 40% 98%;
 
-    --primary: 43 74% 46%; /* Gold */
-    --primary-foreground: 213 27% 10%;
+    --primary: 153 60% 53%; /* Emerald Green */
+    --primary-foreground: 222 47% 11%;
 
-    --secondary: 213 27% 18%;
-    --secondary-foreground: 214 32% 90%;
+    --secondary: 217 33% 17%;
+    --secondary-foreground: 210 40% 98%;
 
-    --muted: 213 27% 16%;
-    --muted-foreground: 214 32% 70%;
+    --muted: 217 33% 17%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 43 74% 46%;
-    --accent-foreground: 213 27% 10%;
+    --accent: 43 74% 46%; /* Gold Accent */
+    --accent-foreground: 222 47% 11%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 213 27% 20%;
-    --input: 213 27% 20%;
-    --ring: 43 74% 46%;
+    --border: 217 33% 20%;
+    --input: 217 33% 20%;
+    --ring: 153 60% 53%;
 
     --radius: 0.5rem;
   }
@@ -53,26 +53,26 @@
 }
 
 @layer utilities {
-  .btn-gold {
-    @apply bg-gradient-to-r from-[#b8860b] to-[#d4af37] text-[#1a232e] hover:scale-[1.02] transition-transform duration-300 shadow-lg hover:shadow-[#d4af37]/30 border-0;
+  .btn-primary {
+    @apply bg-gradient-to-r from-primary to-[#059669] text-primary-foreground hover:scale-[1.02] transition-transform duration-300 shadow-lg hover:shadow-primary/30 border-0;
   }
 
   .card-glass {
-    @apply bg-[#1a232e]/80 backdrop-blur-md border border-border/50;
+    @apply bg-card/80 backdrop-blur-md border border-border/50;
   }
 
   .card-hover {
-    @apply transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_10px_30px_-10px_rgba(212,175,55,0.2)] hover:border-[#d4af37]/50;
+    @apply transition-all duration-500 ease-out hover:-translate-y-2 hover:shadow-[0_10px_30px_-10px_rgba(16,185,129,0.2)] hover:border-primary/50;
   }
 
-  .text-gradient-gold {
-    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#d4af37] to-[#b8860b];
+  .text-gradient-primary {
+    @apply bg-clip-text text-transparent bg-gradient-to-r from-[#34d399] to-primary;
   }
 
   .bg-grid-pattern {
     background-image:
-      linear-gradient(to right, rgba(255, 255, 255, 0.05) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+      linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
     background-size: 40px 40px;
   }
 
@@ -86,7 +86,7 @@
   }
 
   .animate-shine {
-    background: linear-gradient(90deg, transparent, rgba(212, 175, 55, 0.2), transparent);
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
     background-size: 200% auto;
     animation: shine 3s linear infinite;
   }

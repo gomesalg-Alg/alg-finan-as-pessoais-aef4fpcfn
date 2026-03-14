@@ -22,12 +22,12 @@ const personas = [
   {
     title: 'Famílias',
     icon: Users,
-    desc: 'Construção de patrimônio geracional, educação financeira para filhos e segurança.',
+    desc: 'Construção de controle financeiro geracional, educação financeira para filhos e segurança.',
   },
   {
     title: 'Investidores',
     icon: Landmark,
-    desc: 'Otimização de carteira, análise avançada de riscos e busca por alpha sustentável.',
+    desc: 'Otimização de carteira, análise avançada de riscos e busca por estabilidade financeira sustentável.',
   },
 ]
 

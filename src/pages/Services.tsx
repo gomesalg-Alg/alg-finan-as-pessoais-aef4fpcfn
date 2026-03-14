@@ -13,13 +13,13 @@ const catalog = [
     title: 'Consultoria em Investimentos',
     icon: LineChart,
     content:
-      'Foco no crescimento seguro do seu patrimônio. Estruturamos carteiras diversificadas, otimizando a relação risco-retorno com base em cenários macroeconômicos e no seu perfil investidor.',
+      'Foco no crescimento financeiro com segurança. Estruturamos carteiras diversificadas, otimizando a relação risco-retorno com base em cenários macroeconômicos e no seu perfil investidor.',
   },
   {
     title: 'Análise de Risco',
     icon: ShieldAlert,
     content:
-      'Proteção é tão importante quanto rentabilidade. Avaliamos vulnerabilidades patrimoniais, estruturamos proteções sucessórias e securitárias para blindar suas conquistas contra imprevistos.',
+      'Proteção é tão importante quanto rentabilidade. Avaliamos vulnerabilidades financeiras, estruturamos proteções e seguros para blindar suas conquistas contra imprevistos.',
   },
   {
     title: 'Educação Financeira',
@@ -39,8 +39,8 @@ export default function Services() {
             Catálogo de <span className="text-primary">Serviços</span>
           </h1>
           <p className="text-lg text-muted-foreground">
-            Soluções integradas desenhadas para proporcionar clareza, segurança e crescimento
-            patrimonial contínuo.
+            Soluções integradas desenhadas para proporcionar clareza, segurança e excelência em
+            Gestão de Controle Financeiro Pessoal.
           </p>
         </div>
       </section>
