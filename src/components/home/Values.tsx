@@ -30,7 +30,7 @@ const valuesList = [
   },
 ]
 
-export default function Values() {
+export function Values() {
   return (
     <section className="py-24 bg-white relative overflow-hidden border-t border-border">
       <div className="container mx-auto px-4 md:px-6 relative z-10">

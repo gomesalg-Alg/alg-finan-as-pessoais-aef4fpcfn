@@ -2,7 +2,7 @@ import { ArrowRight, CheckCircle2, XCircle } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
 
-export default function Duality() {
+export function Duality() {
   return (
     <section className="py-24 bg-gradient-primary text-white">
       <div className="container mx-auto px-4 md:px-6">

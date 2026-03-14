@@ -1,5 +1,5 @@
 import { Mail, MapPin, Phone, MessageCircle } from 'lucide-react'
-import ContactForm from '@/components/contact/ContactForm'
+import { ContactForm } from '@/components/contact/ContactForm'
 import { Button } from '@/components/ui/button'
 
 export default function Contact() {

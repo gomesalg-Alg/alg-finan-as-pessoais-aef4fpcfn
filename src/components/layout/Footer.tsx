@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom'
 import { Mail, MapPin, Phone, Calendar, ArrowRight } from 'lucide-react'
 import logoUrl from '@/assets/logo_escolhido_alg-bc19d.jpeg'
 
-export default function Footer() {
+export function Footer() {
   return (
     <footer className="bg-[#0B192C] text-slate-300 pt-16 pb-8 border-t border-white/10">
       <div className="container mx-auto px-4 md:px-6">

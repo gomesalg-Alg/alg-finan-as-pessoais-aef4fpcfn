@@ -30,7 +30,7 @@ const formSchema = z.object({
   message: z.string().min(10, { message: 'A mensagem deve ter pelo menos 10 caracteres.' }),
 })
 
-export default function ContactForm() {
+export function ContactForm() {
   const { toast } = useToast()
 
   const form = useForm<z.infer<typeof formSchema>>({

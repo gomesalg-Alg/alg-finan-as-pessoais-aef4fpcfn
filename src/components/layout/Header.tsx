@@ -12,7 +12,7 @@ const navigation = [
   { name: 'Contato', href: '/contato' },
 ]
 
-export default function Header() {
+export function Header() {
   const [isScrolled, setIsScrolled] = useState(false)
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const location = useLocation()

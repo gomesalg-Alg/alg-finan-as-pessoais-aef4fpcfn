@@ -1,8 +1,8 @@
 import { Outlet } from 'react-router-dom'
-import { Header } from './layout/Header'
-import { Footer } from './layout/Footer'
+import { Header } from '@/components/layout/Header'
+import { Footer } from '@/components/layout/Footer'
 
-export default function Layout() {
+export function Layout() {
   return (
     <div className="flex min-h-screen flex-col bg-background selection:bg-primary selection:text-background">
       <Header />

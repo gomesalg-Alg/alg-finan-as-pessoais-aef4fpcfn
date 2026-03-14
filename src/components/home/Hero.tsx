@@ -3,7 +3,7 @@ import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
 import logoUrl from '@/assets/logo_escolhido_alg-bc19d.jpeg'
 
-export default function Hero() {
+export function Hero() {
   return (
     <section className="relative min-h-[90vh] flex items-center pt-20 overflow-hidden bg-gradient-primary">
       {/* Abstract Background Elements */}
