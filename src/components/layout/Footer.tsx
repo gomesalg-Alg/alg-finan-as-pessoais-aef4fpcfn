@@ -1,124 +1,118 @@
 import { Link } from 'react-router-dom'
-import { Facebook, Instagram, Linkedin, Mail, MapPin, Phone } from 'lucide-react'
-import { Button } from '@/components/ui/button'
-import { Input } from '@/components/ui/input'
+import { Mail, MapPin, Phone, Calendar, ArrowRight } from 'lucide-react'
+import logoUrl from '@/assets/logo_escolhido_alg-bc19d.jpeg'
 
-export function Footer() {
+export default function Footer() {
   return (
-    <footer className="border-t border-border/40 bg-background pt-16 pb-8">
-      <div className="container grid grid-cols-1 gap-12 md:grid-cols-2 lg:grid-cols-4 lg:gap-8">
-        <div className="flex flex-col gap-4">
-          <div className="flex items-center gap-2">
-            <div className="flex h-10 w-14 items-center justify-center rounded-md bg-gradient-to-br from-primary to-emerald-700">
-              <span className="font-display font-bold text-background text-sm">AlLG</span>
+    <footer className="bg-[#0B192C] text-slate-300 pt-16 pb-8 border-t border-white/10">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+          {/* Brand Col */}
+          <div className="space-y-6">
+            <Link to="/" className="flex items-center gap-3">
+              <img
+                src={logoUrl}
+                alt="ALG Finanças Pessoais Logo"
+                className="h-12 w-12 object-cover rounded-full border border-white/20"
+              />
+              <span className="font-bold text-xl text-white tracking-tight">ALG Finanças</span>
+            </Link>
+            <p className="text-sm leading-relaxed text-slate-400">
+              Especialistas em Gestão de Controle Financeiro Pessoal, ajudando você a organizar,
+              planejar e multiplicar seu patrimônio com segurança e inteligência.
+            </p>
+            <div className="flex items-center gap-2 text-sm text-accent">
+              <Calendar className="h-4 w-4" />
+              <span>Fundada em 30/10/2024</span>
             </div>
-            <span className="font-display font-bold text-lg">Finanças Pessoais</span>
           </div>
-          <p className="text-sm text-muted-foreground leading-relaxed mt-2">
-            Gestão de Controle Financeiro Pessoal. Transformando números em conquistas pessoais com
-            excelência e zelo.
+
+          {/* Links Col */}
+          <div>
+            <h3 className="text-white font-semibold mb-6 text-lg">Navegação</h3>
+            <ul className="space-y-4">
+              {[
+                { name: 'Início', href: '/' },
+                { name: 'Sobre Nós', href: '/sobre' },
+                { name: 'Serviços', href: '/servicos' },
+                { name: 'Contato', href: '/contato' },
+              ].map((link) => (
+                <li key={link.name}>
+                  <Link
+                    to={link.href}
+                    className="text-sm hover:text-accent transition-colors flex items-center gap-2 group"
+                  >
+                    <ArrowRight className="h-3 w-3 opacity-0 -ml-5 group-hover:opacity-100 group-hover:ml-0 transition-all text-accent" />
+                    {link.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          {/* Services Col */}
+          <div>
+            <h3 className="text-white font-semibold mb-6 text-lg">Especialidades</h3>
+            <ul className="space-y-4">
+              <li className="text-sm text-slate-400">Planejamento Financeiro</li>
+              <li className="text-sm text-slate-400">Gestão de Controle Pessoal</li>
+              <li className="text-sm text-slate-400">Consultoria de Investimentos</li>
+              <li className="text-sm text-slate-400">Organização de Dívidas</li>
+            </ul>
+          </div>
+
+          {/* Contact Col */}
+          <div>
+            <h3 className="text-white font-semibold mb-6 text-lg">Contato</h3>
+            <ul className="space-y-4">
+              <li>
+                <a
+                  href="mailto:gomesalg@gmail.com"
+                  className="flex items-start gap-3 text-sm hover:text-accent transition-colors"
+                >
+                  <Mail className="h-5 w-5 text-accent shrink-0" />
+                  <span>gomesalg@gmail.com</span>
+                </a>
+              </li>
+              <li>
+                <a
+                  href="https://wa.me/5511992459400"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-start gap-3 text-sm hover:text-accent transition-colors"
+                >
+                  <Phone className="h-5 w-5 text-accent shrink-0" />
+                  <span>(11) 99245-9400</span>
+                </a>
+              </li>
+              <li className="flex items-start gap-3 text-sm text-slate-400">
+                <MapPin className="h-5 w-5 text-accent shrink-0" />
+                <span>
+                  Rua Domingos Pires de Oliveira Dias, 32
+                  <br />
+                  São Paulo - SP
+                  <br />
+                  CEP: 04821-230
+                </span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div className="pt-8 border-t border-white/10 flex flex-col md:flex-row items-center justify-between gap-4">
+          <p className="text-xs text-slate-500">
+            &copy; {new Date().getFullYear()} ALG Finanças Pessoais Ltda-me. Todos os direitos
+            reservados.
           </p>
-          <div className="flex gap-4 mt-2">
-            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-              <Instagram className="h-5 w-5" />
-            </a>
-            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-              <Linkedin className="h-5 w-5" />
-            </a>
-            <a href="#" className="text-muted-foreground hover:text-primary transition-colors">
-              <Facebook className="h-5 w-5" />
-            </a>
+          <div className="flex items-center gap-4 text-xs text-slate-500">
+            <Link to="#" className="hover:text-white transition-colors">
+              Política de Privacidade
+            </Link>
+            <Link to="#" className="hover:text-white transition-colors">
+              Termos de Uso
+            </Link>
           </div>
         </div>
-
-        <div className="flex flex-col gap-4">
-          <h3 className="font-display font-semibold text-foreground">Links Rápidos</h3>
-          <nav className="flex flex-col gap-3">
-            <Link
-              to="/"
-              className="text-sm text-muted-foreground hover:text-primary transition-colors"
-            >
-              Início
-            </Link>
-            <Link
-              to="/sobre"
-              className="text-sm text-muted-foreground hover:text-primary transition-colors"
-            >
-              Sobre Nós
-            </Link>
-            <Link
-              to="/servicos"
-              className="text-sm text-muted-foreground hover:text-primary transition-colors"
-            >
-              Serviços
-            </Link>
-            <Link
-              to="/contato"
-              className="text-sm text-muted-foreground hover:text-primary transition-colors"
-            >
-              Contato
-            </Link>
-          </nav>
-        </div>
-
-        <div className="flex flex-col gap-4">
-          <h3 className="font-display font-semibold text-foreground">Contato</h3>
-          <ul className="flex flex-col gap-3 text-sm text-muted-foreground">
-            <li className="flex items-start gap-3">
-              <MapPin className="h-5 w-5 text-primary shrink-0 mt-0.5" />
-              <span>
-                Rua Domingos Pires de Oliveira Dias, 32
-                <br />
-                São Paulo - SP
-                <br />
-                CEP: 04821-230
-              </span>
-            </li>
-            <li className="flex items-center gap-3">
-              <Phone className="h-5 w-5 text-primary shrink-0" />
-              <a
-                href="https://wa.me/5511992459400"
-                target="_blank"
-                rel="noreferrer"
-                className="hover:text-primary transition-colors"
-              >
-                (11) 99245-9400
-              </a>
-            </li>
-            <li className="flex items-center gap-3">
-              <Mail className="h-5 w-5 text-primary shrink-0" />
-              <span>contato@allgfinancas.com.br</span>
-            </li>
-          </ul>
-        </div>
-
-        <div className="flex flex-col gap-4">
-          <h3 className="font-display font-semibold text-foreground">Newsletter</h3>
-          <p className="text-sm text-muted-foreground">Receba dicas financeiras exclusivas.</p>
-          <form className="flex gap-2" onSubmit={(e) => e.preventDefault()}>
-            <Input
-              type="email"
-              placeholder="Seu e-mail"
-              className="bg-secondary/50 border-border"
-            />
-            <Button
-              type="submit"
-              className="bg-primary text-primary-foreground hover:bg-primary/90"
-            >
-              Assinar
-            </Button>
-          </form>
-        </div>
-      </div>
-
-      <div className="container mt-16 pt-8 border-t border-border/40 flex flex-col md:flex-row items-center justify-between text-sm text-muted-foreground gap-4 text-center md:text-left">
-        <p>
-          AlLG Planejamento e Controle de Finanças Pessoais Ltda-me © {new Date().getFullYear()}.
-          Todos os direitos reservados.
-        </p>
-        <p className="font-medium bg-secondary/50 px-4 py-1.5 rounded-full">
-          Fundada em 30/10/2024
-        </p>
       </div>
     </footer>
   )

@@ -1,81 +1,101 @@
 import { Link } from 'react-router-dom'
-import { Card, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Compass, LineChart, ShieldAlert, GraduationCap, ArrowRight } from 'lucide-react'
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
+import {
+  ArrowRight,
+  TrendingUp,
+  ShieldCheck,
+  Wallet,
+  Landmark,
+  Briefcase,
+  Calculator,
+} from 'lucide-react'
 
 const services = [
   {
-    id: 'planejamento',
-    title: 'Planejamento Personalizado',
-    icon: Compass,
-    desc: 'Estratégias sob medida para seus objetivos de curto, médio e longo prazo.',
+    title: 'Planejamento Financeiro',
+    description:
+      'Análise completa da sua situação atual com criação de rotas claras para alcançar seus objetivos de curto, médio e longo prazo.',
+    icon: TrendingUp,
   },
   {
-    id: 'consultoria',
-    title: 'Consultoria de Investimentos',
-    icon: LineChart,
-    desc: 'Análise e recomendação de portfólios para maximizar rentabilidade com segurança.',
+    title: 'Gestão de Controle Financeiro Pessoal',
+    description:
+      'Estratégias avançadas para proteção, diversificação e sucessão do seu patrimônio com foco em segurança e rentabilidade.',
+    icon: Landmark,
   },
   {
-    id: 'risco',
-    title: 'Análise de Risco',
-    icon: ShieldAlert,
-    desc: 'Identificação e mitigação de vulnerabilidades no seu controle financeiro.',
+    title: 'Organização de Orçamento',
+    description:
+      'Estruturação do fluxo de caixa pessoal, identificando vazamentos financeiros e otimizando seus recursos mensais.',
+    icon: Wallet,
   },
   {
-    id: 'educacao',
-    title: 'Educação Financeira',
-    icon: GraduationCap,
-    desc: 'Capacitação para tomadas de decisão conscientes e independentes.',
+    title: 'Análise de Investimentos',
+    description:
+      'Avaliação isenta e profissional do seu portfólio atual e recomendação de ativos alinhados ao seu perfil de risco.',
+    icon: Briefcase,
+  },
+  {
+    title: 'Proteção Patrimonial',
+    description:
+      'Mapeamento de riscos e estruturação de blindagem patrimonial através de seguros e ferramentas jurídicas adequadas.',
+    icon: ShieldCheck,
+  },
+  {
+    title: 'Planejamento Tributário',
+    description:
+      'Estratégias legais para otimizar sua carga tributária, garantindo mais eficiência financeira nos seus rendimentos.',
+    icon: Calculator,
   },
 ]
 
-export function ServicesPreview() {
+export default function ServicesPreview() {
   return (
-    <section className="py-24">
-      <div className="container">
-        <div className="flex flex-col md:flex-row justify-between items-end mb-16 gap-6">
+    <section className="py-24 bg-secondary/30">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <div className="max-w-2xl">
-            <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-              Nossas <span className="text-primary">Especialidades</span>
-            </h2>
-            <p className="text-muted-foreground">
-              Soluções completas para estruturar, proteger e multiplicar suas finanças com
-              inteligência.
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">Nossas Soluções</h2>
+            <p className="text-lg text-muted-foreground">
+              Na ALG Finanças Pessoais, oferecemos um portfólio completo de serviços desenhados para
+              trazer clareza, controle e crescimento para sua vida financeira.
             </p>
           </div>
           <Button
             asChild
-            variant="ghost"
-            className="text-primary hover:text-primary hover:bg-primary/10"
+            variant="outline"
+            className="shrink-0 border-primary text-primary hover:bg-primary hover:text-white"
           >
             <Link to="/servicos">
-              Ver todos os serviços <ArrowRight className="ml-2 h-4 w-4" />
+              Ver todos os serviços
+              <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
         </div>
 
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {services.map((service) => (
-            <Card
-              key={service.id}
-              className="group relative overflow-hidden bg-secondary/50 border-border/50 hover:border-primary/50 transition-colors h-[280px]"
-            >
-              <div className="absolute inset-0 bg-gradient-to-b from-transparent to-background/90 z-10" />
-              <img
-                src={`https://img.usecurling.com/p/400/400?q=finance&color=green&seed=${service.id}`}
-                alt={service.title}
-                className="absolute inset-0 w-full h-full object-cover opacity-40 group-hover:opacity-60 transition-opacity group-hover:scale-105 duration-700"
-              />
-              <CardContent className="relative z-20 flex flex-col justify-end h-full p-6">
-                <service.icon className="h-10 w-10 text-primary mb-4 transform group-hover:-translate-y-2 transition-transform duration-300" />
-                <h3 className="font-display font-semibold text-lg mb-2">{service.title}</h3>
-                <div className="h-0 opacity-0 overflow-hidden transition-all duration-300 group-hover:h-auto group-hover:opacity-100 group-hover:mt-2">
-                  <p className="text-sm text-muted-foreground">{service.desc}</p>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {services.map((service, index) => {
+            const Icon = service.icon
+            return (
+              <Card
+                key={index}
+                className="group hover:shadow-xl transition-all duration-300 border-border/50 hover:border-accent/50 bg-white"
+              >
+                <CardHeader>
+                  <div className="h-12 w-12 rounded-lg bg-primary/5 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:text-white transition-colors duration-300">
+                    <Icon className="h-6 w-6 text-primary group-hover:text-white" />
+                  </div>
+                  <CardTitle className="text-xl">{service.title}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <CardDescription className="text-base text-muted-foreground">
+                    {service.description}
+                  </CardDescription>
+                </CardContent>
+              </Card>
+            )
+          })}
         </div>
       </div>
     </section>

@@ -1,65 +1,60 @@
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from '@/components/ui/carousel'
+import { Users, Building2, GraduationCap } from 'lucide-react'
 import { Card, CardContent } from '@/components/ui/card'
-import { Briefcase, Building2, Users, Landmark } from 'lucide-react'
 
-const personas = [
+const audiences = [
   {
     title: 'Profissionais Liberais',
-    icon: Briefcase,
-    desc: 'Organização de fluxo de caixa e planejamento para independência financeira.',
+    description:
+      'Médicos, advogados, engenheiros e arquitetos que buscam organizar o fluxo de caixa instável e construir patrimônio sólido.',
+    icon: GraduationCap,
   },
   {
-    title: 'Empresários',
+    title: 'Empresários e Empreendedores',
+    description:
+      'Proprietários de negócios que precisam separar as finanças pessoais das empresariais e proteger seu legado.',
     icon: Building2,
-    desc: 'Separação de finanças pessoais e empresariais, com foco em sucessão e proteção.',
   },
   {
     title: 'Famílias',
+    description:
+      'Casais e famílias buscando alinhamento financeiro, planejamento para a educação dos filhos e sucessão patrimonial.',
     icon: Users,
-    desc: 'Construção de controle financeiro geracional, educação financeira para filhos e segurança.',
-  },
-  {
-    title: 'Investidores',
-    icon: Landmark,
-    desc: 'Otimização de carteira, análise avançada de riscos e busca por estabilidade financeira sustentável.',
   },
 ]
 
-export function Audience() {
+export default function Audience() {
   return (
-    <section className="py-24">
-      <div className="container">
-        <div className="text-center mb-16">
-          <h2 className="text-3xl md:text-4xl font-display font-bold mb-4">
-            Para Quem <span className="text-primary">Trabalhamos</span>
+    <section className="py-24 bg-white">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="text-center max-w-3xl mx-auto mb-16">
+          <h2 className="text-3xl md:text-4xl font-bold mb-4">
+            Para quem é a ALG Finanças Pessoais?
           </h2>
+          <p className="text-lg text-muted-foreground">
+            Nossa metodologia de Gestão de Controle Financeiro Pessoal foi desenvolvida para atender
+            necessidades específicas de diferentes perfis.
+          </p>
         </div>
 
-        <Carousel opts={{ align: 'start', loop: true }} className="w-full max-w-5xl mx-auto">
-          <CarouselContent className="-ml-4">
-            {personas.map((persona, index) => (
-              <CarouselItem key={index} className="pl-4 md:basis-1/2 lg:basis-1/3">
-                <Card className="card-glass h-[220px]">
-                  <CardContent className="p-6 flex flex-col h-full">
-                    <persona.icon className="h-8 w-8 text-primary mb-4" />
-                    <h3 className="font-display font-semibold text-lg mb-2">{persona.title}</h3>
-                    <p className="text-sm text-muted-foreground flex-1">{persona.desc}</p>
-                  </CardContent>
-                </Card>
-              </CarouselItem>
-            ))}
-          </CarouselContent>
-          <div className="flex justify-center mt-8 gap-4">
-            <CarouselPrevious className="static translate-y-0" />
-            <CarouselNext className="static translate-y-0" />
-          </div>
-        </Carousel>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {audiences.map((item, index) => {
+            const Icon = item.icon
+            return (
+              <Card
+                key={index}
+                className="border-none shadow-lg bg-secondary/20 hover:-translate-y-2 transition-transform duration-300"
+              >
+                <CardContent className="pt-8 text-center px-6">
+                  <div className="mx-auto h-16 w-16 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+                    <Icon className="h-8 w-8 text-primary" />
+                  </div>
+                  <h3 className="text-xl font-bold mb-3">{item.title}</h3>
+                  <p className="text-muted-foreground">{item.description}</p>
+                </CardContent>
+              </Card>
+            )
+          })}
+        </div>
       </div>
     </section>
   )

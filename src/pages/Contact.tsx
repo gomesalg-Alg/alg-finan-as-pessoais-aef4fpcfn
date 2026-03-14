@@ -1,113 +1,104 @@
-import { ContactForm } from '@/components/contact/ContactForm'
-import { Card, CardContent } from '@/components/ui/card'
-import { MapPin, Phone, Mail, Clock } from 'lucide-react'
+import { Mail, MapPin, Phone, MessageCircle } from 'lucide-react'
+import ContactForm from '@/components/contact/ContactForm'
+import { Button } from '@/components/ui/button'
 
 export default function Contact() {
   return (
-    <div className="pb-24">
-      {/* Header */}
-      <section className="pt-24 pb-16 bg-gradient-to-b from-secondary/50 to-background">
-        <div className="container text-center max-w-3xl">
-          <h1 className="text-4xl md:text-5xl font-display font-bold mb-6">
-            Fale com um <span className="text-primary">Especialista</span>
-          </h1>
-          <p className="text-lg text-muted-foreground">
-            Dê o primeiro passo para a transformação da sua vida financeira. Estamos prontos para
-            entender seu momento.
-          </p>
-        </div>
-      </section>
-
-      <section className="container py-12">
-        <div className="grid lg:grid-cols-5 gap-12">
-          {/* Form Column */}
-          <div className="lg:col-span-3">
-            <ContactForm />
+    <div className="pt-24 pb-16 min-h-screen bg-secondary/20">
+      <div className="container mx-auto px-4 md:px-6">
+        <div className="max-w-5xl mx-auto">
+          <div className="text-center mb-16">
+            <h1 className="text-4xl md:text-5xl font-bold mb-6 text-primary">Vamos conversar</h1>
+            <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+              Dê o primeiro passo para assumir o controle total do seu futuro financeiro. Nossa
+              equipe de especialistas da ALG Finanças Pessoais está pronta para entender suas
+              necessidades.
+            </p>
           </div>
 
-          {/* Info Column */}
-          <div className="lg:col-span-2 space-y-8">
-            <Card className="card-glass border-border/40">
-              <CardContent className="p-6 space-y-6">
-                <h3 className="font-display font-semibold text-xl mb-4">Informações de Contato</h3>
+          <div className="grid lg:grid-cols-3 gap-12 items-start">
+            {/* Contact Info */}
+            <div className="lg:col-span-1 space-y-8">
+              <div className="bg-white p-8 rounded-2xl shadow-sm border border-border">
+                <h3 className="text-xl font-bold mb-6">Informações de Contato</h3>
 
-                <div className="flex items-start gap-4">
-                  <div className="bg-primary/10 p-2 rounded-md shrink-0">
-                    <Phone className="h-5 w-5 text-primary" />
+                <div className="space-y-6">
+                  <div className="flex items-start gap-4">
+                    <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                      <Phone className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground mb-1">
+                        Telefone / WhatsApp
+                      </p>
+                      <a
+                        href="https://wa.me/5511992459400"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-lg font-semibold hover:text-accent transition-colors"
+                      >
+                        (11) 99245-9400
+                      </a>
+                    </div>
                   </div>
-                  <div>
-                    <p className="font-medium">Telefone / WhatsApp</p>
-                    <p className="text-muted-foreground text-sm mt-1">(11) 99245-9400</p>
-                    <a
-                      href="https://wa.me/5511992459400"
-                      target="_blank"
-                      rel="noreferrer"
-                      className="text-primary text-sm hover:underline mt-1 inline-block"
-                    >
-                      Iniciar conversa
+
+                  <div className="flex items-start gap-4">
+                    <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                      <Mail className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground mb-1">E-mail</p>
+                      <a
+                        href="mailto:gomesalg@gmail.com"
+                        className="text-lg font-semibold hover:text-accent transition-colors break-all"
+                      >
+                        gomesalg@gmail.com
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="flex items-start gap-4">
+                    <div className="h-10 w-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                      <MapPin className="h-5 w-5 text-primary" />
+                    </div>
+                    <div>
+                      <p className="text-sm font-medium text-muted-foreground mb-1">
+                        Endereço Sede
+                      </p>
+                      <p className="text-base font-medium leading-relaxed">
+                        Rua Domingos Pires de Oliveira Dias, 32
+                        <br />
+                        São Paulo - SP
+                        <br />
+                        CEP: 04821-230
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-8 pt-8 border-t border-border">
+                  <p className="text-sm text-muted-foreground mb-4">Prefere um contato rápido?</p>
+                  <Button
+                    asChild
+                    className="w-full bg-[#25D366] hover:bg-[#128C7E] text-white shadow-md"
+                  >
+                    <a href="https://wa.me/5511992459400" target="_blank" rel="noopener noreferrer">
+                      <MessageCircle className="mr-2 h-5 w-5" />
+                      Chamar no WhatsApp
                     </a>
-                  </div>
+                  </Button>
                 </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="bg-primary/10 p-2 rounded-md shrink-0">
-                    <Mail className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="font-medium">E-mail Corporativo</p>
-                    <p className="text-muted-foreground text-sm mt-1">
-                      contato@allgfinancas.com.br
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="bg-primary/10 p-2 rounded-md shrink-0">
-                    <MapPin className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="font-medium">Sede Operacional</p>
-                    <p className="text-muted-foreground text-sm mt-1">
-                      Rua Domingos Pires de Oliveira Dias, 32
-                      <br />
-                      São Paulo - SP
-                      <br />
-                      CEP: 04821-230
-                    </p>
-                  </div>
-                </div>
-
-                <div className="flex items-start gap-4">
-                  <div className="bg-primary/10 p-2 rounded-md shrink-0">
-                    <Clock className="h-5 w-5 text-primary" />
-                  </div>
-                  <div>
-                    <p className="font-medium">Horário de Atendimento</p>
-                    <p className="text-muted-foreground text-sm mt-1">
-                      Segunda a Sexta
-                      <br />
-                      09:00 às 18:00
-                    </p>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Map Placeholder */}
-            <div className="rounded-xl overflow-hidden border border-border/50 h-[300px] relative">
-              <img
-                src="https://img.usecurling.com/p/600/400?q=sao%20paulo%20map&color=black"
-                alt="Localização no mapa"
-                className="w-full h-full object-cover opacity-70 grayscale"
-              />
-              <div className="absolute inset-0 bg-background/40 mix-blend-multiply" />
-              <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-background p-3 rounded-full shadow-lg border border-primary/20">
-                <MapPin className="h-6 w-6 text-primary" />
               </div>
+            </div>
+
+            {/* Form */}
+            <div className="lg:col-span-2 bg-white p-8 md:p-10 rounded-2xl shadow-sm border border-border">
+              <h2 className="text-2xl font-bold mb-6">Solicitar Consultoria</h2>
+              <ContactForm />
             </div>
           </div>
         </div>
-      </section>
+      </div>
     </div>
   )
 }
