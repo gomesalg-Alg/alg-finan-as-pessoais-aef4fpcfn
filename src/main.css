@@ -34,15 +34,15 @@
     --ring: 38 35% 53%;
     --radius: 0.5rem;
 
-    /* Sidebar specific variables */
-    --sidebar-background: 217 55% 8%; /* Darker deep navy */
-    --sidebar-foreground: 210 40% 98%;
-    --sidebar-primary: 38 35% 53%;
-    --sidebar-primary-foreground: 217 60% 11%;
-    --sidebar-accent: 217 40% 15%;
-    --sidebar-accent-foreground: 210 40% 98%;
-    --sidebar-border: 217 40% 18%;
-    --sidebar-ring: 38 35% 53%;
+    /* Sidebar specific variables - Color Admin Theme */
+    --sidebar-background: 208 14% 21%; /* #2d353c */
+    --sidebar-foreground: 213 4% 68%; /* #a8acb1 */
+    --sidebar-primary: 211 75% 54%; /* #348fe2 */
+    --sidebar-primary-foreground: 0 0% 100%; /* #ffffff */
+    --sidebar-accent: 208 22% 13%; /* #1a2229 */
+    --sidebar-accent-foreground: 0 0% 100%; /* #ffffff */
+    --sidebar-border: 208 22% 13%; /* #1a2229 */
+    --sidebar-ring: 211 75% 54%; /* #348fe2 */
   }
 }
 

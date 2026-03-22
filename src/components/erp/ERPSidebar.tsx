@@ -11,7 +11,6 @@ import {
   Shield,
   LogOut,
 } from 'lucide-react'
-import { cn } from '@/lib/utils'
 import profileImg from '@/assets/image-6ef14.png'
 import {
   Sidebar,
@@ -80,18 +79,8 @@ export function ERPSidebar() {
       return (
         <SidebarMenuItem key={item.path}>
           <SidebarMenuButton asChild isActive={isActive} tooltip={item.title}>
-            <Link
-              to={item.path}
-              className={cn(
-                'flex items-center gap-3 px-3 py-2.5 rounded-md transition-colors',
-                isActive
-                  ? 'bg-blue-200/60 text-blue-900 font-semibold shadow-sm'
-                  : 'text-blue-800 hover:bg-blue-100/80',
-              )}
-            >
-              <item.icon
-                className={cn('h-5 w-5', isActive ? 'text-[#8B4513]' : 'text-[#8B4513]/70')}
-              />
+            <Link to={item.path} className="flex items-center gap-3">
+              <item.icon className="h-5 w-5 text-[#8B4513] shrink-0" />
               <span>{item.title}</span>
             </Link>
           </SidebarMenuButton>
@@ -101,8 +90,8 @@ export function ERPSidebar() {
   }
 
   return (
-    <Sidebar className="border-r border-blue-900/20 bg-blue-50">
-      <SidebarHeader className="border-b border-blue-200 bg-blue-900 p-4">
+    <Sidebar className="border-r border-sidebar-border bg-sidebar">
+      <SidebarHeader className="bg-sidebar-accent border-b border-sidebar-border p-4">
         <div className="flex items-center gap-4">
           <Avatar className="h-14 w-14 border-2 border-[#8B4513] shadow-md bg-white">
             <AvatarImage
@@ -115,17 +104,17 @@ export function ERPSidebar() {
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
-            <span className="text-white font-bold text-sm leading-tight">
+            <span className="text-sidebar-accent-foreground font-bold text-sm leading-tight">
               {currentUser?.C_USER_NOME || 'Administrador Chefe'}
             </span>
-            <span className="text-blue-200 text-xs mt-0.5">Gestão de Recursos</span>
+            <span className="text-sidebar-foreground text-xs mt-0.5">Gestão de Recursos</span>
           </div>
         </div>
       </SidebarHeader>
 
-      <SidebarContent className="bg-blue-50/50 pt-4">
+      <SidebarContent className="bg-sidebar pt-4">
         <SidebarGroup>
-          <SidebarGroupLabel className="text-blue-800 font-bold text-xs uppercase tracking-wider mb-2">
+          <SidebarGroupLabel className="text-sidebar-foreground font-bold text-xs uppercase tracking-wider mb-2">
             Navegação Principal
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -134,7 +123,7 @@ export function ERPSidebar() {
         </SidebarGroup>
 
         <SidebarGroup className="mt-4">
-          <SidebarGroupLabel className="text-blue-800 font-bold text-xs uppercase tracking-wider mb-2">
+          <SidebarGroupLabel className="text-sidebar-foreground font-bold text-xs uppercase tracking-wider mb-2">
             Relatórios
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -143,7 +132,7 @@ export function ERPSidebar() {
         </SidebarGroup>
 
         <SidebarGroup className="mt-4">
-          <SidebarGroupLabel className="text-blue-800 font-bold text-xs uppercase tracking-wider mb-2">
+          <SidebarGroupLabel className="text-sidebar-foreground font-bold text-xs uppercase tracking-wider mb-2">
             Administração
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -152,15 +141,15 @@ export function ERPSidebar() {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-blue-200 bg-blue-100/50 p-4">
+      <SidebarFooter className="bg-sidebar-accent border-t border-sidebar-border p-4">
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton
               asChild
-              className="text-blue-800 hover:bg-red-50 hover:text-red-700 font-semibold transition-colors"
+              className="text-sidebar-foreground hover:bg-red-500/10 hover:text-red-500 font-semibold transition-colors"
             >
-              <Link to="/login">
-                <LogOut className="h-5 w-5 text-red-600/80" />
+              <Link to="/login" className="flex items-center gap-3">
+                <LogOut className="h-5 w-5 text-[#8B4513] shrink-0" />
                 <span>Sair do Sistema</span>
               </Link>
             </SidebarMenuButton>
