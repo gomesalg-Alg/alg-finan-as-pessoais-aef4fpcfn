@@ -1,12 +1,21 @@
 import React, { createContext, useContext, useState, ReactNode, useMemo } from 'react'
 import { User } from '@/types/user'
 import { Profile } from '@/types/profile'
+import { Empresa } from '@/types/empresa'
+import { Filial } from '@/types/filial'
+import { Notification } from '@/types/notification'
 
 interface ERPContextData {
   users: User[]
   setUsers: React.Dispatch<React.SetStateAction<User[]>>
   profiles: Profile[]
   setProfiles: React.Dispatch<React.SetStateAction<Profile[]>>
+  empresas: Empresa[]
+  setEmpresas: React.Dispatch<React.SetStateAction<Empresa[]>>
+  filiais: Filial[]
+  setFiliais: React.Dispatch<React.SetStateAction<Filial[]>>
+  notifications: Notification[]
+  setNotifications: React.Dispatch<React.SetStateAction<Notification[]>>
   currentUser: User | null
   hasPermission: (perm: string) => boolean
 }
@@ -25,6 +34,8 @@ const initialProfiles: Profile[] = [
       'fornecedores',
       'classificacao-financeira',
       'perfis',
+      'empresas',
+      'filiais',
     ],
   },
   {
@@ -32,6 +43,33 @@ const initialProfiles: Profile[] = [
     C_PERF_NOME: 'Operador',
     C_PERF_DESC: 'Acesso limitado às rotinas de operação',
     C_PERF_PERM: ['dashboard', 'clientes', 'fornecedores'],
+  },
+]
+
+const initialEmpresas: Empresa[] = [
+  {
+    id: '1',
+    C_EMPR_CODI: 'EMP01',
+    C_EMPR_NOME: 'ALG Finanças S.A.',
+    C_EMPR_FANT: 'ALG Finanças',
+    C_EMPR_CNPJ: '12345678000199',
+  },
+]
+
+const initialFiliais: Filial[] = [
+  {
+    id: '1',
+    C_FILI_CODI: 'FIL01',
+    C_FILI_NOME: 'Sede São Paulo',
+    C_FILI_EMPR: '1',
+    C_FILI_CNPJ: '12345678000199',
+  },
+  {
+    id: '2',
+    C_FILI_CODI: 'FIL02',
+    C_FILI_NOME: 'Filial Rio de Janeiro',
+    C_FILI_EMPR: '1',
+    C_FILI_CNPJ: '12345678000277',
   },
 ]
 
@@ -52,6 +90,8 @@ const initialUsers: User[] = [
     C_USER_UFED: 'SP',
     C_USER_PAIS: 'Brasil',
     C_USER_PERF: 'ADMIN',
+    C_USER_EMPR: '1',
+    C_USER_FILI: '1',
   },
   {
     id: '2',
@@ -69,14 +109,35 @@ const initialUsers: User[] = [
     C_USER_UFED: 'SP',
     C_USER_PAIS: 'Brasil',
     C_USER_PERF: 'OPER',
+    C_USER_EMPR: '1',
+    C_USER_FILI: '2',
+  },
+]
+
+const initialNotifications: Notification[] = [
+  {
+    id: '1',
+    title: 'Atualização de Sistema',
+    message: 'A nova versão 0.0.21 foi aplicada com sucesso.',
+    read: false,
+    date: new Date().toISOString(),
+  },
+  {
+    id: '2',
+    title: 'Aviso de Pendência',
+    message: 'Existem 3 fornecedores aguardando homologação.',
+    read: false,
+    date: new Date(Date.now() - 3600000).toISOString(),
   },
 ]
 
 export const ERPProvider = ({ children }: { children: ReactNode }) => {
   const [users, setUsers] = useState<User[]>(initialUsers)
   const [profiles, setProfiles] = useState<Profile[]>(initialProfiles)
+  const [empresas, setEmpresas] = useState<Empresa[]>(initialEmpresas)
+  const [filiais, setFiliais] = useState<Filial[]>(initialFiliais)
+  const [notifications, setNotifications] = useState<Notification[]>(initialNotifications)
 
-  // Emulating the logged in user as the first mock user (ADMIN)
   const currentUser = useMemo(() => users[0] || null, [users])
 
   const hasPermission = (perm: string) => {
@@ -87,7 +148,22 @@ export const ERPProvider = ({ children }: { children: ReactNode }) => {
 
   return React.createElement(
     ERPContext.Provider,
-    { value: { users, setUsers, profiles, setProfiles, currentUser, hasPermission } },
+    {
+      value: {
+        users,
+        setUsers,
+        profiles,
+        setProfiles,
+        empresas,
+        setEmpresas,
+        filiais,
+        setFiliais,
+        notifications,
+        setNotifications,
+        currentUser,
+        hasPermission,
+      },
+    },
     children,
   )
 }

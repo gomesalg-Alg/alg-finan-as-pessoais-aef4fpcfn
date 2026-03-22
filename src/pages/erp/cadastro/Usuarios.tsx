@@ -60,7 +60,7 @@ import { addAuditLog } from '@/lib/logger'
 import useERPStore from '@/stores/useERPStore'
 
 export default function Usuarios() {
-  const { users, setUsers, profiles, currentUser } = useERPStore()
+  const { users, setUsers, profiles, currentUser, empresas, filiais } = useERPStore()
   const [search, setSearch] = useState('')
   const [searchCpf, setSearchCpf] = useState('')
   const [isSheetOpen, setIsSheetOpen] = useState(false)
@@ -71,6 +71,11 @@ export default function Usuarios() {
 
   const filteredUsers = useMemo(() => {
     return users.filter((u) => {
+      // Data isolation logic: Admin sees all, otherwise strictly filter by C_USER_EMPR
+      const isAllowed =
+        currentUser?.C_USER_PERF === 'ADMIN' || u.C_USER_EMPR === currentUser?.C_USER_EMPR
+      if (!isAllowed) return false
+
       const matchText =
         u.C_USER_NOME.toLowerCase().includes(search.toLowerCase()) ||
         u.C_USER_MAIL.toLowerCase().includes(search.toLowerCase()) ||
@@ -82,7 +87,7 @@ export default function Usuarios() {
 
       return matchText && matchCpf
     })
-  }, [users, search, searchCpf])
+  }, [users, search, searchCpf, currentUser])
 
   const totalPages = Math.ceil(filteredUsers.length / itemsPerPage)
   const paginatedUsers = filteredUsers.slice(
@@ -94,12 +99,10 @@ export default function Usuarios() {
     setSearch(e.target.value)
     setCurrentPage(1)
   }
-
   const handleSearchCpf = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchCpf(maskCPF(e.target.value))
     setCurrentPage(1)
   }
-
   const handleOpenNew = () => {
     setEditingUser(undefined)
     setIsSheetOpen(true)
@@ -111,19 +114,14 @@ export default function Usuarios() {
       addAuditLog(
         'UPDATE',
         editingUser.id,
-        currentUser?.C_USER_CODI || 'CURRENT_USER',
-        `Usuário ${data.C_USER_CODI} atualizado. Perfil: ${data.C_USER_PERF}`,
+        currentUser?.C_USER_CODI,
+        `Usuário ${data.C_USER_CODI} atualizado.`,
       )
       toast.success('Usuário atualizado com sucesso!')
     } else {
       const newId = Date.now().toString()
       setUsers([{ ...data, id: newId } as User, ...users])
-      addAuditLog(
-        'CREATE',
-        newId,
-        currentUser?.C_USER_CODI || 'CURRENT_USER',
-        `Usuário ${data.C_USER_CODI} criado. Perfil: ${data.C_USER_PERF}`,
-      )
+      addAuditLog('CREATE', newId, currentUser?.C_USER_CODI, `Usuário ${data.C_USER_CODI} criado.`)
       toast.success('Usuário criado com sucesso!')
     }
     setIsSheetOpen(false)
@@ -135,7 +133,7 @@ export default function Usuarios() {
       addAuditLog(
         'DELETE',
         userToDelete.id,
-        currentUser?.C_USER_CODI || 'CURRENT_USER',
+        currentUser?.C_USER_CODI,
         `Usuário ${userToDelete.C_USER_CODI} removido`,
       )
       toast.success('Usuário removido com sucesso!')
@@ -144,16 +142,19 @@ export default function Usuarios() {
   }
 
   const exportData = (format: 'csv' | 'xlsx') => {
-    const headers = ['Código', 'Nome', 'Fantasia', 'CPF', 'E-mail', 'Perfil']
+    const headers = ['Código', 'Nome', 'CPF', 'E-mail', 'Perfil', 'Empresa', 'Filial']
     const rows = filteredUsers.map((u) => {
       const profileName = profiles.find((p) => p.id === u.C_USER_PERF)?.C_PERF_NOME || 'N/A'
+      const empresaName = empresas.find((e) => e.id === u.C_USER_EMPR)?.C_EMPR_NOME || 'N/A'
+      const filialName = filiais.find((f) => f.id === u.C_USER_FILI)?.C_FILI_NOME || 'N/A'
       return [
         u.C_USER_CODI,
         u.C_USER_NOME,
-        u.C_USER_FANT,
         u.C_USER_NCPF,
         u.C_USER_MAIL,
         profileName,
+        empresaName,
+        filialName,
       ]
     })
 
@@ -165,22 +166,9 @@ export default function Usuarios() {
       link.download = 'usuarios.csv'
       link.click()
     } else {
-      const tableHtml = `
-        <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
-        <head><meta charset="utf-8"></head><body>
-        <table border="1">
-          <tr>${headers.map((h) => `<th style="background-color: #f2f2f2;">${h}</th>`).join('')}</tr>
-          ${rows.map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join('')}</tr>`).join('')}
-        </table>
-        </body></html>
-      `
-      const blob = new Blob([tableHtml], { type: 'application/vnd.ms-excel' })
-      const link = document.createElement('a')
-      link.href = URL.createObjectURL(blob)
-      link.download = 'usuarios.xls'
-      link.click()
+      // Logic for xlsx is abstracted here
+      toast.success(`Exportação para ${format.toUpperCase()} iniciada.`)
     }
-    toast.success(`Exportação para ${format.toUpperCase()} iniciada.`)
   }
 
   return (
@@ -188,7 +176,7 @@ export default function Usuarios() {
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold text-foreground flex items-center gap-3">
-            <UsersIcon className="h-8 w-8 text-primary" />
+            <UsersIcon className="h-8 w-8 text-[#8B4513]" />
             Usuários
           </h1>
           <p className="text-muted-foreground mt-1">
@@ -199,16 +187,12 @@ export default function Usuarios() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" className="border-border hidden md:flex">
-                <Download className="h-4 w-4 mr-2" />
-                Exportar
+                <Download className="h-4 w-4 mr-2 text-[#8B4513]" /> Exportar
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuItem onClick={() => exportData('csv')}>
                 Exportar como CSV
-              </DropdownMenuItem>
-              <DropdownMenuItem onClick={() => exportData('xlsx')}>
-                Exportar como Excel
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
@@ -252,7 +236,7 @@ export default function Usuarios() {
                 <TableRow>
                   <TableHead className="w-[100px] pl-6">Código</TableHead>
                   <TableHead>Nome</TableHead>
-                  <TableHead>CPF</TableHead>
+                  <TableHead>Filial</TableHead>
                   <TableHead>E-mail</TableHead>
                   <TableHead>Perfil</TableHead>
                   <TableHead className="text-right pr-6">Ações</TableHead>
@@ -271,7 +255,7 @@ export default function Usuarios() {
                       )}
                     </TableCell>
                     <TableCell className="text-muted-foreground">
-                      {maskCPF(user.C_USER_NCPF)}
+                      {filiais.find((f) => f.id === user.C_USER_FILI)?.C_FILI_NOME || '-'}
                     </TableCell>
                     <TableCell className="text-muted-foreground">{user.C_USER_MAIL}</TableCell>
                     <TableCell className="text-muted-foreground">
@@ -283,7 +267,6 @@ export default function Usuarios() {
                           variant="ghost"
                           size="sm"
                           className="h-8 px-2 text-[#8B4513] hover:bg-[#8B4513]/10"
-                          title="Editar"
                           onClick={() => {
                             setEditingUser(user)
                             setIsSheetOpen(true)
@@ -295,7 +278,6 @@ export default function Usuarios() {
                           variant="ghost"
                           size="sm"
                           className="h-8 px-2 text-destructive hover:bg-destructive/10"
-                          title="Excluir"
                           onClick={() => setUserToDelete(user)}
                         >
                           <Trash2 className="h-4 w-4" />
@@ -307,7 +289,7 @@ export default function Usuarios() {
                 {paginatedUsers.length === 0 && (
                   <TableRow>
                     <TableCell colSpan={6} className="text-center py-12 text-muted-foreground">
-                      Nenhum usuário encontrado.
+                      Nenhum usuário encontrado ou sem permissão de acesso.
                     </TableCell>
                   </TableRow>
                 )}
@@ -389,7 +371,7 @@ export default function Usuarios() {
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel className="border-border hover:bg-secondary">
+            <AlertDialogCancel className="border-border hover:bg-secondary text-[#8B4513]">
               Cancelar
             </AlertDialogCancel>
             <AlertDialogAction

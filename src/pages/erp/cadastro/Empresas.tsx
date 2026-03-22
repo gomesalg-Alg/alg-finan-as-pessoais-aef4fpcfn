@@ -1,0 +1,269 @@
+import { useState, useMemo } from 'react'
+import { Empresa } from '@/types/empresa'
+import { EmpresaFormData } from '@/schemas/empresaSchema'
+import { EmpresaForm } from '@/components/erp/empresas/EmpresaForm'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from '@/components/ui/table'
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+  SheetDescription,
+} from '@/components/ui/sheet'
+import {
+  AlertDialog,
+  AlertDialogAction,
+  AlertDialogCancel,
+  AlertDialogContent,
+  AlertDialogDescription,
+  AlertDialogFooter,
+  AlertDialogHeader,
+  AlertDialogTitle,
+} from '@/components/ui/alert-dialog'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import { Plus, Search, Building, Edit, Trash2, Download } from 'lucide-react'
+import { toast } from 'sonner'
+import { maskCNPJ } from '@/utils/mask'
+import { addAuditLog } from '@/lib/logger'
+import useERPStore from '@/stores/useERPStore'
+
+export default function Empresas() {
+  const { empresas, setEmpresas, currentUser } = useERPStore()
+  const [search, setSearch] = useState('')
+  const [isSheetOpen, setIsSheetOpen] = useState(false)
+  const [editingEmpresa, setEditingEmpresa] = useState<Empresa | undefined>()
+  const [empresaToDelete, setEmpresaToDelete] = useState<Empresa | undefined>()
+
+  const filteredEmpresas = useMemo(() => {
+    return empresas.filter((e) => {
+      // Data isolation logic: user only sees their own company, unless admin logic dictates otherwise.
+      // Assuming admins can see all, but normal users see only their own.
+      const isAllowed = currentUser?.C_USER_PERF === 'ADMIN' || e.id === currentUser?.C_USER_EMPR
+      if (!isAllowed) return false
+
+      const matchText =
+        e.C_EMPR_NOME.toLowerCase().includes(search.toLowerCase()) ||
+        e.C_EMPR_CODI.toLowerCase().includes(search.toLowerCase())
+      return matchText
+    })
+  }, [empresas, search, currentUser])
+
+  const handleOpenNew = () => {
+    setEditingEmpresa(undefined)
+    setIsSheetOpen(true)
+  }
+
+  const handleSave = (data: EmpresaFormData) => {
+    if (editingEmpresa) {
+      setEmpresas(empresas.map((e) => (e.id === editingEmpresa.id ? { ...e, ...data } : e)))
+      addAuditLog(
+        'UPDATE',
+        editingEmpresa.id,
+        currentUser?.C_USER_CODI,
+        `Empresa ${data.C_EMPR_CODI} atualizada.`,
+      )
+      toast.success('Empresa atualizada com sucesso!')
+    } else {
+      const newId = Date.now().toString()
+      setEmpresas([{ ...data, id: newId } as Empresa, ...empresas])
+      addAuditLog('CREATE', newId, currentUser?.C_USER_CODI, `Empresa ${data.C_EMPR_CODI} criada.`)
+      toast.success('Empresa criada com sucesso!')
+    }
+    setIsSheetOpen(false)
+  }
+
+  const handleDelete = () => {
+    if (empresaToDelete) {
+      setEmpresas(empresas.filter((e) => e.id !== empresaToDelete.id))
+      addAuditLog(
+        'DELETE',
+        empresaToDelete.id,
+        currentUser?.C_USER_CODI,
+        `Empresa ${empresaToDelete.C_EMPR_CODI} removida`,
+      )
+      toast.success('Empresa removida com sucesso!')
+      setEmpresaToDelete(undefined)
+    }
+  }
+
+  const exportData = () => {
+    const headers = ['Código', 'Razão Social', 'Nome Fantasia', 'CNPJ']
+    const rows = filteredEmpresas.map((e) => [
+      e.C_EMPR_CODI,
+      e.C_EMPR_NOME,
+      e.C_EMPR_FANT,
+      maskCNPJ(e.C_EMPR_CNPJ),
+    ])
+    const csvContent = [headers.join(';'), ...rows.map((r) => r.join(';'))].join('\n')
+    const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' })
+    const link = document.createElement('a')
+    link.href = URL.createObjectURL(blob)
+    link.download = 'empresas.csv'
+    link.click()
+    toast.success(`Exportação para CSV iniciada.`)
+  }
+
+  return (
+    <div className="space-y-6">
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+        <div>
+          <h1 className="text-3xl font-bold text-foreground flex items-center gap-3">
+            <Building className="h-8 w-8 text-[#8B4513]" />
+            Empresas
+          </h1>
+          <p className="text-muted-foreground mt-1">Gestão de Empresas (C_EMPR).</p>
+        </div>
+        <div className="flex gap-2 w-full sm:w-auto">
+          <Button variant="outline" className="border-border hidden md:flex" onClick={exportData}>
+            <Download className="h-4 w-4 mr-2 text-[#8B4513]" /> Exportar CSV
+          </Button>
+          <Button
+            onClick={handleOpenNew}
+            className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm flex-1 sm:flex-none"
+          >
+            <Plus className="h-4 w-4 mr-2" /> Nova Empresa
+          </Button>
+        </div>
+      </div>
+
+      <Card className="border-border shadow-sm">
+        <CardHeader className="pb-4 border-b border-border/50">
+          <div className="relative flex-1 md:max-w-md">
+            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+            <Input
+              placeholder="Buscar por nome ou código..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className="pl-9 bg-background/50"
+            />
+          </div>
+        </CardHeader>
+        <CardContent className="p-0">
+          <div className="overflow-x-auto">
+            <Table>
+              <TableHeader className="bg-secondary/30">
+                <TableRow>
+                  <TableHead className="w-[100px] pl-6">Código</TableHead>
+                  <TableHead>Razão Social</TableHead>
+                  <TableHead>Fantasia</TableHead>
+                  <TableHead>CNPJ</TableHead>
+                  <TableHead className="text-right pr-6">Ações</TableHead>
+                </TableRow>
+              </TableHeader>
+              <TableBody>
+                {filteredEmpresas.map((emp) => (
+                  <TableRow key={emp.id} className="group border-border/50">
+                    <TableCell className="font-mono text-xs pl-6 text-muted-foreground">
+                      {emp.C_EMPR_CODI}
+                    </TableCell>
+                    <TableCell className="font-semibold">{emp.C_EMPR_NOME}</TableCell>
+                    <TableCell className="text-muted-foreground">{emp.C_EMPR_FANT}</TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {maskCNPJ(emp.C_EMPR_CNPJ)}
+                    </TableCell>
+                    <TableCell className="text-right pr-6">
+                      <div className="flex justify-end gap-2">
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 px-2 text-[#8B4513] hover:bg-[#8B4513]/10"
+                          onClick={() => {
+                            setEditingEmpresa(emp)
+                            setIsSheetOpen(true)
+                          }}
+                        >
+                          <Edit className="h-4 w-4" />
+                        </Button>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="h-8 px-2 text-destructive hover:bg-destructive/10"
+                          onClick={() => setEmpresaToDelete(emp)}
+                        >
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+                {filteredEmpresas.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={5} className="text-center py-12 text-muted-foreground">
+                      Nenhuma empresa encontrada ou sem permissão de acesso.
+                    </TableCell>
+                  </TableRow>
+                )}
+              </TableBody>
+            </Table>
+          </div>
+        </CardContent>
+      </Card>
+
+      <Sheet open={isSheetOpen} onOpenChange={setIsSheetOpen}>
+        <SheetContent className="w-full sm:max-w-2xl overflow-y-auto border-l-border bg-card p-6">
+          <SheetHeader className="mb-8">
+            <SheetTitle className="text-2xl">
+              {editingEmpresa ? 'Editar Empresa' : 'Nova Empresa'}
+            </SheetTitle>
+            <SheetDescription>
+              {editingEmpresa
+                ? 'Atualize os dados da'
+                : 'Preencha os dados abaixo para cadastrar uma nova'}{' '}
+              empresa.
+            </SheetDescription>
+          </SheetHeader>
+          {isSheetOpen && (
+            <EmpresaForm
+              key={editingEmpresa ? editingEmpresa.id : 'new'}
+              initialData={editingEmpresa}
+              onSubmit={handleSave}
+              onCancel={() => setIsSheetOpen(false)}
+            />
+          )}
+        </SheetContent>
+      </Sheet>
+
+      <AlertDialog
+        open={!!empresaToDelete}
+        onOpenChange={(o) => !o && setEmpresaToDelete(undefined)}
+      >
+        <AlertDialogContent className="border-border">
+          <AlertDialogHeader>
+            <AlertDialogTitle>Excluir Empresa</AlertDialogTitle>
+            <AlertDialogDescription>
+              Tem certeza que deseja excluir a empresa{' '}
+              <strong className="text-foreground">{empresaToDelete?.C_EMPR_NOME}</strong>? Esta ação
+              não pode ser desfeita.
+            </AlertDialogDescription>
+          </AlertDialogHeader>
+          <AlertDialogFooter>
+            <AlertDialogCancel className="border-border hover:bg-secondary text-[#8B4513]">
+              Cancelar
+            </AlertDialogCancel>
+            <AlertDialogAction
+              onClick={handleDelete}
+              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+            >
+              Excluir Empresa
+            </AlertDialogAction>
+          </AlertDialogFooter>
+        </AlertDialogContent>
+      </AlertDialog>
+    </div>
+  )
+}

@@ -30,7 +30,12 @@ interface UserFormProps {
 }
 
 export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
-  const { profiles } = useERPStore()
+  const { profiles, empresas, filiais, currentUser } = useERPStore()
+
+  // Isolation: if not admin, can only create users in their own company
+  const allowedEmpresas = empresas.filter(
+    (e) => currentUser?.C_USER_PERF === 'ADMIN' || e.id === currentUser?.C_USER_EMPR,
+  )
 
   const form = useForm<UserFormData>({
     resolver: zodResolver(userSchema),
@@ -50,10 +55,14 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
       C_USER_UFED: initialData?.C_USER_UFED || '',
       C_USER_PAIS: initialData?.C_USER_PAIS || 'Brasil',
       C_USER_PERF: initialData?.C_USER_PERF || '',
+      C_USER_EMPR: initialData?.C_USER_EMPR || '',
+      C_USER_FILI: initialData?.C_USER_FILI || '',
     },
   })
 
   const cepValue = form.watch('C_USER_CCEP')
+  const selectedEmpresa = form.watch('C_USER_EMPR')
+  const availableFiliais = filiais.filter((f) => f.C_FILI_EMPR === selectedEmpresa)
 
   useEffect(() => {
     const unmaskedCep = cepValue?.replace(/\D/g, '')
@@ -81,9 +90,93 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
         <div className="grid grid-cols-1 gap-8">
           <div className="space-y-4">
             <h3 className="text-lg font-semibold border-b border-border/50 pb-2 text-foreground">
-              Acesso ao Sistema
+              Acesso e Permissões
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
+                control={form.control}
+                name="C_USER_EMPR"
+                render={({ field, fieldState }) => (
+                  <FormItem>
+                    <FormLabel
+                      className={cn(
+                        'text-muted-foreground transition-colors',
+                        fieldState.error && '!text-white font-semibold',
+                      )}
+                    >
+                      Empresa
+                    </FormLabel>
+                    <Select
+                      onValueChange={(val) => {
+                        field.onChange(val)
+                        form.setValue('C_USER_FILI', '')
+                      }}
+                      value={field.value}
+                    >
+                      <FormControl>
+                        <SelectTrigger
+                          className={cn(
+                            'bg-background/50 border-border focus:border-primary',
+                            fieldState.error &&
+                              'border-white focus:border-white ring-offset-white text-white',
+                          )}
+                        >
+                          <SelectValue placeholder="Selecione..." />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {allowedEmpresas.map((e) => (
+                          <SelectItem key={e.id} value={e.id}>
+                            {e.C_EMPR_NOME}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage className="!text-white font-medium drop-shadow-md" />
+                  </FormItem>
+                )}
+              />
+              <FormField
+                control={form.control}
+                name="C_USER_FILI"
+                render={({ field, fieldState }) => (
+                  <FormItem>
+                    <FormLabel
+                      className={cn(
+                        'text-muted-foreground transition-colors',
+                        fieldState.error && '!text-white font-semibold',
+                      )}
+                    >
+                      Filial
+                    </FormLabel>
+                    <Select
+                      onValueChange={field.onChange}
+                      value={field.value}
+                      disabled={!selectedEmpresa}
+                    >
+                      <FormControl>
+                        <SelectTrigger
+                          className={cn(
+                            'bg-background/50 border-border focus:border-primary disabled:opacity-50',
+                            fieldState.error &&
+                              'border-white focus:border-white ring-offset-white text-white',
+                          )}
+                        >
+                          <SelectValue placeholder="Selecione..." />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {availableFiliais.map((f) => (
+                          <SelectItem key={f.id} value={f.id}>
+                            {f.C_FILI_NOME}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage className="!text-white font-medium drop-shadow-md" />
+                  </FormItem>
+                )}
+              />
               <FormInput
                 control={form.control}
                 name="C_USER_CODI"
@@ -122,7 +215,8 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
                         <SelectTrigger
                           className={cn(
                             'bg-background/50 border-border focus:border-primary',
-                            fieldState.error && 'border-white focus:border-white ring-offset-white',
+                            fieldState.error &&
+                              'border-white focus:border-white ring-offset-white text-white',
                           )}
                         >
                           <SelectValue placeholder="Selecione um perfil" />
@@ -232,7 +326,7 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
             type="button"
             variant="outline"
             onClick={onCancel}
-            className="border-border hover:bg-secondary"
+            className="border-border hover:bg-secondary text-[#8B4513]"
           >
             <X className="w-4 h-4 mr-2" /> Cancelar
           </Button>

@@ -9,6 +9,8 @@ import {
   Wrench,
   ChevronRight,
   ShieldCheck,
+  Building,
+  MapPin,
 } from 'lucide-react'
 import {
   Sidebar,
@@ -36,7 +38,9 @@ export function ERPSidebar() {
     hasPermission('perfis') ||
     hasPermission('clientes') ||
     hasPermission('fornecedores') ||
-    hasPermission('classificacao-financeira')
+    hasPermission('classificacao-financeira') ||
+    hasPermission('empresas') ||
+    hasPermission('filiais')
 
   return (
     <Sidebar collapsible="icon" className="border-r border-sidebar-border bg-sidebar shadow-2xl">
@@ -72,7 +76,7 @@ export function ERPSidebar() {
                   tooltip="Dashboard"
                 >
                   <Link to="/erp">
-                    <LayoutDashboard />
+                    <LayoutDashboard className="text-[#8B4513]" />
                     <span>Dashboard</span>
                   </Link>
                 </SidebarMenuButton>
@@ -87,13 +91,39 @@ export function ERPSidebar() {
                 <SidebarMenuItem>
                   <CollapsibleTrigger asChild>
                     <SidebarMenuButton tooltip="Cadastro">
-                      <ShieldCheck />
+                      <ShieldCheck className="text-[#8B4513]" />
                       <span>Cadastro</span>
-                      <ChevronRight className="ml-auto h-4 w-4 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                      <ChevronRight className="ml-auto h-4 w-4 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90 text-[#8B4513]" />
                     </SidebarMenuButton>
                   </CollapsibleTrigger>
                   <CollapsibleContent>
                     <SidebarMenuSub>
+                      {hasPermission('empresas') && (
+                        <SidebarMenuSubItem>
+                          <SidebarMenuSubButton
+                            asChild
+                            isActive={location.pathname === '/erp/cadastro/empresas'}
+                          >
+                            <Link to="/erp/cadastro/empresas">
+                              <Building className="h-4 w-4 mr-2 text-[#8B4513]" />
+                              <span>Empresas</span>
+                            </Link>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      )}
+                      {hasPermission('filiais') && (
+                        <SidebarMenuSubItem>
+                          <SidebarMenuSubButton
+                            asChild
+                            isActive={location.pathname === '/erp/cadastro/filiais'}
+                          >
+                            <Link to="/erp/cadastro/filiais">
+                              <MapPin className="h-4 w-4 mr-2 text-[#8B4513]" />
+                              <span>Filiais</span>
+                            </Link>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      )}
                       {hasPermission('usuarios') && (
                         <SidebarMenuSubItem>
                           <SidebarMenuSubButton
@@ -101,7 +131,7 @@ export function ERPSidebar() {
                             isActive={location.pathname === '/erp/cadastro/usuarios'}
                           >
                             <Link to="/erp/cadastro/usuarios">
-                              <Users className="h-4 w-4 mr-2" />
+                              <Users className="h-4 w-4 mr-2 text-[#8B4513]" />
                               <span>Usuários</span>
                             </Link>
                           </SidebarMenuSubButton>
@@ -114,7 +144,7 @@ export function ERPSidebar() {
                             isActive={location.pathname === '/erp/cadastro/perfis'}
                           >
                             <Link to="/erp/cadastro/perfis">
-                              <ShieldCheck className="h-4 w-4 mr-2" />
+                              <ShieldCheck className="h-4 w-4 mr-2 text-[#8B4513]" />
                               <span>Perfis de Acesso</span>
                             </Link>
                           </SidebarMenuSubButton>
@@ -127,7 +157,7 @@ export function ERPSidebar() {
                             isActive={location.pathname === '/erp/cadastro/clientes'}
                           >
                             <Link to="/erp/cadastro/clientes">
-                              <Users className="h-4 w-4 mr-2" />
+                              <Users className="h-4 w-4 mr-2 text-[#8B4513]" />
                               <span>Clientes</span>
                             </Link>
                           </SidebarMenuSubButton>
@@ -140,7 +170,7 @@ export function ERPSidebar() {
                             isActive={location.pathname === '/erp/cadastro/fornecedores'}
                           >
                             <Link to="/erp/cadastro/fornecedores">
-                              <Building2 className="h-4 w-4 mr-2" />
+                              <Building2 className="h-4 w-4 mr-2 text-[#8B4513]" />
                               <span>Fornecedores</span>
                             </Link>
                           </SidebarMenuSubButton>
@@ -155,7 +185,7 @@ export function ERPSidebar() {
                             }
                           >
                             <Link to="/erp/cadastro/classificacao-financeira">
-                              <Tags className="h-4 w-4 mr-2" />
+                              <Tags className="h-4 w-4 mr-2 text-[#8B4513]" />
                               <span className="truncate">Classificação Financeira</span>
                             </Link>
                           </SidebarMenuSubButton>
@@ -169,21 +199,21 @@ export function ERPSidebar() {
 
             <SidebarMenuItem>
               <SidebarMenuButton tooltip="Operação">
-                <Settings />
+                <Settings className="text-[#8B4513]" />
                 <span>Operação</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
 
             <SidebarMenuItem>
               <SidebarMenuButton tooltip="Relatórios">
-                <FileText />
+                <FileText className="text-[#8B4513]" />
                 <span>Relatórios</span>
               </SidebarMenuButton>
             </SidebarMenuItem>
 
             <SidebarMenuItem>
               <SidebarMenuButton tooltip="Ferramentas">
-                <Wrench />
+                <Wrench className="text-[#8B4513]" />
                 <span>Ferramentas</span>
               </SidebarMenuButton>
             </SidebarMenuItem>

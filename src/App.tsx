@@ -17,6 +17,8 @@ import Clientes from '@/pages/erp/cadastro/Clientes'
 import Fornecedores from '@/pages/erp/cadastro/Fornecedores'
 import Usuarios from '@/pages/erp/cadastro/Usuarios'
 import Perfis from '@/pages/erp/cadastro/Perfis'
+import Empresas from '@/pages/erp/cadastro/Empresas'
+import Filiais from '@/pages/erp/cadastro/Filiais'
 import ClassificacaoFinanceira from '@/pages/erp/cadastro/ClassificacaoFinanceira'
 
 import { ERPProvider } from '@/stores/useERPStore'
@@ -39,6 +41,8 @@ const App = () => (
 
           <Route path="/erp" element={<ERPLayout />}>
             <Route index element={<Dashboard />} />
+            <Route path="cadastro/empresas" element={<Empresas />} />
+            <Route path="cadastro/filiais" element={<Filiais />} />
             <Route path="cadastro/usuarios" element={<Usuarios />} />
             <Route path="cadastro/perfis" element={<Perfis />} />
             <Route path="cadastro/clientes" element={<Clientes />} />

@@ -14,4 +14,6 @@ export interface User {
   C_USER_UFED: string
   C_USER_PAIS: string
   C_USER_PERF?: string
+  C_USER_EMPR?: string
+  C_USER_FILI?: string
 }

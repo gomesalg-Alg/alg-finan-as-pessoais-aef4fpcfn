@@ -1,7 +1,7 @@
 import { Control, FieldValues, Path } from 'react-hook-form'
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import { maskCPF, maskCEP, unmask } from '@/utils/mask'
+import { maskCPF, maskCEP, maskCNPJ, unmask } from '@/utils/mask'
 import { cn } from '@/lib/utils'
 
 interface FormInputProps<T extends FieldValues> {
@@ -10,7 +10,7 @@ interface FormInputProps<T extends FieldValues> {
   label: string
   type?: string
   placeholder?: string
-  mask?: 'cpf' | 'cep'
+  mask?: 'cpf' | 'cep' | 'cnpj'
   maxLength?: number
 }
 
@@ -26,6 +26,7 @@ export function FormInput<T extends FieldValues>({
   const applyMask = (value: string) => {
     if (mask === 'cpf') return maskCPF(value)
     if (mask === 'cep') return maskCEP(value)
+    if (mask === 'cnpj') return maskCNPJ(value)
     return value
   }
 
@@ -52,7 +53,8 @@ export function FormInput<T extends FieldValues>({
                 placeholder={placeholder}
                 className={cn(
                   'bg-background/50 border-border focus:border-primary',
-                  fieldState.error && 'border-white focus:border-white ring-offset-white',
+                  fieldState.error &&
+                    'border-white focus:border-white ring-offset-white text-foreground',
                 )}
                 {...field}
                 value={displayValue}

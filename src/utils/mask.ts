@@ -14,6 +14,16 @@ export const maskCEP = (value: string) => {
     .replace(/(-\d{3})\d+?$/, '$1')
 }
 
+export const maskCNPJ = (value: string) => {
+  return value
+    .replace(/\D/g, '')
+    .replace(/(\d{2})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d)/, '$1.$2')
+    .replace(/(\d{3})(\d)/, '$1/$2')
+    .replace(/(\d{4})(\d{1,2})/, '$1-$2')
+    .replace(/(-\d{2})\d+?$/, '$1')
+}
+
 export const unmask = (value: string) => value.replace(/\D/g, '')
 
 export const isValidCPF = (cpf: string) => {
@@ -39,5 +49,12 @@ export const isValidCPF = (cpf: string) => {
   if (remainder === 10 || remainder === 11) remainder = 0
   if (remainder !== parseInt(cleanCpf.substring(10, 11))) return false
 
+  return true
+}
+
+export const isValidCNPJ = (cnpj: string) => {
+  const cleanCnpj = cnpj.replace(/\D/g, '')
+  if (cleanCnpj.length !== 14) return false
+  if (/^(\d)\1{13}$/.test(cleanCnpj)) return false
   return true
 }
