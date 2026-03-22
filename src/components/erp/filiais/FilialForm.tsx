@@ -33,6 +33,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import useERPStore from '@/stores/useERPStore'
 
 interface FilialFormProps {
   initialData?: Partial<FilialFormData>
@@ -47,8 +48,11 @@ export function FilialForm({
   empresas = [],
   onSubmit,
   onCancel,
-  isTi = false,
+  isTi: isTiProp,
 }: FilialFormProps) {
+  const { currentUser } = useERPStore()
+  const isTi = isTiProp || currentUser?.role === 'ti' || currentUser?.C_USER_PERF === 'TI'
+
   const form = useForm<FilialFormData>({
     resolver: zodResolver(filialSchema),
     defaultValues: {
@@ -117,7 +121,7 @@ export function FilialForm({
       <div className="mb-6 pb-2 border-b border-blue-200 flex items-center gap-2">
         <Store className="h-6 w-6 text-amber-700" />
         <h2 className="text-xl font-bold text-blue-900">
-          {isTi ? 'C_FILI - ' : ''}Cadastro de Filial
+          {isTi ? '[C_FILI] - ' : ''}Cadastro de Filial
         </h2>
       </div>
 
@@ -147,7 +151,9 @@ export function FilialForm({
                         <SelectContent>
                           {empresas.map((emp) => (
                             <SelectItem key={emp.id} value={emp.id}>
-                              {emp.nomeFantasia || emp.C_EMPR_FANT || emp.razaoSocial}
+                              {emp.nomeFantasia ||
+                                (emp as any).C_EMPR_FANT ||
+                                (emp as any).razaoSocial}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -174,7 +180,7 @@ export function FilialForm({
                 'C_FILI_CNPJ',
                 cnpjMask,
               )}
-              {renderField('ie', 'Inscrição Estadual', <Hash className="h-4 w-4" />, 'C_FILI_IE')}
+              {renderField('ie', 'Inscrição Estadual', <Hash className="h-4 w-4" />, 'C_FILI_INSC')}
             </div>
           </div>
 

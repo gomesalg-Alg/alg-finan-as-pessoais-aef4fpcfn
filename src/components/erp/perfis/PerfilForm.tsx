@@ -16,6 +16,7 @@ import { Button } from '@/components/ui/button'
 import { Checkbox } from '@/components/ui/checkbox'
 import { Save, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
+import useERPStore from '@/stores/useERPStore'
 
 interface PerfilFormProps {
   initialData?: Partial<PerfilFormData>
@@ -37,7 +38,10 @@ const PERMISSIONS = [
   },
 ]
 
-export function PerfilForm({ initialData, onSubmit, onCancel, isTi = false }: PerfilFormProps) {
+export function PerfilForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: PerfilFormProps) {
+  const { currentUser } = useERPStore()
+  const isTi = isTiProp || currentUser?.role === 'ti' || currentUser?.C_USER_PERF === 'TI'
+
   const form = useForm<PerfilFormData>({
     resolver: zodResolver(perfilSchema),
     mode: 'onBlur',

@@ -32,6 +32,7 @@ import {
   Landmark,
 } from 'lucide-react'
 import { logger } from '@/lib/logger'
+import useERPStore from '@/stores/useERPStore'
 
 interface UserFormProps {
   initialData?: Partial<UserFormData>
@@ -40,7 +41,10 @@ interface UserFormProps {
   isTi?: boolean
 }
 
-export function UserForm({ initialData, onSubmit, onCancel, isTi = false }: UserFormProps) {
+export function UserForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: UserFormProps) {
+  const { currentUser } = useERPStore()
+  const isTi = isTiProp || currentUser?.role === 'ti' || currentUser?.C_USER_PERF === 'TI'
+
   const form = useForm<UserFormData>({
     resolver: zodResolver(userSchema),
     defaultValues: {
@@ -110,7 +114,7 @@ export function UserForm({ initialData, onSubmit, onCancel, isTi = false }: User
       <div className="mb-6 pb-2 border-b border-blue-200 flex items-center gap-2">
         <UserIcon className="h-6 w-6 text-amber-700" />
         <h2 className="text-xl font-bold text-blue-900">
-          {isTi ? 'C_USER - ' : ''}Cadastro de Usuário
+          {isTi ? '[C_USER] - ' : ''}Cadastro de Usuário
         </h2>
       </div>
 

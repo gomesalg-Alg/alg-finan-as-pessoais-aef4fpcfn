@@ -25,14 +25,19 @@ import {
   Navigation,
 } from 'lucide-react'
 import { logger } from '@/lib/logger'
+import useERPStore from '@/stores/useERPStore'
 
 interface EmpresaFormProps {
   initialData?: Partial<EmpresaFormData>
   onSubmit: (data: EmpresaFormData) => void
   onCancel?: () => void
+  isTi?: boolean
 }
 
-export function EmpresaForm({ initialData, onSubmit, onCancel }: EmpresaFormProps) {
+export function EmpresaForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: EmpresaFormProps) {
+  const { currentUser } = useERPStore()
+  const isTi = isTiProp || currentUser?.role === 'ti' || currentUser?.C_USER_PERF === 'TI'
+
   const form = useForm<EmpresaFormData>({
     resolver: zodResolver(empresaSchema),
     defaultValues: {
@@ -65,39 +70,45 @@ export function EmpresaForm({ initialData, onSubmit, onCancel }: EmpresaFormProp
     name: keyof EmpresaFormData,
     label: string,
     icon: any,
+    techName?: string,
     maskFn?: (v: string) => string,
-  ) => (
-    <FormField
-      control={form.control}
-      name={name}
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
-            {icon && <span className="text-amber-800">{icon}</span>}
-            {label}
-          </FormLabel>
-          <FormControl>
-            <Input
-              {...field}
-              value={(field.value as string) || ''}
-              onChange={(e) => {
-                const val = maskFn ? maskFn(e.target.value) : e.target.value
-                field.onChange(val)
-              }}
-              className="bg-white border-blue-200 focus-visible:ring-blue-500 text-gray-800 shadow-sm w-full"
-            />
-          </FormControl>
-          <FormMessage className="text-white bg-red-500 px-2 py-1 mt-1 rounded text-xs inline-block shadow-sm" />
-        </FormItem>
-      )}
-    />
-  )
+  ) => {
+    const displayLabel = isTi && techName ? `[${techName}] - ${label}` : label
+    return (
+      <FormField
+        control={form.control}
+        name={name}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
+              {icon && <span className="text-amber-800">{icon}</span>}
+              {displayLabel}
+            </FormLabel>
+            <FormControl>
+              <Input
+                {...field}
+                value={(field.value as string) || ''}
+                onChange={(e) => {
+                  const val = maskFn ? maskFn(e.target.value) : e.target.value
+                  field.onChange(val)
+                }}
+                className="bg-white border-blue-200 focus-visible:ring-blue-500 text-gray-800 shadow-sm w-full"
+              />
+            </FormControl>
+            <FormMessage className="text-white bg-red-500 px-2 py-1 mt-1 rounded text-xs inline-block shadow-sm" />
+          </FormItem>
+        )}
+      />
+    )
+  }
 
   return (
     <div className="bg-blue-50 p-6 rounded-xl border border-blue-100 shadow-sm">
       <div className="mb-6 pb-2 border-b border-blue-200 flex items-center gap-2">
         <Building2 className="h-6 w-6 text-amber-700" />
-        <h2 className="text-xl font-bold text-blue-900">Cadastro de Empresa</h2>
+        <h2 className="text-xl font-bold text-blue-900">
+          {isTi ? '[C_EMPR] - ' : ''}Cadastro de Empresa
+        </h2>
       </div>
 
       <Form {...form}>
@@ -107,13 +118,34 @@ export function EmpresaForm({ initialData, onSubmit, onCancel }: EmpresaFormProp
               <FileText className="h-4 w-4" /> Dados Principais
             </h3>
             <div className="grid grid-cols-1 gap-4">
-              {renderField('razaoSocial', 'Razão Social', <Building2 className="h-4 w-4" />)}
-              {renderField('nomeFantasia', 'Nome Fantasia', <Building2 className="h-4 w-4" />)}
+              {renderField(
+                'razaoSocial',
+                'Razão Social',
+                <Building2 className="h-4 w-4" />,
+                'C_EMPR_NOME',
+              )}
+              {renderField(
+                'nomeFantasia',
+                'Nome Fantasia',
+                <Building2 className="h-4 w-4" />,
+                'C_EMPR_FANT',
+              )}
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {renderField('cnpj', 'CNPJ', <FileText className="h-4 w-4" />, cnpjMask)}
-              {renderField('ie', 'Inscrição Estadual', <Hash className="h-4 w-4" />)}
-              {renderField('im', 'Inscrição Municipal', <Hash className="h-4 w-4" />)}
+              {renderField(
+                'cnpj',
+                'CNPJ',
+                <FileText className="h-4 w-4" />,
+                'C_EMPR_CNPJ',
+                cnpjMask,
+              )}
+              {renderField('ie', 'Inscrição Estadual', <Hash className="h-4 w-4" />, 'C_EMPR_INSC')}
+              {renderField(
+                'im',
+                'Inscrição Municipal',
+                <Hash className="h-4 w-4" />,
+                'C_EMPR_IMUN',
+              )}
             </div>
           </div>
 
@@ -122,8 +154,14 @@ export function EmpresaForm({ initialData, onSubmit, onCancel }: EmpresaFormProp
               <Phone className="h-4 w-4" /> Contato
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {renderField('telefone', 'Telefone', <Phone className="h-4 w-4" />, phoneMask)}
-              {renderField('email', 'E-mail', <Mail className="h-4 w-4" />)}
+              {renderField(
+                'telefone',
+                'Telefone',
+                <Phone className="h-4 w-4" />,
+                'C_EMPR_FONE',
+                phoneMask,
+              )}
+              {renderField('email', 'E-mail', <Mail className="h-4 w-4" />, 'C_EMPR_MAIL')}
             </div>
           </div>
 
@@ -133,29 +171,39 @@ export function EmpresaForm({ initialData, onSubmit, onCancel }: EmpresaFormProp
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="md:col-span-1">
-                {renderField('cep', 'CEP', <MapPin className="h-4 w-4" />, cepMask)}
+                {renderField('cep', 'CEP', <MapPin className="h-4 w-4" />, 'C_EMPR_CCEP', cepMask)}
               </div>
               <div className="md:col-span-3">
-                {renderField('logradouro', 'Logradouro', <MapIcon className="h-4 w-4" />)}
+                {renderField(
+                  'logradouro',
+                  'Logradouro',
+                  <MapIcon className="h-4 w-4" />,
+                  'C_EMPR_ENDE',
+                )}
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="md:col-span-1">
-                {renderField('numero', 'Número', <Hash className="h-4 w-4" />)}
+                {renderField('numero', 'Número', <Hash className="h-4 w-4" />, 'C_EMPR_NUME')}
               </div>
               <div className="md:col-span-1">
-                {renderField('complemento', 'Complemento', <Navigation className="h-4 w-4" />)}
+                {renderField(
+                  'complemento',
+                  'Complemento',
+                  <Navigation className="h-4 w-4" />,
+                  'C_EMPR_COMP',
+                )}
               </div>
               <div className="md:col-span-2">
-                {renderField('bairro', 'Bairro', <MapIcon className="h-4 w-4" />)}
+                {renderField('bairro', 'Bairro', <MapIcon className="h-4 w-4" />, 'C_EMPR_BAIR')}
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="md:col-span-3">
-                {renderField('cidade', 'Cidade', <Landmark className="h-4 w-4" />)}
+                {renderField('cidade', 'Cidade', <Landmark className="h-4 w-4" />, 'C_EMPR_MUNI')}
               </div>
               <div className="md:col-span-1">
-                {renderField('uf', 'UF', <MapPin className="h-4 w-4" />)}
+                {renderField('uf', 'UF', <MapPin className="h-4 w-4" />, 'C_EMPR_UFED')}
               </div>
             </div>
           </div>
