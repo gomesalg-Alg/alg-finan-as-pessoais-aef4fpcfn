@@ -1,15 +1,21 @@
 import { z } from 'zod'
-import { isValidCNPJ } from '@/utils/mask'
 
 export const empresaSchema = z.object({
-  C_EMPR_CODI: z.string().min(1, 'Código é obrigatório'),
-  C_EMPR_NOME: z.string().min(3, 'Razão Social deve ter no mínimo 3 caracteres'),
-  C_EMPR_FANT: z.string().min(1, 'Nome Fantasia é obrigatório'),
-  C_EMPR_CNPJ: z
-    .string()
-    .min(1, 'CNPJ é obrigatório')
-    .refine((val) => val.replace(/\D/g, '').length === 14, 'CNPJ deve conter 14 dígitos')
-    .refine((val) => isValidCNPJ(val), 'CNPJ inválido'),
+  id: z.string().optional(),
+  razaoSocial: z.string().min(1, 'Razão Social é obrigatória'),
+  nomeFantasia: z.string().min(1, 'Nome Fantasia é obrigatório'),
+  cnpj: z.string().min(14, 'CNPJ inválido'),
+  ie: z.string().optional(),
+  im: z.string().optional(),
+  cep: z.string().min(8, 'CEP inválido').optional().or(z.literal('')),
+  logradouro: z.string().optional(),
+  numero: z.string().optional(),
+  complemento: z.string().optional(),
+  bairro: z.string().optional(),
+  cidade: z.string().optional(),
+  uf: z.string().optional(),
+  telefone: z.string().optional(),
+  email: z.string().email('E-mail inválido').optional().or(z.literal('')),
 })
 
 export type EmpresaFormData = z.infer<typeof empresaSchema>

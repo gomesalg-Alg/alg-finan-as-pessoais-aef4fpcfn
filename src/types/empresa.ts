@@ -1,7 +1,19 @@
 export interface Empresa {
   id: string
-  C_EMPR_CODI: string
-  C_EMPR_NOME: string
-  C_EMPR_FANT: string
-  C_EMPR_CNPJ: string
+  razaoSocial: string
+  nomeFantasia: string
+  cnpj: string
+  ie?: string
+  im?: string
+  cep?: string
+  logradouro?: string
+  numero?: string
+  complemento?: string
+  bairro?: string
+  cidade?: string
+  uf?: string
+  telefone?: string
+  email?: string
+  createdAt?: string
+  updatedAt?: string
 }

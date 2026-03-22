@@ -1,4 +1,3 @@
-import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { userSchema, UserFormData } from '@/schemas/userSchema'
@@ -10,9 +9,10 @@ import {
   FormControl,
   FormMessage,
 } from '@/components/ui/form'
+import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
-import { FormInput } from './FormInput'
-import { Save, X } from 'lucide-react'
+import { useCepAutofill } from '@/hooks/use-cep-autofill'
+import { cepMask } from '@/utils/mask'
 import {
   Select,
   SelectContent,
@@ -20,324 +20,206 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
-import useERPStore from '@/stores/useERPStore'
-import { cn } from '@/lib/utils'
+import {
+  User as UserIcon,
+  MapPin,
+  Mail,
+  Shield,
+  Activity,
+  Hash,
+  Map as MapIcon,
+  Navigation,
+  Landmark,
+} from 'lucide-react'
+import { logger } from '@/lib/logger'
 
 interface UserFormProps {
   initialData?: Partial<UserFormData>
   onSubmit: (data: UserFormData) => void
-  onCancel: () => void
+  onCancel?: () => void
 }
 
 export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
-  const { profiles, empresas, filiais, currentUser } = useERPStore()
-
-  // Isolation: if not admin, can only create users in their own company
-  const allowedEmpresas = empresas.filter(
-    (e) => currentUser?.C_USER_PERF === 'ADMIN' || e.id === currentUser?.C_USER_EMPR,
-  )
-
   const form = useForm<UserFormData>({
     resolver: zodResolver(userSchema),
-    mode: 'onBlur',
     defaultValues: {
-      C_USER_CODI: initialData?.C_USER_CODI || '',
-      C_USER_NOME: initialData?.C_USER_NOME || '',
-      C_USER_FANT: initialData?.C_USER_FANT || '',
-      C_USER_NCPF: initialData?.C_USER_NCPF || '',
-      C_USER_PASS: initialData?.C_USER_PASS || '',
-      C_USER_MAIL: initialData?.C_USER_MAIL || '',
-      C_USER_CCEP: initialData?.C_USER_CCEP || '',
-      C_USER_ENDE: initialData?.C_USER_ENDE || '',
-      C_USER_BAIR: initialData?.C_USER_BAIR || '',
-      C_USER_MUNI: initialData?.C_USER_MUNI || '',
-      C_USER_ESTA: initialData?.C_USER_ESTA || '',
-      C_USER_UFED: initialData?.C_USER_UFED || '',
-      C_USER_PAIS: initialData?.C_USER_PAIS || 'Brasil',
-      C_USER_PERF: initialData?.C_USER_PERF || '',
-      C_USER_EMPR: initialData?.C_USER_EMPR || '',
-      C_USER_FILI: initialData?.C_USER_FILI || '',
+      name: initialData?.name || '',
+      email: initialData?.email || '',
+      role: initialData?.role || 'user',
+      status: initialData?.status || 'active',
+      cep: initialData?.cep || '',
+      logradouro: initialData?.logradouro || '',
+      numero: initialData?.numero || '',
+      complemento: initialData?.complemento || '',
+      bairro: initialData?.bairro || '',
+      cidade: initialData?.cidade || '',
+      uf: initialData?.uf || '',
+      ...initialData,
     },
   })
 
-  const cepValue = form.watch('C_USER_CCEP')
-  const selectedEmpresa = form.watch('C_USER_EMPR')
-  const availableFiliais = filiais.filter((f) => f.C_FILI_EMPR === selectedEmpresa)
+  useCepAutofill(form.watch, form.setValue)
 
-  useEffect(() => {
-    const unmaskedCep = cepValue?.replace(/\D/g, '')
-    if (unmaskedCep?.length === 8) {
-      fetch(`https://viacep.com.br/ws/${unmaskedCep}/json/`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (!data.erro) {
-            form.setValue('C_USER_ENDE', data.logradouro || '', { shouldValidate: true })
-            form.setValue('C_USER_BAIR', data.bairro || '', { shouldValidate: true })
-            form.setValue('C_USER_MUNI', data.localidade || '', { shouldValidate: true })
-            form.setValue('C_USER_UFED', data.uf || '', { shouldValidate: true })
-            if (data.estado) {
-              form.setValue('C_USER_ESTA', data.estado, { shouldValidate: true })
-            }
-          }
-        })
-        .catch((err) => console.error('Erro ao buscar CEP:', err))
-    }
-  }, [cepValue, form])
+  const handleSubmit = (data: UserFormData) => {
+    logger.log('SUBMIT_USER', data)
+    onSubmit(data)
+  }
+
+  const renderField = (
+    name: keyof UserFormData,
+    label: string,
+    icon: any,
+    maskFn?: (v: string) => string,
+  ) => (
+    <FormField
+      control={form.control}
+      name={name}
+      render={({ field }) => (
+        <FormItem>
+          <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
+            {icon && <span className="text-amber-800">{icon}</span>}
+            {label}
+          </FormLabel>
+          <FormControl>
+            <Input
+              {...field}
+              value={(field.value as string) || ''}
+              onChange={(e) => {
+                const val = maskFn ? maskFn(e.target.value) : e.target.value
+                field.onChange(val)
+              }}
+              className="bg-white border-blue-200 focus-visible:ring-blue-500 text-gray-800 shadow-sm"
+            />
+          </FormControl>
+          <FormMessage className="text-white bg-red-500 px-2 py-1 mt-1 rounded text-xs inline-block shadow-sm" />
+        </FormItem>
+      )}
+    />
+  )
 
   return (
-    <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 pb-8">
-        <div className="grid grid-cols-1 gap-8">
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold border-b border-border/50 pb-2 text-foreground">
-              Acesso e Permissões
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="C_USER_EMPR"
-                render={({ field, fieldState }) => (
-                  <FormItem>
-                    <FormLabel
-                      className={cn(
-                        'text-muted-foreground transition-colors',
-                        fieldState.error && '!text-white font-semibold',
-                      )}
-                    >
-                      Empresa
-                    </FormLabel>
-                    <Select
-                      onValueChange={(val) => {
-                        field.onChange(val)
-                        form.setValue('C_USER_FILI', '')
-                      }}
-                      value={field.value}
-                    >
-                      <FormControl>
-                        <SelectTrigger
-                          className={cn(
-                            'bg-background/50 border-border focus:border-primary',
-                            fieldState.error &&
-                              'border-white focus:border-white ring-offset-white text-white',
-                          )}
-                        >
-                          <SelectValue placeholder="Selecione..." />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {allowedEmpresas.map((e) => (
-                          <SelectItem key={e.id} value={e.id}>
-                            {e.C_EMPR_NOME}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage className="!text-white font-medium drop-shadow-md" />
-                  </FormItem>
-                )}
-              />
-              <FormField
-                control={form.control}
-                name="C_USER_FILI"
-                render={({ field, fieldState }) => (
-                  <FormItem>
-                    <FormLabel
-                      className={cn(
-                        'text-muted-foreground transition-colors',
-                        fieldState.error && '!text-white font-semibold',
-                      )}
-                    >
-                      Filial
-                    </FormLabel>
-                    <Select
-                      onValueChange={field.onChange}
-                      value={field.value}
-                      disabled={!selectedEmpresa}
-                    >
-                      <FormControl>
-                        <SelectTrigger
-                          className={cn(
-                            'bg-background/50 border-border focus:border-primary disabled:opacity-50',
-                            fieldState.error &&
-                              'border-white focus:border-white ring-offset-white text-white',
-                          )}
-                        >
-                          <SelectValue placeholder="Selecione..." />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {availableFiliais.map((f) => (
-                          <SelectItem key={f.id} value={f.id}>
-                            {f.C_FILI_NOME}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage className="!text-white font-medium drop-shadow-md" />
-                  </FormItem>
-                )}
-              />
-              <FormInput
-                control={form.control}
-                name="C_USER_CODI"
-                label="Código do Usuário"
-                placeholder="Ex: ADM01"
-              />
-              <FormInput
-                control={form.control}
-                name="C_USER_MAIL"
-                label="E-mail Corporativo"
-                type="email"
-                placeholder="admin@empresa.com"
-              />
-              <FormInput
-                control={form.control}
-                name="C_USER_PASS"
-                label="Senha de Acesso"
-                type="password"
-                placeholder="••••••••"
-              />
-              <FormField
-                control={form.control}
-                name="C_USER_PERF"
-                render={({ field, fieldState }) => (
-                  <FormItem>
-                    <FormLabel
-                      className={cn(
-                        'text-muted-foreground transition-colors',
-                        fieldState.error && '!text-white font-semibold',
-                      )}
-                    >
-                      Perfil de Acesso
-                    </FormLabel>
-                    <Select onValueChange={field.onChange} value={field.value}>
-                      <FormControl>
-                        <SelectTrigger
-                          className={cn(
-                            'bg-background/50 border-border focus:border-primary',
-                            fieldState.error &&
-                              'border-white focus:border-white ring-offset-white text-white',
-                          )}
-                        >
-                          <SelectValue placeholder="Selecione um perfil" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {profiles.map((p) => (
-                          <SelectItem key={p.id} value={p.id}>
-                            {p.C_PERF_NOME}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage className="!text-white font-medium drop-shadow-md" />
-                  </FormItem>
-                )}
-              />
-            </div>
-          </div>
+    <div className="bg-blue-50 p-6 rounded-xl border border-blue-100 shadow-sm">
+      <div className="mb-6 pb-2 border-b border-blue-200 flex items-center gap-2">
+        <UserIcon className="h-6 w-6 text-amber-700" />
+        <h2 className="text-xl font-bold text-blue-900">Cadastro de Usuário</h2>
+      </div>
 
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold border-b border-border/50 pb-2 text-foreground">
-              Identificação
+      <Form {...form}>
+        <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
+          <div className="bg-white/60 p-4 rounded-lg border border-blue-100/50 space-y-4">
+            <h3 className="text-sm font-bold text-amber-800 uppercase flex items-center gap-2 mb-4">
+              <MapPin className="h-4 w-4" /> Endereço Residencial
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormInput
-                control={form.control}
-                name="C_USER_NOME"
-                label="Nome Completo"
-                placeholder="João da Silva"
-              />
-              <FormInput
-                control={form.control}
-                name="C_USER_FANT"
-                label="Nome Fantasia / Apelido"
-                placeholder="João"
-              />
-              <FormInput
-                control={form.control}
-                name="C_USER_NCPF"
-                label="Nº do CPF"
-                placeholder="000.000.000-00"
-                mask="cpf"
-                maxLength={14}
-              />
-            </div>
-          </div>
-
-          <div className="space-y-4">
-            <h3 className="text-lg font-semibold border-b border-border/50 pb-2 text-foreground">
-              Endereço
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-              <div className="md:col-span-2 lg:col-span-3">
-                <FormInput
-                  control={form.control}
-                  name="C_USER_ENDE"
-                  label="Logradouro"
-                  placeholder="Rua Domingos Pires, 32"
-                />
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="md:col-span-1">
+                {renderField('cep', 'CEP', <MapPin className="h-4 w-4" />, cepMask)}
               </div>
-              <FormInput
+              <div className="md:col-span-3">
+                {renderField('logradouro', 'Logradouro', <MapIcon className="h-4 w-4" />)}
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="md:col-span-1">
+                {renderField('numero', 'Número', <Hash className="h-4 w-4" />)}
+              </div>
+              <div className="md:col-span-1">
+                {renderField('complemento', 'Complemento', <Navigation className="h-4 w-4" />)}
+              </div>
+              <div className="md:col-span-2">
+                {renderField('bairro', 'Bairro', <MapIcon className="h-4 w-4" />)}
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="md:col-span-3">
+                {renderField('cidade', 'Cidade', <Landmark className="h-4 w-4" />)}
+              </div>
+              <div className="md:col-span-1">
+                {renderField('uf', 'UF', <MapPin className="h-4 w-4" />)}
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white/60 p-4 rounded-lg border border-blue-100/50 space-y-4">
+            <h3 className="text-sm font-bold text-amber-800 uppercase flex items-center gap-2 mb-4">
+              <UserIcon className="h-4 w-4" /> Dados do Usuário
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {renderField('name', 'Nome Completo', <UserIcon className="h-4 w-4" />)}
+              {renderField('email', 'E-mail', <Mail className="h-4 w-4" />)}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <FormField
                 control={form.control}
-                name="C_USER_CCEP"
-                label="CEP"
-                placeholder="00000-000"
-                mask="cep"
-                maxLength={9}
+                name="role"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
+                      <Shield className="h-4 w-4 text-amber-800" />
+                      Nível de Acesso
+                    </FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger className="bg-white border-blue-200 focus-visible:ring-blue-500 shadow-sm text-gray-800">
+                          <SelectValue placeholder="Selecione o nível" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="admin">Administrador</SelectItem>
+                        <SelectItem value="manager">Gerente</SelectItem>
+                        <SelectItem value="user">Usuário Comum</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage className="text-white bg-red-500 px-2 py-1 mt-1 rounded text-xs inline-block shadow-sm" />
+                  </FormItem>
+                )}
               />
-              <FormInput
+              <FormField
                 control={form.control}
-                name="C_USER_BAIR"
-                label="Bairro"
-                placeholder="Interlagos"
-              />
-              <FormInput
-                control={form.control}
-                name="C_USER_MUNI"
-                label="Município"
-                placeholder="São Paulo"
-              />
-              <FormInput
-                control={form.control}
-                name="C_USER_ESTA"
-                label="Estado"
-                placeholder="São Paulo"
-              />
-              <FormInput
-                control={form.control}
-                name="C_USER_UFED"
-                label="Unidade Federal (UF)"
-                placeholder="SP"
-                maxLength={2}
-              />
-              <FormInput
-                control={form.control}
-                name="C_USER_PAIS"
-                label="País"
-                placeholder="Brasil"
+                name="status"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
+                      <Activity className="h-4 w-4 text-amber-800" />
+                      Status
+                    </FormLabel>
+                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <FormControl>
+                        <SelectTrigger className="bg-white border-blue-200 focus-visible:ring-blue-500 shadow-sm text-gray-800">
+                          <SelectValue placeholder="Selecione o status" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        <SelectItem value="active">Ativo</SelectItem>
+                        <SelectItem value="inactive">Inativo</SelectItem>
+                      </SelectContent>
+                    </Select>
+                    <FormMessage className="text-white bg-red-500 px-2 py-1 mt-1 rounded text-xs inline-block shadow-sm" />
+                  </FormItem>
+                )}
               />
             </div>
           </div>
-        </div>
 
-        <div className="flex justify-end gap-3 pt-6 border-t border-border/50 sticky bottom-0 bg-card py-4 z-10 -mx-6 px-6 shadow-[0_-10px_20px_-10px_rgba(0,0,0,0.1)]">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={onCancel}
-            className="border-border hover:bg-secondary text-[#8B4513]"
-          >
-            <X className="w-4 h-4 mr-2" /> Cancelar
-          </Button>
-          <Button
-            type="submit"
-            className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg shadow-primary/20"
-          >
-            <Save className="w-4 h-4 mr-2" /> Salvar Usuário
-          </Button>
-        </div>
-      </form>
-    </Form>
+          <div className="flex justify-end gap-3 pt-4 border-t border-blue-200">
+            {onCancel && (
+              <Button
+                type="button"
+                variant="outline"
+                onClick={onCancel}
+                className="border-blue-300 text-blue-800 bg-white"
+              >
+                Cancelar
+              </Button>
+            )}
+            <Button
+              type="submit"
+              className="bg-blue-800 hover:bg-blue-900 text-white shadow-md font-semibold"
+            >
+              Salvar Usuário
+            </Button>
+          </div>
+        </form>
+      </Form>
+    </div>
   )
 }

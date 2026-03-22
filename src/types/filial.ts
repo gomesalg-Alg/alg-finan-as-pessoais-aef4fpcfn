@@ -1,7 +1,18 @@
 export interface Filial {
   id: string
-  C_FILI_CODI: string
-  C_FILI_NOME: string
-  C_FILI_EMPR: string
-  C_FILI_CNPJ: string
+  empresaId: string
+  nome: string
+  cnpj: string
+  ie?: string
+  cep?: string
+  logradouro?: string
+  numero?: string
+  complemento?: string
+  bairro?: string
+  cidade?: string
+  uf?: string
+  telefone?: string
+  email?: string
+  createdAt?: string
+  updatedAt?: string
 }
