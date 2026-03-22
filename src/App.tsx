@@ -20,6 +20,8 @@ import Perfis from '@/pages/erp/cadastro/Perfis'
 import Empresas from '@/pages/erp/cadastro/Empresas'
 import Filiais from '@/pages/erp/cadastro/Filiais'
 import ClassificacaoFinanceira from '@/pages/erp/cadastro/ClassificacaoFinanceira'
+import PeriodosContabeis from '@/pages/erp/admin/PeriodosContabeis'
+import ManutencaoLogs from '@/pages/erp/admin/ManutencaoLogs'
 
 import { ERPProvider } from '@/stores/useERPStore'
 
@@ -48,6 +50,10 @@ const App = () => (
             <Route path="cadastro/clientes" element={<Clientes />} />
             <Route path="cadastro/fornecedores" element={<Fornecedores />} />
             <Route path="cadastro/classificacao-financeira" element={<ClassificacaoFinanceira />} />
+
+            {/* Admin Routes */}
+            <Route path="admin/periodos-contabeis" element={<PeriodosContabeis />} />
+            <Route path="admin/manutencao-logs" element={<ManutencaoLogs />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />

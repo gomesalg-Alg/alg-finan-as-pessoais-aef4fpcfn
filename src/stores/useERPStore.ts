@@ -1,9 +1,11 @@
-import React, { createContext, useContext, useState, ReactNode, useMemo } from 'react'
+import React, { createContext, useContext, useState, ReactNode, useMemo, useCallback } from 'react'
 import { User } from '@/types/user'
 import { Profile } from '@/types/profile'
 import { Empresa } from '@/types/empresa'
 import { Filial } from '@/types/filial'
 import { Notification } from '@/types/notification'
+import { S_CLOG } from '@/types/log'
+import { PeriodoFechamento } from '@/types/periodo'
 
 interface ERPContextData {
   users: User[]
@@ -16,6 +18,13 @@ interface ERPContextData {
   setFiliais: React.Dispatch<React.SetStateAction<Filial[]>>
   notifications: Notification[]
   setNotifications: React.Dispatch<React.SetStateAction<Notification[]>>
+  logs: S_CLOG[]
+  addLog: (action: S_CLOG['action'], details: string, recordId?: string) => void
+  archiveLogs: (beforeDate: string) => number
+  restoreLogs: (batchId: string) => number
+  periodos: PeriodoFechamento[]
+  setPeriodos: React.Dispatch<React.SetStateAction<PeriodoFechamento[]>>
+  isDateInClosedPeriod: (dateStr: string) => boolean
   currentUser: User | null
   hasPermission: (perm: string) => boolean
 }
@@ -36,6 +45,8 @@ const initialProfiles: Profile[] = [
       'perfis',
       'empresas',
       'filiais',
+      'admin-periodos',
+      'admin-logs',
     ],
   },
   {
@@ -64,13 +75,6 @@ const initialFiliais: Filial[] = [
     C_FILI_EMPR: '1',
     C_FILI_CNPJ: '12345678000199',
   },
-  {
-    id: '2',
-    C_FILI_CODI: 'FIL02',
-    C_FILI_NOME: 'Filial Rio de Janeiro',
-    C_FILI_EMPR: '1',
-    C_FILI_CNPJ: '12345678000277',
-  },
 ]
 
 const initialUsers: User[] = [
@@ -93,41 +97,35 @@ const initialUsers: User[] = [
     C_USER_EMPR: '1',
     C_USER_FILI: '1',
   },
-  {
-    id: '2',
-    C_USER_CODI: 'OP002',
-    C_USER_NOME: 'Operador Sistema',
-    C_USER_FANT: 'Operador',
-    C_USER_NCPF: '99988877766',
-    C_USER_PASS: '123456',
-    C_USER_MAIL: 'operador@alg.com.br',
-    C_USER_CCEP: '04821230',
-    C_USER_ENDE: 'Rua B',
-    C_USER_BAIR: 'Centro',
-    C_USER_MUNI: 'SP',
-    C_USER_ESTA: 'SP',
-    C_USER_UFED: 'SP',
-    C_USER_PAIS: 'Brasil',
-    C_USER_PERF: 'OPER',
-    C_USER_EMPR: '1',
-    C_USER_FILI: '2',
-  },
 ]
 
-const initialNotifications: Notification[] = [
+const initialNotifications: Notification[] = []
+
+const initialLogs: S_CLOG[] = Array.from({ length: 45 }).map((_, i) => ({
+  id: `log-${i}`,
+  action: i % 3 === 0 ? 'LOGIN' : i % 2 === 0 ? 'UPDATE' : 'CREATE',
+  timestamp: new Date(Date.now() - i * 86400000 * 2).toISOString(), // Spread over past 90 days
+  userId: '1',
+  details: `Ação gerada automaticamente para histórico #${i}`,
+  archived: false,
+}))
+
+const initialPeriodos: PeriodoFechamento[] = [
   {
-    id: '1',
-    title: 'Atualização de Sistema',
-    message: 'A nova versão 0.0.21 foi aplicada com sucesso.',
-    read: false,
-    date: new Date().toISOString(),
+    id: 'p1',
+    ano: new Date().getFullYear(),
+    mes: new Date().getMonth(), // Last month
+    status: 'Fechado',
+    updatedAt: new Date().toISOString(),
+    updatedBy: 'ADM01',
   },
   {
-    id: '2',
-    title: 'Aviso de Pendência',
-    message: 'Existem 3 fornecedores aguardando homologação.',
-    read: false,
-    date: new Date(Date.now() - 3600000).toISOString(),
+    id: 'p2',
+    ano: new Date().getFullYear(),
+    mes: new Date().getMonth() + 1, // Current month
+    status: 'Aberto',
+    updatedAt: new Date().toISOString(),
+    updatedBy: 'ADM01',
   },
 ]
 
@@ -137,14 +135,92 @@ export const ERPProvider = ({ children }: { children: ReactNode }) => {
   const [empresas, setEmpresas] = useState<Empresa[]>(initialEmpresas)
   const [filiais, setFiliais] = useState<Filial[]>(initialFiliais)
   const [notifications, setNotifications] = useState<Notification[]>(initialNotifications)
+  const [logs, setLogs] = useState<S_CLOG[]>(initialLogs)
+  const [periodos, setPeriodos] = useState<PeriodoFechamento[]>(initialPeriodos)
 
   const currentUser = useMemo(() => users[0] || null, [users])
 
-  const hasPermission = (perm: string) => {
-    if (!currentUser || !currentUser.C_USER_PERF) return false
-    const profile = profiles.find((p) => p.id === currentUser.C_USER_PERF)
-    return profile?.C_PERF_PERM.includes(perm) ?? false
-  }
+  const hasPermission = useCallback(
+    (perm: string) => {
+      if (!currentUser || !currentUser.C_USER_PERF) return false
+      const profile = profiles.find((p) => p.id === currentUser.C_USER_PERF)
+      return profile?.C_PERF_PERM.includes(perm) ?? false
+    },
+    [currentUser, profiles],
+  )
+
+  const addLog = useCallback(
+    (action: S_CLOG['action'], details: string, recordId?: string) => {
+      const newLog: S_CLOG = {
+        id: `log-${Date.now()}-${Math.random().toString(36).substring(2, 9)}`,
+        action,
+        timestamp: new Date().toISOString(),
+        userId: currentUser?.id || 'system',
+        details,
+        recordId,
+        archived: false,
+      }
+      setLogs((prev) => [newLog, ...prev])
+    },
+    [currentUser],
+  )
+
+  const archiveLogs = useCallback(
+    (beforeDate: string) => {
+      let count = 0
+      const batchId = `BATCH-${Date.now()}`
+      const archiveDate = new Date().toISOString()
+
+      setLogs((prev) =>
+        prev.map((log) => {
+          if (!log.archived && new Date(log.timestamp) < new Date(beforeDate)) {
+            count++
+            return { ...log, archived: true, archiveBatchId: batchId, archiveDate }
+          }
+          return log
+        }),
+      )
+
+      if (count > 0) {
+        addLog('ARCHIVE', `Arquivado lote ${batchId} com ${count} registros.`)
+      }
+      return count
+    },
+    [addLog],
+  )
+
+  const restoreLogs = useCallback(
+    (batchId: string) => {
+      let count = 0
+      setLogs((prev) =>
+        prev.map((log) => {
+          if (log.archived && log.archiveBatchId === batchId) {
+            count++
+            return { ...log, archived: false, archiveBatchId: undefined, archiveDate: undefined }
+          }
+          return log
+        }),
+      )
+
+      if (count > 0) {
+        addLog('RESTORE', `Restaurado lote ${batchId} com ${count} registros.`)
+      }
+      return count
+    },
+    [addLog],
+  )
+
+  const isDateInClosedPeriod = useCallback(
+    (dateStr: string) => {
+      const date = new Date(dateStr)
+      const year = date.getFullYear()
+      const month = date.getMonth() + 1 // 1-12
+
+      const periodo = periodos.find((p) => p.ano === year && p.mes === month)
+      return periodo?.status === 'Fechado'
+    },
+    [periodos],
+  )
 
   return React.createElement(
     ERPContext.Provider,
@@ -160,6 +236,13 @@ export const ERPProvider = ({ children }: { children: ReactNode }) => {
         setFiliais,
         notifications,
         setNotifications,
+        logs,
+        addLog,
+        archiveLogs,
+        restoreLogs,
+        periodos,
+        setPeriodos,
+        isDateInClosedPeriod,
         currentUser,
         hasPermission,
       },
