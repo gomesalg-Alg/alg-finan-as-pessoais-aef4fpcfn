@@ -26,6 +26,7 @@ const breadcrumbMap: Record<string, string> = {
   cadastro: 'Cadastro',
   clientes: 'Clientes',
   fornecedores: 'Fornecedores',
+  usuarios: 'Usuários',
   'classificacao-financeira': 'Classificação Financeira',
 }
 

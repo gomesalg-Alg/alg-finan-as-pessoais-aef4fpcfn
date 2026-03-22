@@ -15,6 +15,7 @@ import { ERPLayout } from '@/components/erp/ERPLayout'
 import Dashboard from '@/pages/erp/Dashboard'
 import Clientes from '@/pages/erp/cadastro/Clientes'
 import Fornecedores from '@/pages/erp/cadastro/Fornecedores'
+import Usuarios from '@/pages/erp/cadastro/Usuarios'
 import ClassificacaoFinanceira from '@/pages/erp/cadastro/ClassificacaoFinanceira'
 
 const App = () => (
@@ -34,6 +35,7 @@ const App = () => (
 
         <Route path="/erp" element={<ERPLayout />}>
           <Route index element={<Dashboard />} />
+          <Route path="cadastro/usuarios" element={<Usuarios />} />
           <Route path="cadastro/clientes" element={<Clientes />} />
           <Route path="cadastro/fornecedores" element={<Fornecedores />} />
           <Route path="cadastro/classificacao-financeira" element={<ClassificacaoFinanceira />} />

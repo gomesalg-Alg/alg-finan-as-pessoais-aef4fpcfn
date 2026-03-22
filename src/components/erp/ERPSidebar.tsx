@@ -85,6 +85,17 @@ export function ERPSidebar() {
                     <SidebarMenuSubItem>
                       <SidebarMenuSubButton
                         asChild
+                        isActive={location.pathname === '/erp/cadastro/usuarios'}
+                      >
+                        <Link to="/erp/cadastro/usuarios">
+                          <Users className="h-4 w-4 mr-2" />
+                          <span>Usuários</span>
+                        </Link>
+                      </SidebarMenuSubButton>
+                    </SidebarMenuSubItem>
+                    <SidebarMenuSubItem>
+                      <SidebarMenuSubButton
+                        asChild
                         isActive={location.pathname === '/erp/cadastro/clientes'}
                       >
                         <Link to="/erp/cadastro/clientes">
