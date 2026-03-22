@@ -3,13 +3,13 @@ import {
   Building2,
   Users,
   Store,
-  Settings,
   PieChart,
   CalendarDays,
   Database,
   FileText,
   Shield,
   LogOut,
+  Tags,
 } from 'lucide-react'
 import profileImg from '@/assets/image-6ef14.png'
 import {
@@ -29,9 +29,18 @@ import useERPStore from '@/stores/useERPStore'
 
 const navItems = [
   { title: 'Dashboard', icon: PieChart, path: '/erp', perm: 'dashboard' },
-  { title: 'Usuários', icon: Users, path: '/erp/usuarios', perm: 'usuarios' },
-  { title: 'Empresas', icon: Building2, path: '/erp/empresas', perm: 'empresas' },
-  { title: 'Filiais', icon: Store, path: '/erp/filiais', perm: 'filiais' },
+  { title: 'Empresas', icon: Building2, path: '/erp/cadastro/empresas', perm: 'empresas' },
+  { title: 'Filiais', icon: Store, path: '/erp/cadastro/filiais', perm: 'filiais' },
+  { title: 'Usuários', icon: Users, path: '/erp/cadastro/usuarios', perm: 'usuarios' },
+  { title: 'Perfis de Acesso', icon: Shield, path: '/erp/cadastro/perfis', perm: 'perfis' },
+  { title: 'Clientes', icon: Users, path: '/erp/cadastro/clientes', perm: 'clientes' },
+  { title: 'Fornecedores', icon: Store, path: '/erp/cadastro/fornecedores', perm: 'fornecedores' },
+  {
+    title: 'Classif. Financeira',
+    icon: Tags,
+    path: '/erp/cadastro/classificacao-financeira',
+    perm: 'classificacao-financeira',
+  },
 ]
 
 const relatoriosItems = [
@@ -62,7 +71,6 @@ const adminItems = [
     path: '/erp/admin/auditoria',
     perm: 'admin-auditoria',
   },
-  { title: 'Configurações', icon: Settings, path: '/erp/configuracoes', perm: 'dashboard' },
 ]
 
 export function ERPSidebar() {
