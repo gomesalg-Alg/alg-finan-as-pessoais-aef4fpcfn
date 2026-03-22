@@ -38,9 +38,10 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
-import { Plus, Search, Users, Edit, Trash2, ShieldCheck } from 'lucide-react'
+import { Plus, Search, Users, Edit, Trash2, ShieldCheck, Filter } from 'lucide-react'
 import { toast } from 'sonner'
 import { maskCPF } from '@/utils/mask'
+import { addAuditLog } from '@/lib/logger'
 
 const initialMock: User[] = [
   {
@@ -80,6 +81,7 @@ const initialMock: User[] = [
 export default function Usuarios() {
   const [users, setUsers] = useState<User[]>(initialMock)
   const [search, setSearch] = useState('')
+  const [searchCpf, setSearchCpf] = useState('')
   const [isSheetOpen, setIsSheetOpen] = useState(false)
   const [editingUser, setEditingUser] = useState<User | undefined>()
   const [userToDelete, setUserToDelete] = useState<User | undefined>()
@@ -87,13 +89,19 @@ export default function Usuarios() {
   const itemsPerPage = 5
 
   const filteredUsers = useMemo(() => {
-    return users.filter(
-      (u) =>
+    return users.filter((u) => {
+      const matchText =
         u.C_USER_NOME.toLowerCase().includes(search.toLowerCase()) ||
         u.C_USER_MAIL.toLowerCase().includes(search.toLowerCase()) ||
-        u.C_USER_CODI.toLowerCase().includes(search.toLowerCase()),
-    )
-  }, [users, search])
+        u.C_USER_CODI.toLowerCase().includes(search.toLowerCase())
+
+      const unmaskedCpf = u.C_USER_NCPF.replace(/\D/g, '')
+      const searchUnmaskedCpf = searchCpf.replace(/\D/g, '')
+      const matchCpf = searchUnmaskedCpf ? unmaskedCpf.includes(searchUnmaskedCpf) : true
+
+      return matchText && matchCpf
+    })
+  }, [users, search, searchCpf])
 
   const totalPages = Math.ceil(filteredUsers.length / itemsPerPage)
   const paginatedUsers = filteredUsers.slice(
@@ -106,6 +114,11 @@ export default function Usuarios() {
     setCurrentPage(1)
   }
 
+  const handleSearchCpf = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchCpf(maskCPF(e.target.value))
+    setCurrentPage(1)
+  }
+
   const handleOpenNew = () => {
     setEditingUser(undefined)
     setIsSheetOpen(true)
@@ -114,9 +127,17 @@ export default function Usuarios() {
   const handleSave = (data: UserFormData) => {
     if (editingUser) {
       setUsers(users.map((u) => (u.id === editingUser.id ? { ...u, ...data } : u)))
+      addAuditLog(
+        'UPDATE',
+        editingUser.id,
+        'CURRENT_USER',
+        `Usuário ${data.C_USER_CODI} atualizado`,
+      )
       toast.success('Usuário atualizado com sucesso!')
     } else {
-      setUsers([{ ...data, id: Date.now().toString() }, ...users])
+      const newId = Date.now().toString()
+      setUsers([{ ...data, id: newId }, ...users])
+      addAuditLog('CREATE', newId, 'CURRENT_USER', `Usuário ${data.C_USER_CODI} criado`)
       toast.success('Usuário criado com sucesso!')
     }
     setIsSheetOpen(false)
@@ -125,6 +146,12 @@ export default function Usuarios() {
   const handleDelete = () => {
     if (userToDelete) {
       setUsers(users.filter((u) => u.id !== userToDelete.id))
+      addAuditLog(
+        'DELETE',
+        userToDelete.id,
+        'CURRENT_USER',
+        `Usuário ${userToDelete.C_USER_CODI} removido`,
+      )
       toast.success('Usuário removido com sucesso!')
       setUserToDelete(undefined)
     }
@@ -152,14 +179,26 @@ export default function Usuarios() {
 
       <Card className="border-border shadow-sm">
         <CardHeader className="pb-4 border-b border-border/50">
-          <div className="relative w-full md:w-96">
-            <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-            <Input
-              placeholder="Buscar por nome, e-mail ou código..."
-              value={search}
-              onChange={handleSearch}
-              className="pl-9 bg-background/50"
-            />
+          <div className="flex flex-col sm:flex-row gap-4 w-full">
+            <div className="relative flex-1 md:max-w-md">
+              <Search className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Buscar por nome, e-mail ou código..."
+                value={search}
+                onChange={handleSearch}
+                className="pl-9 bg-background/50"
+              />
+            </div>
+            <div className="relative w-full sm:w-48">
+              <Filter className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
+              <Input
+                placeholder="Filtrar por CPF..."
+                value={searchCpf}
+                onChange={handleSearchCpf}
+                className="pl-9 bg-background/50"
+                maxLength={14}
+              />
+            </div>
           </div>
         </CardHeader>
         <CardContent className="p-0">

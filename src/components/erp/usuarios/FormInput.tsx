@@ -50,7 +50,10 @@ export function FormInput<T extends FieldValues>({
               <Input
                 type={type}
                 placeholder={placeholder}
-                className="bg-background/50 border-border focus:border-primary"
+                className={cn(
+                  'bg-background/50 border-border focus:border-primary',
+                  fieldState.error && 'border-white focus:border-white ring-offset-white',
+                )}
                 {...field}
                 value={displayValue}
                 onChange={(e) => {
@@ -65,7 +68,7 @@ export function FormInput<T extends FieldValues>({
                 maxLength={maxLength}
               />
             </FormControl>
-            <FormMessage className="!text-white" />
+            <FormMessage className="!text-white font-medium drop-shadow-md" />
           </FormItem>
         )
       }}

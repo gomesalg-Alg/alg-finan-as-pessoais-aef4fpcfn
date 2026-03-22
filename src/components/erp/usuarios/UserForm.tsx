@@ -1,3 +1,4 @@
+import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { userSchema, UserFormData } from '@/schemas/userSchema'
@@ -29,9 +30,31 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
       C_USER_MUNI: initialData?.C_USER_MUNI || '',
       C_USER_ESTA: initialData?.C_USER_ESTA || '',
       C_USER_UFED: initialData?.C_USER_UFED || '',
-      C_USER_PAIS: initialData?.C_USER_PAIS || '',
+      C_USER_PAIS: initialData?.C_USER_PAIS || 'Brasil',
     },
   })
+
+  const cepValue = form.watch('C_USER_CCEP')
+
+  useEffect(() => {
+    const unmaskedCep = cepValue?.replace(/\D/g, '')
+    if (unmaskedCep?.length === 8) {
+      fetch(`https://viacep.com.br/ws/${unmaskedCep}/json/`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (!data.erro) {
+            form.setValue('C_USER_ENDE', data.logradouro || '', { shouldValidate: true })
+            form.setValue('C_USER_BAIR', data.bairro || '', { shouldValidate: true })
+            form.setValue('C_USER_MUNI', data.localidade || '', { shouldValidate: true })
+            form.setValue('C_USER_UFED', data.uf || '', { shouldValidate: true })
+            if (data.estado) {
+              form.setValue('C_USER_ESTA', data.estado, { shouldValidate: true })
+            }
+          }
+        })
+        .catch((err) => console.error('Erro ao buscar CEP:', err))
+    }
+  }, [cepValue, form])
 
   return (
     <Form {...form}>
