@@ -21,6 +21,7 @@ interface PerfilFormProps {
   initialData?: Partial<PerfilFormData>
   onSubmit: (data: PerfilFormData) => void
   onCancel: () => void
+  isTi?: boolean
 }
 
 const PERMISSIONS = [
@@ -36,7 +37,7 @@ const PERMISSIONS = [
   },
 ]
 
-export function PerfilForm({ initialData, onSubmit, onCancel }: PerfilFormProps) {
+export function PerfilForm({ initialData, onSubmit, onCancel, isTi = false }: PerfilFormProps) {
   const form = useForm<PerfilFormData>({
     resolver: zodResolver(perfilSchema),
     mode: 'onBlur',
@@ -62,7 +63,7 @@ export function PerfilForm({ initialData, onSubmit, onCancel }: PerfilFormProps)
                     fieldState.error && '!text-white font-semibold',
                   )}
                 >
-                  Nome do Perfil
+                  {isTi ? '[C_PERF_NOME] - Nome do Perfil' : 'Nome do Perfil'}
                 </FormLabel>
                 <FormControl>
                   <Input
@@ -90,7 +91,7 @@ export function PerfilForm({ initialData, onSubmit, onCancel }: PerfilFormProps)
                     fieldState.error && '!text-white font-semibold',
                   )}
                 >
-                  Descrição
+                  {isTi ? '[C_PERF_DESC] - Descrição' : 'Descrição'}
                 </FormLabel>
                 <FormControl>
                   <Textarea
@@ -115,7 +116,7 @@ export function PerfilForm({ initialData, onSubmit, onCancel }: PerfilFormProps)
             <FormItem>
               <div className="mb-4">
                 <FormLabel className="text-base font-semibold text-foreground border-b border-border/50 pb-2 block">
-                  Permissões de Acesso
+                  {isTi ? '[C_PERF_PERM] - Permissões de Acesso' : 'Permissões de Acesso'}
                 </FormLabel>
                 <FormDescription>
                   Selecione as áreas do sistema que os usuários com este perfil terão acesso.

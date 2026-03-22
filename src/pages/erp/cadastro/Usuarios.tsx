@@ -69,19 +69,23 @@ export default function Usuarios() {
   const [currentPage, setCurrentPage] = useState(1)
   const itemsPerPage = 5
 
+  const isTi = currentUser?.C_USER_PERF === 'TI' || currentUser?.role === 'ti'
+
   const filteredUsers = useMemo(() => {
     return users.filter((u) => {
-      // Data isolation logic: Admin sees all, otherwise strictly filter by C_USER_EMPR
+      // Data isolation logic: Admin/TI sees all, otherwise strictly filter by C_USER_EMPR
       const isAllowed =
-        currentUser?.C_USER_PERF === 'ADMIN' || u.C_USER_EMPR === currentUser?.C_USER_EMPR
+        currentUser?.C_USER_PERF === 'ADMIN' ||
+        currentUser?.C_USER_PERF === 'TI' ||
+        u.C_USER_EMPR === currentUser?.C_USER_EMPR
       if (!isAllowed) return false
 
       const matchText =
-        u.C_USER_NOME.toLowerCase().includes(search.toLowerCase()) ||
-        u.C_USER_MAIL.toLowerCase().includes(search.toLowerCase()) ||
-        u.C_USER_CODI.toLowerCase().includes(search.toLowerCase())
+        (u.C_USER_NOME || u.name)?.toLowerCase().includes(search.toLowerCase()) ||
+        (u.C_USER_MAIL || u.email)?.toLowerCase().includes(search.toLowerCase()) ||
+        (u.C_USER_CODI || u.id)?.toLowerCase().includes(search.toLowerCase())
 
-      const unmaskedCpf = u.C_USER_NCPF.replace(/\D/g, '')
+      const unmaskedCpf = (u.C_USER_NCPF || '').replace(/\D/g, '')
       const searchUnmaskedCpf = searchCpf.replace(/\D/g, '')
       const matchCpf = searchUnmaskedCpf ? unmaskedCpf.includes(searchUnmaskedCpf) : true
 
@@ -110,18 +114,39 @@ export default function Usuarios() {
 
   const handleSave = (data: UserFormData) => {
     if (editingUser) {
-      setUsers(users.map((u) => (u.id === editingUser.id ? { ...u, ...data } : u)))
+      setUsers(
+        users.map((u) =>
+          u.id === editingUser.id
+            ? {
+                ...u,
+                ...data,
+                C_USER_NOME: data.name,
+                C_USER_MAIL: data.email,
+                C_USER_PERF: data.role.toUpperCase(),
+              }
+            : u,
+        ),
+      )
       addAuditLog(
         'UPDATE',
         editingUser.id,
         currentUser?.C_USER_CODI,
-        `Usuário ${data.C_USER_CODI} atualizado.`,
+        `Usuário ${data.name} atualizado.`,
       )
       toast.success('Usuário atualizado com sucesso!')
     } else {
       const newId = Date.now().toString()
-      setUsers([{ ...data, id: newId } as User, ...users])
-      addAuditLog('CREATE', newId, currentUser?.C_USER_CODI, `Usuário ${data.C_USER_CODI} criado.`)
+      setUsers([
+        {
+          ...data,
+          id: newId,
+          C_USER_NOME: data.name,
+          C_USER_MAIL: data.email,
+          C_USER_PERF: data.role.toUpperCase(),
+        } as User,
+        ...users,
+      ])
+      addAuditLog('CREATE', newId, currentUser?.C_USER_CODI, `Usuário ${data.name} criado.`)
       toast.success('Usuário criado com sucesso!')
     }
     setIsSheetOpen(false)
@@ -134,7 +159,7 @@ export default function Usuarios() {
         'DELETE',
         userToDelete.id,
         currentUser?.C_USER_CODI,
-        `Usuário ${userToDelete.C_USER_CODI} removido`,
+        `Usuário ${userToDelete.C_USER_CODI || userToDelete.id} removido`,
       )
       toast.success('Usuário removido com sucesso!')
       setUserToDelete(undefined)
@@ -144,14 +169,15 @@ export default function Usuarios() {
   const exportData = (format: 'csv' | 'xlsx') => {
     const headers = ['Código', 'Nome', 'CPF', 'E-mail', 'Perfil', 'Empresa', 'Filial']
     const rows = filteredUsers.map((u) => {
-      const profileName = profiles.find((p) => p.id === u.C_USER_PERF)?.C_PERF_NOME || 'N/A'
+      const profileName =
+        profiles.find((p) => p.id === u.C_USER_PERF)?.C_PERF_NOME || u.role || 'N/A'
       const empresaName = empresas.find((e) => e.id === u.C_USER_EMPR)?.C_EMPR_NOME || 'N/A'
       const filialName = filiais.find((f) => f.id === u.C_USER_FILI)?.C_FILI_NOME || 'N/A'
       return [
-        u.C_USER_CODI,
-        u.C_USER_NOME,
-        u.C_USER_NCPF,
-        u.C_USER_MAIL,
+        u.C_USER_CODI || u.id.substring(0, 8),
+        u.C_USER_NOME || u.name,
+        u.C_USER_NCPF || '',
+        u.C_USER_MAIL || u.email,
         profileName,
         empresaName,
         filialName,
@@ -235,7 +261,7 @@ export default function Usuarios() {
               <TableHeader className="bg-secondary/30">
                 <TableRow>
                   <TableHead className="w-[100px] pl-6">Código</TableHead>
-                  <TableHead>Nome</TableHead>
+                  <TableHead className="min-w-[300px]">Nome</TableHead>
                   <TableHead>Filial</TableHead>
                   <TableHead>E-mail</TableHead>
                   <TableHead>Perfil</TableHead>
@@ -246,20 +272,24 @@ export default function Usuarios() {
                 {paginatedUsers.map((user) => (
                   <TableRow key={user.id} className="group border-border/50">
                     <TableCell className="font-mono text-xs pl-6 text-muted-foreground">
-                      {user.C_USER_CODI}
+                      {user.C_USER_CODI || user.id.substring(0, 8)}
                     </TableCell>
-                    <TableCell className="font-semibold flex items-center gap-2">
-                      {user.C_USER_NOME}
-                      {user.C_USER_PERF === 'ADMIN' && (
-                        <ShieldCheck className="h-4 w-4 text-primary" />
+                    <TableCell className="font-semibold flex items-center gap-2 max-w-[300px] truncate">
+                      {user.C_USER_NOME || user.name}
+                      {(user.C_USER_PERF === 'ADMIN' || user.C_USER_PERF === 'TI') && (
+                        <ShieldCheck className="h-4 w-4 text-primary shrink-0" />
                       )}
                     </TableCell>
                     <TableCell className="text-muted-foreground">
                       {filiais.find((f) => f.id === user.C_USER_FILI)?.C_FILI_NOME || '-'}
                     </TableCell>
-                    <TableCell className="text-muted-foreground">{user.C_USER_MAIL}</TableCell>
                     <TableCell className="text-muted-foreground">
-                      {profiles.find((p) => p.id === user.C_USER_PERF)?.C_PERF_NOME || '-'}
+                      {user.C_USER_MAIL || user.email}
+                    </TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {profiles.find((p) => p.id === user.C_USER_PERF)?.C_PERF_NOME ||
+                        user.role ||
+                        '-'}
                     </TableCell>
                     <TableCell className="text-right pr-6">
                       <div className="flex justify-end gap-2">
@@ -355,6 +385,7 @@ export default function Usuarios() {
               initialData={editingUser}
               onSubmit={handleSave}
               onCancel={() => setIsSheetOpen(false)}
+              isTi={isTi}
             />
           )}
         </SheetContent>
@@ -366,8 +397,10 @@ export default function Usuarios() {
             <AlertDialogTitle>Excluir Usuário</AlertDialogTitle>
             <AlertDialogDescription>
               Tem certeza que deseja excluir o usuário{' '}
-              <strong className="text-foreground">{userToDelete?.C_USER_NOME}</strong>? Esta ação
-              não pode ser desfeita.
+              <strong className="text-foreground">
+                {userToDelete?.C_USER_NOME || userToDelete?.name}
+              </strong>
+              ? Esta ação não pode ser desfeita.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

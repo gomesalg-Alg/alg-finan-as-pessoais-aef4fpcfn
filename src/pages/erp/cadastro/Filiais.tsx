@@ -43,15 +43,19 @@ export default function Filiais() {
   const [editingFilial, setEditingFilial] = useState<Filial | undefined>()
   const [filialToDelete, setFilialToDelete] = useState<Filial | undefined>()
 
+  const isTi = currentUser?.C_USER_PERF === 'TI' || currentUser?.role === 'ti'
+
   const filteredFiliais = useMemo(() => {
     return filiais.filter((f) => {
       const isAllowed =
-        currentUser?.C_USER_PERF === 'ADMIN' || f.C_FILI_EMPR === currentUser?.C_USER_EMPR
+        currentUser?.C_USER_PERF === 'ADMIN' ||
+        currentUser?.C_USER_PERF === 'TI' ||
+        f.C_FILI_EMPR === currentUser?.C_USER_EMPR
       if (!isAllowed) return false
 
       const matchText =
-        f.C_FILI_NOME.toLowerCase().includes(search.toLowerCase()) ||
-        f.C_FILI_CODI.toLowerCase().includes(search.toLowerCase())
+        (f.C_FILI_NOME || f.nome)?.toLowerCase().includes(search.toLowerCase()) ||
+        (f.C_FILI_CODI || f.id)?.toLowerCase().includes(search.toLowerCase())
       return matchText
     })
   }, [filiais, search, currentUser])
@@ -68,13 +72,13 @@ export default function Filiais() {
         'UPDATE',
         editingFilial.id,
         currentUser?.C_USER_CODI,
-        `Filial ${data.C_FILI_CODI} atualizada.`,
+        `Filial ${data.nome} atualizada.`,
       )
       toast.success('Filial atualizada com sucesso!')
     } else {
       const newId = Date.now().toString()
       setFiliais([{ ...data, id: newId } as Filial, ...filiais])
-      addAuditLog('CREATE', newId, currentUser?.C_USER_CODI, `Filial ${data.C_FILI_CODI} criada.`)
+      addAuditLog('CREATE', newId, currentUser?.C_USER_CODI, `Filial ${data.nome} criada.`)
       toast.success('Filial criada com sucesso!')
     }
     setIsSheetOpen(false)
@@ -87,7 +91,7 @@ export default function Filiais() {
         'DELETE',
         filialToDelete.id,
         currentUser?.C_USER_CODI,
-        `Filial ${filialToDelete.C_FILI_CODI} removida`,
+        `Filial ${filialToDelete.C_FILI_CODI || filialToDelete.id} removida`,
       )
       toast.success('Filial removida com sucesso!')
       setFilialToDelete(undefined)
@@ -97,8 +101,14 @@ export default function Filiais() {
   const exportData = () => {
     const headers = ['Código', 'Nome da Filial', 'Empresa', 'CNPJ']
     const rows = filteredFiliais.map((f) => {
-      const empresa = empresas.find((e) => e.id === f.C_FILI_EMPR)?.C_EMPR_NOME || 'N/A'
-      return [f.C_FILI_CODI, f.C_FILI_NOME, empresa, maskCNPJ(f.C_FILI_CNPJ)]
+      const empresa = empresas.find((e) => e.id === (f.C_FILI_EMPR || f.empresaId))
+      const empresaNome = empresa?.C_EMPR_NOME || empresa?.nomeFantasia || 'N/A'
+      return [
+        f.C_FILI_CODI || f.id.substring(0, 8),
+        f.C_FILI_NOME || f.nome,
+        empresaNome,
+        maskCNPJ(f.C_FILI_CNPJ || f.cnpj || ''),
+      ]
     })
     const csvContent = [headers.join(';'), ...rows.map((r) => r.join(';'))].join('\n')
     const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' })
@@ -151,7 +161,7 @@ export default function Filiais() {
                 <TableRow>
                   <TableHead className="w-[100px] pl-6">Código</TableHead>
                   <TableHead>Nome da Filial</TableHead>
-                  <TableHead>Empresa (Matriz)</TableHead>
+                  <TableHead className="min-w-[300px]">Empresa (Matriz)</TableHead>
                   <TableHead>CNPJ</TableHead>
                   <TableHead className="text-right pr-6">Ações</TableHead>
                 </TableRow>
@@ -160,14 +170,21 @@ export default function Filiais() {
                 {filteredFiliais.map((filial) => (
                   <TableRow key={filial.id} className="group border-border/50">
                     <TableCell className="font-mono text-xs pl-6 text-muted-foreground">
-                      {filial.C_FILI_CODI}
+                      {filial.C_FILI_CODI || filial.id.substring(0, 8)}
                     </TableCell>
-                    <TableCell className="font-semibold">{filial.C_FILI_NOME}</TableCell>
-                    <TableCell className="text-muted-foreground">
-                      {empresas.find((e) => e.id === filial.C_FILI_EMPR)?.C_EMPR_NOME}
+                    <TableCell className="font-semibold">
+                      {filial.C_FILI_NOME || filial.nome}
+                    </TableCell>
+                    <TableCell className="text-muted-foreground truncate max-w-[300px]">
+                      {(() => {
+                        const empresa = empresas.find(
+                          (e) => e.id === (filial.C_FILI_EMPR || filial.empresaId),
+                        )
+                        return empresa?.C_EMPR_NOME || empresa?.nomeFantasia || '-'
+                      })()}
                     </TableCell>
                     <TableCell className="text-muted-foreground">
-                      {maskCNPJ(filial.C_FILI_CNPJ)}
+                      {maskCNPJ(filial.C_FILI_CNPJ || filial.cnpj || '')}
                     </TableCell>
                     <TableCell className="text-right pr-6">
                       <div className="flex justify-end gap-2">
@@ -224,8 +241,10 @@ export default function Filiais() {
             <FilialForm
               key={editingFilial ? editingFilial.id : 'new'}
               initialData={editingFilial}
+              empresas={empresas}
               onSubmit={handleSave}
               onCancel={() => setIsSheetOpen(false)}
+              isTi={isTi}
             />
           )}
         </SheetContent>
@@ -237,8 +256,10 @@ export default function Filiais() {
             <AlertDialogTitle>Excluir Filial</AlertDialogTitle>
             <AlertDialogDescription>
               Tem certeza que deseja excluir a filial{' '}
-              <strong className="text-foreground">{filialToDelete?.C_FILI_NOME}</strong>? Esta ação
-              não pode ser desfeita.
+              <strong className="text-foreground">
+                {filialToDelete?.C_FILI_NOME || filialToDelete?.nome}
+              </strong>
+              ? Esta ação não pode ser desfeita.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>

@@ -57,11 +57,33 @@ const initialProfiles: Profile[] = [
     C_PERF_DESC: 'Acesso limitado às rotinas de operação',
     C_PERF_PERM: ['dashboard', 'clientes', 'fornecedores'],
   },
+  {
+    id: 'TI',
+    C_PERF_NOME: 'Tecnologia da Informação',
+    C_PERF_DESC: 'Acesso técnico e mapeamento de banco de dados',
+    C_PERF_PERM: [
+      'dashboard',
+      'usuarios',
+      'clientes',
+      'fornecedores',
+      'classificacao-financeira',
+      'perfis',
+      'empresas',
+      'filiais',
+      'admin-periodos',
+      'admin-logs',
+      'admin-auditoria',
+      'relatorios',
+    ],
+  },
 ]
 
 const initialEmpresas: Empresa[] = [
   {
     id: '1',
+    razaoSocial: 'ALG Finanças S.A.',
+    nomeFantasia: 'ALG Finanças',
+    cnpj: '12345678000199',
     C_EMPR_CODI: 'EMP01',
     C_EMPR_NOME: 'ALG Finanças S.A.',
     C_EMPR_FANT: 'ALG Finanças',
@@ -72,6 +94,9 @@ const initialEmpresas: Empresa[] = [
 const initialFiliais: Filial[] = [
   {
     id: '1',
+    empresaId: '1',
+    nome: 'Sede São Paulo',
+    cnpj: '12345678000199',
     C_FILI_CODI: 'FIL01',
     C_FILI_NOME: 'Sede São Paulo',
     C_FILI_EMPR: '1',
@@ -82,6 +107,10 @@ const initialFiliais: Filial[] = [
 const initialUsers: User[] = [
   {
     id: '1',
+    name: 'Administrador Chefe',
+    email: 'admin@alg.com.br',
+    role: 'admin',
+    status: 'active',
     C_USER_CODI: 'ADM01',
     C_USER_NOME: 'Administrador Chefe',
     C_USER_FANT: 'Admin',
@@ -101,6 +130,10 @@ const initialUsers: User[] = [
   },
   {
     id: '2',
+    name: 'João Silva',
+    email: 'joao@alg.com.br',
+    role: 'user',
+    status: 'active',
     C_USER_CODI: 'OPR01',
     C_USER_NOME: 'João Silva',
     C_USER_FANT: 'João',
@@ -115,6 +148,29 @@ const initialUsers: User[] = [
     C_USER_UFED: 'SP',
     C_USER_PAIS: 'Brasil',
     C_USER_PERF: 'OPER',
+    C_USER_EMPR: '1',
+    C_USER_FILI: '1',
+  },
+  {
+    id: '3',
+    name: 'Analista de TI',
+    email: 'ti@alg.com.br',
+    role: 'ti',
+    status: 'active',
+    C_USER_CODI: 'TI01',
+    C_USER_NOME: 'Analista de TI',
+    C_USER_FANT: 'TI',
+    C_USER_NCPF: '55544433322',
+    C_USER_PASS: '123456',
+    C_USER_MAIL: 'ti@alg.com.br',
+    C_USER_CCEP: '04821230',
+    C_USER_ENDE: 'Rua C',
+    C_USER_BAIR: 'Centro',
+    C_USER_MUNI: 'SP',
+    C_USER_ESTA: 'SP',
+    C_USER_UFED: 'SP',
+    C_USER_PAIS: 'Brasil',
+    C_USER_PERF: 'TI',
     C_USER_EMPR: '1',
     C_USER_FILI: '1',
   },
@@ -159,6 +215,7 @@ export const ERPProvider = ({ children }: { children: ReactNode }) => {
   const [logs, setLogs] = useState<S_CLOG[]>(initialLogs)
   const [periodos, setPeriodos] = useState<PeriodoFechamento[]>(initialPeriodos)
 
+  // In a real scenario you would have a login flow updating this. We default to admin (0) or TI (2) for tests
   const currentUser = useMemo(() => users[0] || null, [users])
 
   const hasPermission = useCallback(

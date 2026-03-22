@@ -42,6 +42,8 @@ export default function Perfis() {
   const [editingProfile, setEditingProfile] = useState<Profile | undefined>()
   const [profileToDelete, setProfileToDelete] = useState<Profile | undefined>()
 
+  const isTi = currentUser?.C_USER_PERF === 'TI' || currentUser?.role === 'ti'
+
   const filteredProfiles = profiles.filter(
     (p) =>
       p.C_PERF_NOME.toLowerCase().includes(search.toLowerCase()) ||
@@ -190,7 +192,13 @@ export default function Perfis() {
         <SheetContent className="w-full sm:max-w-2xl overflow-y-auto border-l-border bg-card p-6">
           <SheetHeader className="mb-8">
             <SheetTitle className="text-2xl">
-              {editingProfile ? 'Editar Perfil' : 'Novo Perfil'}
+              {editingProfile
+                ? isTi
+                  ? 'C_PERF - Editar Perfil'
+                  : 'Editar Perfil'
+                : isTi
+                  ? 'C_PERF - Novo Perfil'
+                  : 'Novo Perfil'}
             </SheetTitle>
             <SheetDescription>
               {editingProfile
@@ -205,6 +213,7 @@ export default function Perfis() {
               initialData={editingProfile}
               onSubmit={handleSave}
               onCancel={() => setIsSheetOpen(false)}
+              isTi={isTi}
             />
           )}
         </SheetContent>

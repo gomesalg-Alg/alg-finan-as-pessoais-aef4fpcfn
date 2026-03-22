@@ -37,23 +37,27 @@ interface UserFormProps {
   initialData?: Partial<UserFormData>
   onSubmit: (data: UserFormData) => void
   onCancel?: () => void
+  isTi?: boolean
 }
 
-export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
+export function UserForm({ initialData, onSubmit, onCancel, isTi = false }: UserFormProps) {
   const form = useForm<UserFormData>({
     resolver: zodResolver(userSchema),
     defaultValues: {
-      name: initialData?.name || '',
-      email: initialData?.email || '',
-      role: initialData?.role || 'user',
+      name: initialData?.name || initialData?.C_USER_NOME || '',
+      email: initialData?.email || initialData?.C_USER_MAIL || '',
+      role:
+        initialData?.role ||
+        (initialData?.C_USER_PERF?.toLowerCase() as 'admin' | 'user' | 'manager' | 'ti') ||
+        'user',
       status: initialData?.status || 'active',
-      cep: initialData?.cep || '',
-      logradouro: initialData?.logradouro || '',
-      numero: initialData?.numero || '',
-      complemento: initialData?.complemento || '',
-      bairro: initialData?.bairro || '',
-      cidade: initialData?.cidade || '',
-      uf: initialData?.uf || '',
+      cep: initialData?.cep || initialData?.C_USER_CCEP || '',
+      logradouro: initialData?.logradouro || initialData?.C_USER_ENDE || '',
+      numero: initialData?.numero || initialData?.C_USER_NUME || '',
+      complemento: initialData?.complemento || initialData?.C_USER_COMP || '',
+      bairro: initialData?.bairro || initialData?.C_USER_BAIR || '',
+      cidade: initialData?.cidade || initialData?.C_USER_MUNI || '',
+      uf: initialData?.uf || initialData?.C_USER_UFED || '',
       ...initialData,
     },
   })
@@ -69,39 +73,45 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
     name: keyof UserFormData,
     label: string,
     icon: any,
+    techName?: string,
     maskFn?: (v: string) => string,
-  ) => (
-    <FormField
-      control={form.control}
-      name={name}
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
-            {icon && <span className="text-amber-800">{icon}</span>}
-            {label}
-          </FormLabel>
-          <FormControl>
-            <Input
-              {...field}
-              value={(field.value as string) || ''}
-              onChange={(e) => {
-                const val = maskFn ? maskFn(e.target.value) : e.target.value
-                field.onChange(val)
-              }}
-              className="bg-white border-blue-200 focus-visible:ring-blue-500 text-gray-800 shadow-sm w-full"
-            />
-          </FormControl>
-          <FormMessage className="text-white bg-red-500 px-2 py-1 mt-1 rounded text-xs inline-block shadow-sm" />
-        </FormItem>
-      )}
-    />
-  )
+  ) => {
+    const displayLabel = isTi && techName ? `[${techName}] - ${label}` : label
+    return (
+      <FormField
+        control={form.control}
+        name={name}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
+              {icon && <span className="text-amber-800">{icon}</span>}
+              {displayLabel}
+            </FormLabel>
+            <FormControl>
+              <Input
+                {...field}
+                value={(field.value as string) || ''}
+                onChange={(e) => {
+                  const val = maskFn ? maskFn(e.target.value) : e.target.value
+                  field.onChange(val)
+                }}
+                className="bg-white border-blue-200 focus-visible:ring-blue-500 text-gray-800 shadow-sm w-full"
+              />
+            </FormControl>
+            <FormMessage className="text-white bg-red-500 px-2 py-1 mt-1 rounded text-xs inline-block shadow-sm" />
+          </FormItem>
+        )}
+      />
+    )
+  }
 
   return (
     <div className="bg-blue-50 p-6 rounded-xl border border-blue-100 shadow-sm">
       <div className="mb-6 pb-2 border-b border-blue-200 flex items-center gap-2">
         <UserIcon className="h-6 w-6 text-amber-700" />
-        <h2 className="text-xl font-bold text-blue-900">Cadastro de Usuário</h2>
+        <h2 className="text-xl font-bold text-blue-900">
+          {isTi ? 'C_USER - ' : ''}Cadastro de Usuário
+        </h2>
       </div>
 
       <Form {...form}>
@@ -110,12 +120,17 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
             <h3 className="text-sm font-bold text-amber-800 uppercase flex items-center gap-2 mb-4">
               <UserIcon className="h-4 w-4" /> Dados do Usuário
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="md:col-span-2">
-                {renderField('name', 'Nome Completo', <UserIcon className="h-4 w-4" />)}
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="md:col-span-3">
+                {renderField(
+                  'name',
+                  'Nome Completo',
+                  <UserIcon className="h-4 w-4" />,
+                  'C_USER_NOME',
+                )}
               </div>
               <div className="md:col-span-1">
-                {renderField('email', 'E-mail', <Mail className="h-4 w-4" />)}
+                {renderField('email', 'E-mail', <Mail className="h-4 w-4" />, 'C_USER_MAIL')}
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -126,7 +141,7 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
                   <FormItem>
                     <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
                       <Shield className="h-4 w-4 text-amber-800" />
-                      Nível de Acesso
+                      {isTi ? '[C_USER_PERF] - Nível de Acesso' : 'Nível de Acesso'}
                     </FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
@@ -138,6 +153,7 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
                         <SelectItem value="admin">Administrador</SelectItem>
                         <SelectItem value="manager">Gerente</SelectItem>
                         <SelectItem value="user">Usuário Comum</SelectItem>
+                        <SelectItem value="ti">Tecnologia da Informação</SelectItem>
                       </SelectContent>
                     </Select>
                     <FormMessage className="text-white bg-red-500 px-2 py-1 mt-1 rounded text-xs inline-block shadow-sm" />
@@ -151,7 +167,7 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
                   <FormItem>
                     <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
                       <Activity className="h-4 w-4 text-amber-800" />
-                      Status
+                      {isTi ? '[C_USER_STAT] - Status' : 'Status'}
                     </FormLabel>
                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                       <FormControl>
@@ -177,29 +193,39 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="md:col-span-1">
-                {renderField('cep', 'CEP', <MapPin className="h-4 w-4" />, cepMask)}
+                {renderField('cep', 'CEP', <MapPin className="h-4 w-4" />, 'C_USER_CCEP', cepMask)}
               </div>
               <div className="md:col-span-3">
-                {renderField('logradouro', 'Logradouro', <MapIcon className="h-4 w-4" />)}
+                {renderField(
+                  'logradouro',
+                  'Logradouro',
+                  <MapIcon className="h-4 w-4" />,
+                  'C_USER_ENDE',
+                )}
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="md:col-span-1">
-                {renderField('numero', 'Número', <Hash className="h-4 w-4" />)}
+                {renderField('numero', 'Número', <Hash className="h-4 w-4" />, 'C_USER_NUME')}
               </div>
               <div className="md:col-span-1">
-                {renderField('complemento', 'Complemento', <Navigation className="h-4 w-4" />)}
+                {renderField(
+                  'complemento',
+                  'Complemento',
+                  <Navigation className="h-4 w-4" />,
+                  'C_USER_COMP',
+                )}
               </div>
               <div className="md:col-span-2">
-                {renderField('bairro', 'Bairro', <MapIcon className="h-4 w-4" />)}
+                {renderField('bairro', 'Bairro', <MapIcon className="h-4 w-4" />, 'C_USER_BAIR')}
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="md:col-span-3">
-                {renderField('cidade', 'Cidade', <Landmark className="h-4 w-4" />)}
+                {renderField('cidade', 'Cidade', <Landmark className="h-4 w-4" />, 'C_USER_MUNI')}
               </div>
               <div className="md:col-span-1">
-                {renderField('uf', 'UF', <MapPin className="h-4 w-4" />)}
+                {renderField('uf', 'UF', <MapPin className="h-4 w-4" />, 'C_USER_UFED')}
               </div>
             </div>
           </div>

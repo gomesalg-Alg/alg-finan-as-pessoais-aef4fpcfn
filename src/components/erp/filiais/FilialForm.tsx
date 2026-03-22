@@ -39,9 +39,16 @@ interface FilialFormProps {
   empresas?: { id: string; nomeFantasia: string }[]
   onSubmit: (data: FilialFormData) => void
   onCancel?: () => void
+  isTi?: boolean
 }
 
-export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: FilialFormProps) {
+export function FilialForm({
+  initialData,
+  empresas = [],
+  onSubmit,
+  onCancel,
+  isTi = false,
+}: FilialFormProps) {
   const form = useForm<FilialFormData>({
     resolver: zodResolver(filialSchema),
     defaultValues: {
@@ -73,39 +80,45 @@ export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: F
     name: keyof FilialFormData,
     label: string,
     icon: any,
+    techName?: string,
     maskFn?: (v: string) => string,
-  ) => (
-    <FormField
-      control={form.control}
-      name={name}
-      render={({ field }) => (
-        <FormItem>
-          <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
-            {icon && <span className="text-amber-800">{icon}</span>}
-            {label}
-          </FormLabel>
-          <FormControl>
-            <Input
-              {...field}
-              value={(field.value as string) || ''}
-              onChange={(e) => {
-                const val = maskFn ? maskFn(e.target.value) : e.target.value
-                field.onChange(val)
-              }}
-              className="bg-white border-blue-200 focus-visible:ring-blue-500 text-gray-800 shadow-sm w-full"
-            />
-          </FormControl>
-          <FormMessage className="text-white bg-red-500 px-2 py-1 mt-1 rounded text-xs inline-block shadow-sm" />
-        </FormItem>
-      )}
-    />
-  )
+  ) => {
+    const displayLabel = isTi && techName ? `[${techName}] - ${label}` : label
+    return (
+      <FormField
+        control={form.control}
+        name={name}
+        render={({ field }) => (
+          <FormItem>
+            <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
+              {icon && <span className="text-amber-800">{icon}</span>}
+              {displayLabel}
+            </FormLabel>
+            <FormControl>
+              <Input
+                {...field}
+                value={(field.value as string) || ''}
+                onChange={(e) => {
+                  const val = maskFn ? maskFn(e.target.value) : e.target.value
+                  field.onChange(val)
+                }}
+                className="bg-white border-blue-200 focus-visible:ring-blue-500 text-gray-800 shadow-sm w-full"
+              />
+            </FormControl>
+            <FormMessage className="text-white bg-red-500 px-2 py-1 mt-1 rounded text-xs inline-block shadow-sm" />
+          </FormItem>
+        )}
+      />
+    )
+  }
 
   return (
     <div className="bg-blue-50 p-6 rounded-xl border border-blue-100 shadow-sm">
       <div className="mb-6 pb-2 border-b border-blue-200 flex items-center gap-2">
         <Store className="h-6 w-6 text-amber-700" />
-        <h2 className="text-xl font-bold text-blue-900">Cadastro de Filial</h2>
+        <h2 className="text-xl font-bold text-blue-900">
+          {isTi ? 'C_FILI - ' : ''}Cadastro de Filial
+        </h2>
       </div>
 
       <Form {...form}>
@@ -114,8 +127,8 @@ export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: F
             <h3 className="text-sm font-bold text-amber-800 uppercase flex items-center gap-2 mb-4">
               <FileText className="h-4 w-4" /> Dados Principais
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <div className="md:col-span-1">
+            <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+              <div className="md:col-span-2">
                 <FormField
                   control={form.control}
                   name="empresaId"
@@ -123,7 +136,7 @@ export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: F
                     <FormItem>
                       <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
                         <Building2 className="h-4 w-4 text-amber-800" />
-                        Empresa Matriz
+                        {isTi ? '[C_FILI_EMPR] - Empresa Matriz' : 'Empresa Matriz'}
                       </FormLabel>
                       <Select onValueChange={field.onChange} defaultValue={field.value}>
                         <FormControl>
@@ -134,7 +147,7 @@ export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: F
                         <SelectContent>
                           {empresas.map((emp) => (
                             <SelectItem key={emp.id} value={emp.id}>
-                              {emp.nomeFantasia}
+                              {emp.nomeFantasia || emp.C_EMPR_FANT || emp.razaoSocial}
                             </SelectItem>
                           ))}
                         </SelectContent>
@@ -144,13 +157,24 @@ export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: F
                   )}
                 />
               </div>
-              <div className="md:col-span-2">
-                {renderField('nome', 'Nome da Filial', <Store className="h-4 w-4" />)}
+              <div className="md:col-span-3">
+                {renderField(
+                  'nome',
+                  'Nome da Filial',
+                  <Store className="h-4 w-4" />,
+                  'C_FILI_NOME',
+                )}
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {renderField('cnpj', 'CNPJ', <FileText className="h-4 w-4" />, cnpjMask)}
-              {renderField('ie', 'Inscrição Estadual', <Hash className="h-4 w-4" />)}
+              {renderField(
+                'cnpj',
+                'CNPJ',
+                <FileText className="h-4 w-4" />,
+                'C_FILI_CNPJ',
+                cnpjMask,
+              )}
+              {renderField('ie', 'Inscrição Estadual', <Hash className="h-4 w-4" />, 'C_FILI_IE')}
             </div>
           </div>
 
@@ -159,8 +183,14 @@ export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: F
               <Phone className="h-4 w-4" /> Contato
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {renderField('telefone', 'Telefone', <Phone className="h-4 w-4" />, phoneMask)}
-              {renderField('email', 'E-mail', <Mail className="h-4 w-4" />)}
+              {renderField(
+                'telefone',
+                'Telefone',
+                <Phone className="h-4 w-4" />,
+                'C_FILI_FONE',
+                phoneMask,
+              )}
+              {renderField('email', 'E-mail', <Mail className="h-4 w-4" />, 'C_FILI_MAIL')}
             </div>
           </div>
 
@@ -170,29 +200,39 @@ export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: F
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="md:col-span-1">
-                {renderField('cep', 'CEP', <MapPin className="h-4 w-4" />, cepMask)}
+                {renderField('cep', 'CEP', <MapPin className="h-4 w-4" />, 'C_FILI_CCEP', cepMask)}
               </div>
               <div className="md:col-span-3">
-                {renderField('logradouro', 'Logradouro', <MapIcon className="h-4 w-4" />)}
+                {renderField(
+                  'logradouro',
+                  'Logradouro',
+                  <MapIcon className="h-4 w-4" />,
+                  'C_FILI_ENDE',
+                )}
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="md:col-span-1">
-                {renderField('numero', 'Número', <Hash className="h-4 w-4" />)}
+                {renderField('numero', 'Número', <Hash className="h-4 w-4" />, 'C_FILI_NUME')}
               </div>
               <div className="md:col-span-1">
-                {renderField('complemento', 'Complemento', <Navigation className="h-4 w-4" />)}
+                {renderField(
+                  'complemento',
+                  'Complemento',
+                  <Navigation className="h-4 w-4" />,
+                  'C_FILI_COMP',
+                )}
               </div>
               <div className="md:col-span-2">
-                {renderField('bairro', 'Bairro', <MapIcon className="h-4 w-4" />)}
+                {renderField('bairro', 'Bairro', <MapIcon className="h-4 w-4" />, 'C_FILI_BAIR')}
               </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               <div className="md:col-span-3">
-                {renderField('cidade', 'Cidade', <Landmark className="h-4 w-4" />)}
+                {renderField('cidade', 'Cidade', <Landmark className="h-4 w-4" />, 'C_FILI_MUNI')}
               </div>
               <div className="md:col-span-1">
-                {renderField('uf', 'UF', <MapPin className="h-4 w-4" />)}
+                {renderField('uf', 'UF', <MapPin className="h-4 w-4" />, 'C_FILI_UFED')}
               </div>
             </div>
           </div>
