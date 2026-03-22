@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Lock } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import logoUrl from '@/assets/logo_escolhido_alg-bc19d.jpeg'
@@ -80,7 +80,17 @@ export function Header() {
           </div>
 
           {/* Right: CTA */}
-          <div className="flex-1 flex justify-end items-center">
+          <div className="flex-1 flex justify-end items-center gap-2 md:gap-4">
+            <Button
+              asChild
+              variant="ghost"
+              className="hidden lg:flex text-foreground hover:text-primary transition-colors border border-transparent hover:border-border hover:bg-secondary"
+            >
+              <Link to="/login">
+                <Lock className="w-4 h-4 mr-2" />
+                Área Restrita
+              </Link>
+            </Button>
             <Button
               asChild
               className="shadow-lg hover:shadow-xl transition-all bg-primary text-primary-foreground hover:bg-primary/90"
@@ -112,6 +122,15 @@ export function Header() {
                 {item.name}
               </Link>
             ))}
+            <div className="mt-4 pt-4 border-t border-border">
+              <Link
+                to="/login"
+                className="flex items-center gap-3 text-lg font-medium p-3 rounded-lg text-foreground/80 hover:bg-secondary hover:text-primary transition-colors"
+              >
+                <Lock className="h-5 w-5" />
+                Área Restrita
+              </Link>
+            </div>
           </div>
         </div>
       )}

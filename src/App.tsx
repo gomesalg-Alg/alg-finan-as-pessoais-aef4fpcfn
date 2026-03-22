@@ -3,11 +3,19 @@ import { Toaster } from '@/components/ui/toaster'
 import { Toaster as Sonner } from '@/components/ui/sonner'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { Layout } from '@/components/Layout'
+
 import Index from '@/pages/Index'
 import Services from '@/pages/Services'
 import About from '@/pages/About'
 import Contact from '@/pages/Contact'
 import NotFound from '@/pages/NotFound'
+
+import Login from '@/pages/auth/Login'
+import { ERPLayout } from '@/components/erp/ERPLayout'
+import Dashboard from '@/pages/erp/Dashboard'
+import Clientes from '@/pages/erp/cadastro/Clientes'
+import Fornecedores from '@/pages/erp/cadastro/Fornecedores'
+import ClassificacaoFinanceira from '@/pages/erp/cadastro/ClassificacaoFinanceira'
 
 const App = () => (
   <BrowserRouter future={{ v7_startTransition: false, v7_relativeSplatPath: false }}>
@@ -21,6 +29,16 @@ const App = () => (
           <Route path="/sobre" element={<About />} />
           <Route path="/contato" element={<Contact />} />
         </Route>
+
+        <Route path="/login" element={<Login />} />
+
+        <Route path="/erp" element={<ERPLayout />}>
+          <Route index element={<Dashboard />} />
+          <Route path="cadastro/clientes" element={<Clientes />} />
+          <Route path="cadastro/fornecedores" element={<Fornecedores />} />
+          <Route path="cadastro/classificacao-financeira" element={<ClassificacaoFinanceira />} />
+        </Route>
+
         <Route path="*" element={<NotFound />} />
       </Routes>
     </TooltipProvider>

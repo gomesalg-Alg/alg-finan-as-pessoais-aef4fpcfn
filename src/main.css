@@ -33,6 +33,16 @@
     --input: 217 40% 25%;
     --ring: 38 35% 53%;
     --radius: 0.5rem;
+
+    /* Sidebar specific variables */
+    --sidebar-background: 217 55% 8%; /* Darker deep navy */
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 38 35% 53%;
+    --sidebar-primary-foreground: 217 60% 11%;
+    --sidebar-accent: 217 40% 15%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217 40% 18%;
+    --sidebar-ring: 38 35% 53%;
   }
 }
 
