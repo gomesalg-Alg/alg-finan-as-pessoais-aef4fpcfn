@@ -112,39 +112,6 @@ export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: F
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
           <div className="bg-white/60 p-4 rounded-lg border border-blue-100/50 space-y-4">
             <h3 className="text-sm font-bold text-amber-800 uppercase flex items-center gap-2 mb-4">
-              <MapPin className="h-4 w-4" /> Localização
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="md:col-span-1">
-                {renderField('cep', 'CEP', <MapPin className="h-4 w-4" />, cepMask)}
-              </div>
-              <div className="md:col-span-3">
-                {renderField('logradouro', 'Logradouro', <MapIcon className="h-4 w-4" />)}
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="md:col-span-1">
-                {renderField('numero', 'Número', <Hash className="h-4 w-4" />)}
-              </div>
-              <div className="md:col-span-1">
-                {renderField('complemento', 'Complemento', <Navigation className="h-4 w-4" />)}
-              </div>
-              <div className="md:col-span-2">
-                {renderField('bairro', 'Bairro', <MapIcon className="h-4 w-4" />)}
-              </div>
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
-              <div className="md:col-span-3">
-                {renderField('cidade', 'Cidade', <Landmark className="h-4 w-4" />)}
-              </div>
-              <div className="md:col-span-1">
-                {renderField('uf', 'UF', <MapPin className="h-4 w-4" />)}
-              </div>
-            </div>
-          </div>
-
-          <div className="bg-white/60 p-4 rounded-lg border border-blue-100/50 space-y-4">
-            <h3 className="text-sm font-bold text-amber-800 uppercase flex items-center gap-2 mb-4">
               <FileText className="h-4 w-4" /> Dados Principais
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -190,6 +157,39 @@ export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: F
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {renderField('telefone', 'Telefone', <Phone className="h-4 w-4" />, phoneMask)}
               {renderField('email', 'E-mail', <Mail className="h-4 w-4" />)}
+            </div>
+          </div>
+
+          <div className="bg-white/60 p-4 rounded-lg border border-blue-100/50 space-y-4">
+            <h3 className="text-sm font-bold text-amber-800 uppercase flex items-center gap-2 mb-4">
+              <MapPin className="h-4 w-4" /> Localização
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="md:col-span-1">
+                {renderField('cep', 'CEP', <MapPin className="h-4 w-4" />, cepMask)}
+              </div>
+              <div className="md:col-span-3">
+                {renderField('logradouro', 'Logradouro', <MapIcon className="h-4 w-4" />)}
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="md:col-span-1">
+                {renderField('numero', 'Número', <Hash className="h-4 w-4" />)}
+              </div>
+              <div className="md:col-span-1">
+                {renderField('complemento', 'Complemento', <Navigation className="h-4 w-4" />)}
+              </div>
+              <div className="md:col-span-2">
+                {renderField('bairro', 'Bairro', <MapIcon className="h-4 w-4" />)}
+              </div>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+              <div className="md:col-span-3">
+                {renderField('cidade', 'Cidade', <Landmark className="h-4 w-4" />)}
+              </div>
+              <div className="md:col-span-1">
+                {renderField('uf', 'UF', <MapPin className="h-4 w-4" />)}
+              </div>
             </div>
           </div>
 

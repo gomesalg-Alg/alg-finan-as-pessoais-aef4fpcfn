@@ -104,6 +104,31 @@ export function EmpresaForm({ initialData, onSubmit, onCancel }: EmpresaFormProp
         <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-6">
           <div className="bg-white/60 p-4 rounded-lg border border-blue-100/50 space-y-4">
             <h3 className="text-sm font-bold text-amber-800 uppercase flex items-center gap-2 mb-4">
+              <FileText className="h-4 w-4" /> Dados Principais
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {renderField('razaoSocial', 'Razão Social', <Building2 className="h-4 w-4" />)}
+              {renderField('nomeFantasia', 'Nome Fantasia', <Building2 className="h-4 w-4" />)}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {renderField('cnpj', 'CNPJ', <FileText className="h-4 w-4" />, cnpjMask)}
+              {renderField('ie', 'Inscrição Estadual', <Hash className="h-4 w-4" />)}
+              {renderField('im', 'Inscrição Municipal', <Hash className="h-4 w-4" />)}
+            </div>
+          </div>
+
+          <div className="bg-white/60 p-4 rounded-lg border border-blue-100/50 space-y-4">
+            <h3 className="text-sm font-bold text-amber-800 uppercase flex items-center gap-2 mb-4">
+              <Phone className="h-4 w-4" /> Contato
+            </h3>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              {renderField('telefone', 'Telefone', <Phone className="h-4 w-4" />, phoneMask)}
+              {renderField('email', 'E-mail', <Mail className="h-4 w-4" />)}
+            </div>
+          </div>
+
+          <div className="bg-white/60 p-4 rounded-lg border border-blue-100/50 space-y-4">
+            <h3 className="text-sm font-bold text-amber-800 uppercase flex items-center gap-2 mb-4">
               <MapPin className="h-4 w-4" /> Localização
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
@@ -132,31 +157,6 @@ export function EmpresaForm({ initialData, onSubmit, onCancel }: EmpresaFormProp
               <div className="md:col-span-1">
                 {renderField('uf', 'UF', <MapPin className="h-4 w-4" />)}
               </div>
-            </div>
-          </div>
-
-          <div className="bg-white/60 p-4 rounded-lg border border-blue-100/50 space-y-4">
-            <h3 className="text-sm font-bold text-amber-800 uppercase flex items-center gap-2 mb-4">
-              <FileText className="h-4 w-4" /> Dados Principais
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {renderField('razaoSocial', 'Razão Social', <Building2 className="h-4 w-4" />)}
-              {renderField('nomeFantasia', 'Nome Fantasia', <Building2 className="h-4 w-4" />)}
-            </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {renderField('cnpj', 'CNPJ', <FileText className="h-4 w-4" />, cnpjMask)}
-              {renderField('ie', 'Inscrição Estadual', <Hash className="h-4 w-4" />)}
-              {renderField('im', 'Inscrição Municipal', <Hash className="h-4 w-4" />)}
-            </div>
-          </div>
-
-          <div className="bg-white/60 p-4 rounded-lg border border-blue-100/50 space-y-4">
-            <h3 className="text-sm font-bold text-amber-800 uppercase flex items-center gap-2 mb-4">
-              <Phone className="h-4 w-4" /> Contato
-            </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {renderField('telefone', 'Telefone', <Phone className="h-4 w-4" />, phoneMask)}
-              {renderField('email', 'E-mail', <Mail className="h-4 w-4" />)}
             </div>
           </div>
 
