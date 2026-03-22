@@ -2,6 +2,7 @@ import { Control, FieldValues, Path } from 'react-hook-form'
 import { FormField, FormItem, FormLabel, FormControl, FormMessage } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
 import { maskCPF, maskCEP, unmask } from '@/utils/mask'
+import { cn } from '@/lib/utils'
 
 interface FormInputProps<T extends FieldValues> {
   control: Control<T>
@@ -32,12 +33,19 @@ export function FormInput<T extends FieldValues>({
     <FormField
       control={control}
       name={name}
-      render={({ field }) => {
+      render={({ field, fieldState }) => {
         const displayValue = mask ? applyMask(field.value ?? '') : (field.value ?? '')
 
         return (
           <FormItem>
-            <FormLabel className="text-muted-foreground">{label}</FormLabel>
+            <FormLabel
+              className={cn(
+                'text-muted-foreground transition-colors',
+                fieldState.error && '!text-white font-semibold',
+              )}
+            >
+              {label}
+            </FormLabel>
             <FormControl>
               <Input
                 type={type}
@@ -57,7 +65,7 @@ export function FormInput<T extends FieldValues>({
                 maxLength={maxLength}
               />
             </FormControl>
-            <FormMessage />
+            <FormMessage className="!text-white" />
           </FormItem>
         )
       }}
