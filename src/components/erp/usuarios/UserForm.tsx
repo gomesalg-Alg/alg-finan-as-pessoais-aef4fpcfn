@@ -2,10 +2,26 @@ import { useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { userSchema, UserFormData } from '@/schemas/userSchema'
-import { Form } from '@/components/ui/form'
+import {
+  Form,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormControl,
+  FormMessage,
+} from '@/components/ui/form'
 import { Button } from '@/components/ui/button'
 import { FormInput } from './FormInput'
 import { Save, X } from 'lucide-react'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+import useERPStore from '@/stores/useERPStore'
+import { cn } from '@/lib/utils'
 
 interface UserFormProps {
   initialData?: Partial<UserFormData>
@@ -14,6 +30,8 @@ interface UserFormProps {
 }
 
 export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
+  const { profiles } = useERPStore()
+
   const form = useForm<UserFormData>({
     resolver: zodResolver(userSchema),
     mode: 'onBlur',
@@ -31,6 +49,7 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
       C_USER_ESTA: initialData?.C_USER_ESTA || '',
       C_USER_UFED: initialData?.C_USER_UFED || '',
       C_USER_PAIS: initialData?.C_USER_PAIS || 'Brasil',
+      C_USER_PERF: initialData?.C_USER_PERF || '',
     },
   })
 
@@ -84,6 +103,42 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
                 label="Senha de Acesso"
                 type="password"
                 placeholder="••••••••"
+              />
+              <FormField
+                control={form.control}
+                name="C_USER_PERF"
+                render={({ field, fieldState }) => (
+                  <FormItem>
+                    <FormLabel
+                      className={cn(
+                        'text-muted-foreground transition-colors',
+                        fieldState.error && '!text-white font-semibold',
+                      )}
+                    >
+                      Perfil de Acesso
+                    </FormLabel>
+                    <Select onValueChange={field.onChange} value={field.value}>
+                      <FormControl>
+                        <SelectTrigger
+                          className={cn(
+                            'bg-background/50 border-border focus:border-primary',
+                            fieldState.error && 'border-white focus:border-white ring-offset-white',
+                          )}
+                        >
+                          <SelectValue placeholder="Selecione um perfil" />
+                        </SelectTrigger>
+                      </FormControl>
+                      <SelectContent>
+                        {profiles.map((p) => (
+                          <SelectItem key={p.id} value={p.id}>
+                            {p.C_PERF_NOME}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
+                    <FormMessage className="!text-white font-medium drop-shadow-md" />
+                  </FormItem>
+                )}
               />
             </div>
           </div>

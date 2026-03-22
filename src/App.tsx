@@ -16,35 +16,41 @@ import Dashboard from '@/pages/erp/Dashboard'
 import Clientes from '@/pages/erp/cadastro/Clientes'
 import Fornecedores from '@/pages/erp/cadastro/Fornecedores'
 import Usuarios from '@/pages/erp/cadastro/Usuarios'
+import Perfis from '@/pages/erp/cadastro/Perfis'
 import ClassificacaoFinanceira from '@/pages/erp/cadastro/ClassificacaoFinanceira'
 
+import { ERPProvider } from '@/stores/useERPStore'
+
 const App = () => (
-  <BrowserRouter future={{ v7_startTransition: false, v7_relativeSplatPath: false }}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner position="top-right" theme="dark" />
-      <Routes>
-        <Route element={<Layout />}>
-          <Route path="/" element={<Index />} />
-          <Route path="/servicos" element={<Services />} />
-          <Route path="/sobre" element={<About />} />
-          <Route path="/contato" element={<Contact />} />
-        </Route>
+  <ERPProvider>
+    <BrowserRouter future={{ v7_startTransition: false, v7_relativeSplatPath: false }}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner position="top-right" theme="dark" />
+        <Routes>
+          <Route element={<Layout />}>
+            <Route path="/" element={<Index />} />
+            <Route path="/servicos" element={<Services />} />
+            <Route path="/sobre" element={<About />} />
+            <Route path="/contato" element={<Contact />} />
+          </Route>
 
-        <Route path="/login" element={<Login />} />
+          <Route path="/login" element={<Login />} />
 
-        <Route path="/erp" element={<ERPLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="cadastro/usuarios" element={<Usuarios />} />
-          <Route path="cadastro/clientes" element={<Clientes />} />
-          <Route path="cadastro/fornecedores" element={<Fornecedores />} />
-          <Route path="cadastro/classificacao-financeira" element={<ClassificacaoFinanceira />} />
-        </Route>
+          <Route path="/erp" element={<ERPLayout />}>
+            <Route index element={<Dashboard />} />
+            <Route path="cadastro/usuarios" element={<Usuarios />} />
+            <Route path="cadastro/perfis" element={<Perfis />} />
+            <Route path="cadastro/clientes" element={<Clientes />} />
+            <Route path="cadastro/fornecedores" element={<Fornecedores />} />
+            <Route path="cadastro/classificacao-financeira" element={<ClassificacaoFinanceira />} />
+          </Route>
 
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </TooltipProvider>
-  </BrowserRouter>
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </TooltipProvider>
+    </BrowserRouter>
+  </ERPProvider>
 )
 
 export default App

@@ -19,6 +19,7 @@ export const userSchema = z.object({
   C_USER_ESTA: z.string().min(1, 'Estado é obrigatório'),
   C_USER_UFED: z.string().length(2, 'UF deve ter 2 caracteres (ex: SP)'),
   C_USER_PAIS: z.string().min(1, 'País é obrigatório'),
+  C_USER_PERF: z.string().min(1, 'Perfil de Acesso é obrigatório'),
 })
 
 export type UserFormData = z.infer<typeof userSchema>

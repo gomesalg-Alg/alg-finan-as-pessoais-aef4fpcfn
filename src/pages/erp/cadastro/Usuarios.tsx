@@ -38,48 +38,29 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/components/ui/pagination'
-import { Plus, Search, Users, Edit, Trash2, ShieldCheck, Filter } from 'lucide-react'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
+import {
+  Plus,
+  Search,
+  Users as UsersIcon,
+  Edit,
+  Trash2,
+  ShieldCheck,
+  Filter,
+  Download,
+} from 'lucide-react'
 import { toast } from 'sonner'
 import { maskCPF } from '@/utils/mask'
 import { addAuditLog } from '@/lib/logger'
-
-const initialMock: User[] = [
-  {
-    id: '1',
-    C_USER_CODI: 'ADM01',
-    C_USER_NOME: 'Administrador Chefe',
-    C_USER_FANT: 'Admin',
-    C_USER_NCPF: '11122233344',
-    C_USER_PASS: '123456',
-    C_USER_MAIL: 'admin@alg.com.br',
-    C_USER_CCEP: '04821230',
-    C_USER_ENDE: 'Rua A',
-    C_USER_BAIR: 'Centro',
-    C_USER_MUNI: 'SP',
-    C_USER_ESTA: 'SP',
-    C_USER_UFED: 'SP',
-    C_USER_PAIS: 'Brasil',
-  },
-  {
-    id: '2',
-    C_USER_CODI: 'OP002',
-    C_USER_NOME: 'Operador Sistema',
-    C_USER_FANT: 'Operador',
-    C_USER_NCPF: '99988877766',
-    C_USER_PASS: '123456',
-    C_USER_MAIL: 'operador@alg.com.br',
-    C_USER_CCEP: '04821230',
-    C_USER_ENDE: 'Rua B',
-    C_USER_BAIR: 'Centro',
-    C_USER_MUNI: 'SP',
-    C_USER_ESTA: 'SP',
-    C_USER_UFED: 'SP',
-    C_USER_PAIS: 'Brasil',
-  },
-]
+import useERPStore from '@/stores/useERPStore'
 
 export default function Usuarios() {
-  const [users, setUsers] = useState<User[]>(initialMock)
+  const { users, setUsers, profiles, currentUser } = useERPStore()
   const [search, setSearch] = useState('')
   const [searchCpf, setSearchCpf] = useState('')
   const [isSheetOpen, setIsSheetOpen] = useState(false)
@@ -130,14 +111,19 @@ export default function Usuarios() {
       addAuditLog(
         'UPDATE',
         editingUser.id,
-        'CURRENT_USER',
-        `Usuário ${data.C_USER_CODI} atualizado`,
+        currentUser?.C_USER_CODI || 'CURRENT_USER',
+        `Usuário ${data.C_USER_CODI} atualizado. Perfil: ${data.C_USER_PERF}`,
       )
       toast.success('Usuário atualizado com sucesso!')
     } else {
       const newId = Date.now().toString()
-      setUsers([{ ...data, id: newId }, ...users])
-      addAuditLog('CREATE', newId, 'CURRENT_USER', `Usuário ${data.C_USER_CODI} criado`)
+      setUsers([{ ...data, id: newId } as User, ...users])
+      addAuditLog(
+        'CREATE',
+        newId,
+        currentUser?.C_USER_CODI || 'CURRENT_USER',
+        `Usuário ${data.C_USER_CODI} criado. Perfil: ${data.C_USER_PERF}`,
+      )
       toast.success('Usuário criado com sucesso!')
     }
     setIsSheetOpen(false)
@@ -149,7 +135,7 @@ export default function Usuarios() {
       addAuditLog(
         'DELETE',
         userToDelete.id,
-        'CURRENT_USER',
+        currentUser?.C_USER_CODI || 'CURRENT_USER',
         `Usuário ${userToDelete.C_USER_CODI} removido`,
       )
       toast.success('Usuário removido com sucesso!')
@@ -157,24 +143,82 @@ export default function Usuarios() {
     }
   }
 
+  const exportData = (format: 'csv' | 'xlsx') => {
+    const headers = ['Código', 'Nome', 'Fantasia', 'CPF', 'E-mail', 'Perfil']
+    const rows = filteredUsers.map((u) => {
+      const profileName = profiles.find((p) => p.id === u.C_USER_PERF)?.C_PERF_NOME || 'N/A'
+      return [
+        u.C_USER_CODI,
+        u.C_USER_NOME,
+        u.C_USER_FANT,
+        u.C_USER_NCPF,
+        u.C_USER_MAIL,
+        profileName,
+      ]
+    })
+
+    if (format === 'csv') {
+      const csvContent = [headers.join(';'), ...rows.map((r) => r.join(';'))].join('\n')
+      const blob = new Blob(['\uFEFF' + csvContent], { type: 'text/csv;charset=utf-8;' })
+      const link = document.createElement('a')
+      link.href = URL.createObjectURL(blob)
+      link.download = 'usuarios.csv'
+      link.click()
+    } else {
+      const tableHtml = `
+        <html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40">
+        <head><meta charset="utf-8"></head><body>
+        <table border="1">
+          <tr>${headers.map((h) => `<th style="background-color: #f2f2f2;">${h}</th>`).join('')}</tr>
+          ${rows.map((r) => `<tr>${r.map((c) => `<td>${c}</td>`).join('')}</tr>`).join('')}
+        </table>
+        </body></html>
+      `
+      const blob = new Blob([tableHtml], { type: 'application/vnd.ms-excel' })
+      const link = document.createElement('a')
+      link.href = URL.createObjectURL(blob)
+      link.download = 'usuarios.xls'
+      link.click()
+    }
+    toast.success(`Exportação para ${format.toUpperCase()} iniciada.`)
+  }
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
         <div>
           <h1 className="text-3xl font-bold text-foreground flex items-center gap-3">
-            <Users className="h-8 w-8 text-primary" />
+            <UsersIcon className="h-8 w-8 text-primary" />
             Usuários
           </h1>
           <p className="text-muted-foreground mt-1">
             Gerenciamento de acessos e cadastro de usuários.
           </p>
         </div>
-        <Button
-          onClick={handleOpenNew}
-          className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm"
-        >
-          <Plus className="h-4 w-4 mr-2" /> Novo Usuário
-        </Button>
+        <div className="flex gap-2 w-full sm:w-auto">
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="outline" className="border-border hidden md:flex">
+                <Download className="h-4 w-4 mr-2" />
+                Exportar
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end">
+              <DropdownMenuItem onClick={() => exportData('csv')}>
+                Exportar como CSV
+              </DropdownMenuItem>
+              <DropdownMenuItem onClick={() => exportData('xlsx')}>
+                Exportar como Excel
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+          <Button
+            onClick={handleOpenNew}
+            className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-sm flex-1 sm:flex-none"
+          >
+            <Plus className="h-4 w-4 mr-2" /> Novo Usuário
+          </Button>
+        </div>
       </div>
 
       <Card className="border-border shadow-sm">
@@ -210,6 +254,7 @@ export default function Usuarios() {
                   <TableHead>Nome</TableHead>
                   <TableHead>CPF</TableHead>
                   <TableHead>E-mail</TableHead>
+                  <TableHead>Perfil</TableHead>
                   <TableHead className="text-right pr-6">Ações</TableHead>
                 </TableRow>
               </TableHeader>
@@ -221,7 +266,7 @@ export default function Usuarios() {
                     </TableCell>
                     <TableCell className="font-semibold flex items-center gap-2">
                       {user.C_USER_NOME}
-                      {user.C_USER_CODI.startsWith('ADM') && (
+                      {user.C_USER_PERF === 'ADMIN' && (
                         <ShieldCheck className="h-4 w-4 text-primary" />
                       )}
                     </TableCell>
@@ -229,6 +274,9 @@ export default function Usuarios() {
                       {maskCPF(user.C_USER_NCPF)}
                     </TableCell>
                     <TableCell className="text-muted-foreground">{user.C_USER_MAIL}</TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {profiles.find((p) => p.id === user.C_USER_PERF)?.C_PERF_NOME || '-'}
+                    </TableCell>
                     <TableCell className="text-right pr-6">
                       <div className="flex justify-end gap-2">
                         <Button
@@ -258,7 +306,7 @@ export default function Usuarios() {
                 ))}
                 {paginatedUsers.length === 0 && (
                   <TableRow>
-                    <TableCell colSpan={5} className="text-center py-12 text-muted-foreground">
+                    <TableCell colSpan={6} className="text-center py-12 text-muted-foreground">
                       Nenhum usuário encontrado.
                     </TableCell>
                   </TableRow>

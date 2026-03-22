@@ -25,9 +25,18 @@ import {
 } from '@/components/ui/sidebar'
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from '@/components/ui/collapsible'
 import logoUrl from '@/assets/logo_escolhido_alg-bc19d.jpeg'
+import useERPStore from '@/stores/useERPStore'
 
 export function ERPSidebar() {
   const location = useLocation()
+  const { hasPermission } = useERPStore()
+
+  const showCadastro =
+    hasPermission('usuarios') ||
+    hasPermission('perfis') ||
+    hasPermission('clientes') ||
+    hasPermission('fornecedores') ||
+    hasPermission('classificacao-financeira')
 
   return (
     <Sidebar collapsible="icon" className="border-r border-sidebar-border bg-sidebar shadow-2xl">
@@ -55,81 +64,108 @@ export function ERPSidebar() {
             Navegação Principal
           </SidebarGroupLabel>
           <SidebarMenu>
-            <SidebarMenuItem>
-              <SidebarMenuButton
-                asChild
-                isActive={location.pathname === '/erp'}
-                tooltip="Dashboard"
-              >
-                <Link to="/erp">
-                  <LayoutDashboard />
-                  <span>Dashboard</span>
-                </Link>
-              </SidebarMenuButton>
-            </SidebarMenuItem>
-
-            <Collapsible
-              defaultOpen={location.pathname.includes('/cadastro')}
-              className="group/collapsible"
-            >
+            {hasPermission('dashboard') && (
               <SidebarMenuItem>
-                <CollapsibleTrigger asChild>
-                  <SidebarMenuButton tooltip="Cadastro">
-                    <ShieldCheck />
-                    <span>Cadastro</span>
-                    <ChevronRight className="ml-auto h-4 w-4 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
-                  </SidebarMenuButton>
-                </CollapsibleTrigger>
-                <CollapsibleContent>
-                  <SidebarMenuSub>
-                    <SidebarMenuSubItem>
-                      <SidebarMenuSubButton
-                        asChild
-                        isActive={location.pathname === '/erp/cadastro/usuarios'}
-                      >
-                        <Link to="/erp/cadastro/usuarios">
-                          <Users className="h-4 w-4 mr-2" />
-                          <span>Usuários</span>
-                        </Link>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                    <SidebarMenuSubItem>
-                      <SidebarMenuSubButton
-                        asChild
-                        isActive={location.pathname === '/erp/cadastro/clientes'}
-                      >
-                        <Link to="/erp/cadastro/clientes">
-                          <Users className="h-4 w-4 mr-2" />
-                          <span>Clientes</span>
-                        </Link>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                    <SidebarMenuSubItem>
-                      <SidebarMenuSubButton
-                        asChild
-                        isActive={location.pathname === '/erp/cadastro/fornecedores'}
-                      >
-                        <Link to="/erp/cadastro/fornecedores">
-                          <Building2 className="h-4 w-4 mr-2" />
-                          <span>Fornecedores</span>
-                        </Link>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                    <SidebarMenuSubItem>
-                      <SidebarMenuSubButton
-                        asChild
-                        isActive={location.pathname === '/erp/cadastro/classificacao-financeira'}
-                      >
-                        <Link to="/erp/cadastro/classificacao-financeira">
-                          <Tags className="h-4 w-4 mr-2" />
-                          <span className="truncate">Classificação Financeira</span>
-                        </Link>
-                      </SidebarMenuSubButton>
-                    </SidebarMenuSubItem>
-                  </SidebarMenuSub>
-                </CollapsibleContent>
+                <SidebarMenuButton
+                  asChild
+                  isActive={location.pathname === '/erp'}
+                  tooltip="Dashboard"
+                >
+                  <Link to="/erp">
+                    <LayoutDashboard />
+                    <span>Dashboard</span>
+                  </Link>
+                </SidebarMenuButton>
               </SidebarMenuItem>
-            </Collapsible>
+            )}
+
+            {showCadastro && (
+              <Collapsible
+                defaultOpen={location.pathname.includes('/cadastro')}
+                className="group/collapsible"
+              >
+                <SidebarMenuItem>
+                  <CollapsibleTrigger asChild>
+                    <SidebarMenuButton tooltip="Cadastro">
+                      <ShieldCheck />
+                      <span>Cadastro</span>
+                      <ChevronRight className="ml-auto h-4 w-4 transition-transform duration-200 group-data-[state=open]/collapsible:rotate-90" />
+                    </SidebarMenuButton>
+                  </CollapsibleTrigger>
+                  <CollapsibleContent>
+                    <SidebarMenuSub>
+                      {hasPermission('usuarios') && (
+                        <SidebarMenuSubItem>
+                          <SidebarMenuSubButton
+                            asChild
+                            isActive={location.pathname === '/erp/cadastro/usuarios'}
+                          >
+                            <Link to="/erp/cadastro/usuarios">
+                              <Users className="h-4 w-4 mr-2" />
+                              <span>Usuários</span>
+                            </Link>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      )}
+                      {hasPermission('perfis') && (
+                        <SidebarMenuSubItem>
+                          <SidebarMenuSubButton
+                            asChild
+                            isActive={location.pathname === '/erp/cadastro/perfis'}
+                          >
+                            <Link to="/erp/cadastro/perfis">
+                              <ShieldCheck className="h-4 w-4 mr-2" />
+                              <span>Perfis de Acesso</span>
+                            </Link>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      )}
+                      {hasPermission('clientes') && (
+                        <SidebarMenuSubItem>
+                          <SidebarMenuSubButton
+                            asChild
+                            isActive={location.pathname === '/erp/cadastro/clientes'}
+                          >
+                            <Link to="/erp/cadastro/clientes">
+                              <Users className="h-4 w-4 mr-2" />
+                              <span>Clientes</span>
+                            </Link>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      )}
+                      {hasPermission('fornecedores') && (
+                        <SidebarMenuSubItem>
+                          <SidebarMenuSubButton
+                            asChild
+                            isActive={location.pathname === '/erp/cadastro/fornecedores'}
+                          >
+                            <Link to="/erp/cadastro/fornecedores">
+                              <Building2 className="h-4 w-4 mr-2" />
+                              <span>Fornecedores</span>
+                            </Link>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      )}
+                      {hasPermission('classificacao-financeira') && (
+                        <SidebarMenuSubItem>
+                          <SidebarMenuSubButton
+                            asChild
+                            isActive={
+                              location.pathname === '/erp/cadastro/classificacao-financeira'
+                            }
+                          >
+                            <Link to="/erp/cadastro/classificacao-financeira">
+                              <Tags className="h-4 w-4 mr-2" />
+                              <span className="truncate">Classificação Financeira</span>
+                            </Link>
+                          </SidebarMenuSubButton>
+                        </SidebarMenuSubItem>
+                      )}
+                    </SidebarMenuSub>
+                  </CollapsibleContent>
+                </SidebarMenuItem>
+              </Collapsible>
+            )}
 
             <SidebarMenuItem>
               <SidebarMenuButton tooltip="Operação">
