@@ -47,6 +47,8 @@ const initialProfiles: Profile[] = [
       'filiais',
       'admin-periodos',
       'admin-logs',
+      'admin-auditoria',
+      'relatorios',
     ],
   },
   {
@@ -97,6 +99,25 @@ const initialUsers: User[] = [
     C_USER_EMPR: '1',
     C_USER_FILI: '1',
   },
+  {
+    id: '2',
+    C_USER_CODI: 'OPR01',
+    C_USER_NOME: 'João Silva',
+    C_USER_FANT: 'João',
+    C_USER_NCPF: '99988877766',
+    C_USER_PASS: '123456',
+    C_USER_MAIL: 'joao@alg.com.br',
+    C_USER_CCEP: '04821230',
+    C_USER_ENDE: 'Rua B',
+    C_USER_BAIR: 'Centro',
+    C_USER_MUNI: 'SP',
+    C_USER_ESTA: 'SP',
+    C_USER_UFED: 'SP',
+    C_USER_PAIS: 'Brasil',
+    C_USER_PERF: 'OPER',
+    C_USER_EMPR: '1',
+    C_USER_FILI: '1',
+  },
 ]
 
 const initialNotifications: Notification[] = []
@@ -105,7 +126,7 @@ const initialLogs: S_CLOG[] = Array.from({ length: 45 }).map((_, i) => ({
   id: `log-${i}`,
   action: i % 3 === 0 ? 'LOGIN' : i % 2 === 0 ? 'UPDATE' : 'CREATE',
   timestamp: new Date(Date.now() - i * 86400000 * 2).toISOString(), // Spread over past 90 days
-  userId: '1',
+  userId: i % 2 === 0 ? '1' : '2',
   details: `Ação gerada automaticamente para histórico #${i}`,
   archived: false,
 }))
@@ -116,7 +137,7 @@ const initialPeriodos: PeriodoFechamento[] = [
     ano: new Date().getFullYear(),
     mes: new Date().getMonth(), // Last month
     status: 'Fechado',
-    updatedAt: new Date().toISOString(),
+    updatedAt: new Date(Date.now() - 86400000 * 5).toISOString(),
     updatedBy: 'ADM01',
   },
   {

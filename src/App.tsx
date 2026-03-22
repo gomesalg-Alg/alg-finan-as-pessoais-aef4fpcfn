@@ -22,6 +22,8 @@ import Filiais from '@/pages/erp/cadastro/Filiais'
 import ClassificacaoFinanceira from '@/pages/erp/cadastro/ClassificacaoFinanceira'
 import PeriodosContabeis from '@/pages/erp/admin/PeriodosContabeis'
 import ManutencaoLogs from '@/pages/erp/admin/ManutencaoLogs'
+import AuditoriaAcoes from '@/pages/erp/admin/AuditoriaAcoes'
+import RelatoriosGerenciais from '@/pages/erp/relatorios/RelatoriosGerenciais'
 
 import { ERPProvider } from '@/stores/useERPStore'
 
@@ -51,9 +53,13 @@ const App = () => (
             <Route path="cadastro/fornecedores" element={<Fornecedores />} />
             <Route path="cadastro/classificacao-financeira" element={<ClassificacaoFinanceira />} />
 
+            {/* Relatórios Routes */}
+            <Route path="relatorios/gerenciais" element={<RelatoriosGerenciais />} />
+
             {/* Admin Routes */}
             <Route path="admin/periodos-contabeis" element={<PeriodosContabeis />} />
             <Route path="admin/manutencao-logs" element={<ManutencaoLogs />} />
+            <Route path="admin/auditoria" element={<AuditoriaAcoes />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />

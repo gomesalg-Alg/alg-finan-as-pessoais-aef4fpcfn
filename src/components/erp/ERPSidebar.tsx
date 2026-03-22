@@ -1,11 +1,23 @@
 import { Link, useLocation } from 'react-router-dom'
-import { Building2, Users, Store, Settings, PieChart, CalendarDays, Database } from 'lucide-react'
+import {
+  Building2,
+  Users,
+  Store,
+  Settings,
+  PieChart,
+  CalendarDays,
+  Database,
+  FileText,
+  Shield,
+  LogOut,
+} from 'lucide-react'
 import { cn } from '@/lib/utils'
 import profileImg from '@/assets/image-6ef14.png'
 import {
   Sidebar,
   SidebarContent,
   SidebarHeader,
+  SidebarFooter,
   SidebarMenu,
   SidebarMenuItem,
   SidebarMenuButton,
@@ -23,6 +35,15 @@ const navItems = [
   { title: 'Filiais', icon: Store, path: '/erp/filiais', perm: 'filiais' },
 ]
 
+const relatoriosItems = [
+  {
+    title: 'Relatórios Gerenciais',
+    icon: FileText,
+    path: '/erp/relatorios/gerenciais',
+    perm: 'relatorios',
+  },
+]
+
 const adminItems = [
   {
     title: 'Períodos Contábeis',
@@ -36,12 +57,18 @@ const adminItems = [
     path: '/erp/admin/manutencao-logs',
     perm: 'admin-logs',
   },
+  {
+    title: 'Auditoria de Ações',
+    icon: Shield,
+    path: '/erp/admin/auditoria',
+    perm: 'admin-auditoria',
+  },
   { title: 'Configurações', icon: Settings, path: '/erp/configuracoes', perm: 'dashboard' },
 ]
 
 export function ERPSidebar() {
   const location = useLocation()
-  const { hasPermission } = useERPStore()
+  const { hasPermission, currentUser } = useERPStore()
 
   const renderMenu = (items: typeof navItems) => {
     return items.map((item) => {
@@ -77,16 +104,25 @@ export function ERPSidebar() {
     <Sidebar className="border-r border-blue-900/20 bg-blue-50">
       <SidebarHeader className="border-b border-blue-200 bg-blue-900 p-4">
         <div className="flex items-center gap-4">
-          <Avatar className="h-14 w-14 border-2 border-[#8B4513] shadow-md">
-            <AvatarImage src={profileImg} alt="Administrador Chefe" className="object-cover" />
-            <AvatarFallback className="bg-[#8B4513]/20 text-[#8B4513] font-bold">AC</AvatarFallback>
+          <Avatar className="h-14 w-14 border-2 border-[#8B4513] shadow-md bg-white">
+            <AvatarImage
+              src={profileImg}
+              alt={currentUser?.C_USER_NOME || 'Admin'}
+              className="object-cover"
+            />
+            <AvatarFallback className="bg-[#8B4513]/20 text-[#8B4513] font-bold">
+              {currentUser?.C_USER_NOME?.substring(0, 2).toUpperCase() || 'AC'}
+            </AvatarFallback>
           </Avatar>
           <div className="flex flex-col">
-            <span className="text-white font-bold text-sm leading-tight">Administrador Chefe</span>
+            <span className="text-white font-bold text-sm leading-tight">
+              {currentUser?.C_USER_NOME || 'Administrador Chefe'}
+            </span>
             <span className="text-blue-200 text-xs mt-0.5">Gestão de Recursos</span>
           </div>
         </div>
       </SidebarHeader>
+
       <SidebarContent className="bg-blue-50/50 pt-4">
         <SidebarGroup>
           <SidebarGroupLabel className="text-blue-800 font-bold text-xs uppercase tracking-wider mb-2">
@@ -99,6 +135,15 @@ export function ERPSidebar() {
 
         <SidebarGroup className="mt-4">
           <SidebarGroupLabel className="text-blue-800 font-bold text-xs uppercase tracking-wider mb-2">
+            Relatórios
+          </SidebarGroupLabel>
+          <SidebarGroupContent>
+            <SidebarMenu>{renderMenu(relatoriosItems)}</SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
+
+        <SidebarGroup className="mt-4">
+          <SidebarGroupLabel className="text-blue-800 font-bold text-xs uppercase tracking-wider mb-2">
             Administração
           </SidebarGroupLabel>
           <SidebarGroupContent>
@@ -106,6 +151,22 @@ export function ERPSidebar() {
           </SidebarGroupContent>
         </SidebarGroup>
       </SidebarContent>
+
+      <SidebarFooter className="border-t border-blue-200 bg-blue-100/50 p-4">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              asChild
+              className="text-blue-800 hover:bg-red-50 hover:text-red-700 font-semibold transition-colors"
+            >
+              <Link to="/login">
+                <LogOut className="h-5 w-5 text-red-600/80" />
+                <span>Sair do Sistema</span>
+              </Link>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarFooter>
     </Sidebar>
   )
 }
