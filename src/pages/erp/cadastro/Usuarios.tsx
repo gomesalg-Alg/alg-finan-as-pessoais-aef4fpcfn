@@ -40,6 +40,7 @@ import {
 } from '@/components/ui/pagination'
 import { Plus, Search, Users, Edit, Trash2, ShieldCheck } from 'lucide-react'
 import { toast } from 'sonner'
+import { maskCPF } from '@/utils/mask'
 
 const initialMock: User[] = [
   {
@@ -185,14 +186,17 @@ export default function Usuarios() {
                         <ShieldCheck className="h-4 w-4 text-primary" />
                       )}
                     </TableCell>
-                    <TableCell className="text-muted-foreground">{user.C_USER_NCPF}</TableCell>
+                    <TableCell className="text-muted-foreground">
+                      {maskCPF(user.C_USER_NCPF)}
+                    </TableCell>
                     <TableCell className="text-muted-foreground">{user.C_USER_MAIL}</TableCell>
                     <TableCell className="text-right pr-6">
-                      <div className="flex justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                      <div className="flex justify-end gap-2">
                         <Button
                           variant="ghost"
                           size="sm"
-                          className="h-8 px-2 text-primary hover:bg-primary/10"
+                          className="h-8 px-2 text-[#8B4513] hover:bg-[#8B4513]/10"
+                          title="Editar"
                           onClick={() => {
                             setEditingUser(user)
                             setIsSheetOpen(true)
@@ -204,6 +208,7 @@ export default function Usuarios() {
                           variant="ghost"
                           size="sm"
                           className="h-8 px-2 text-destructive hover:bg-destructive/10"
+                          title="Excluir"
                           onClick={() => setUserToDelete(user)}
                         >
                           <Trash2 className="h-4 w-4" />

@@ -15,6 +15,7 @@ interface UserFormProps {
 export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
   const form = useForm<UserFormData>({
     resolver: zodResolver(userSchema),
+    mode: 'onBlur',
     defaultValues: {
       C_USER_CODI: initialData?.C_USER_CODI || '',
       C_USER_NOME: initialData?.C_USER_NOME || '',
@@ -84,8 +85,10 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
               <FormInput
                 control={form.control}
                 name="C_USER_NCPF"
-                label="Nº do CPF (Somente números)"
-                placeholder="11122233344"
+                label="Nº do CPF"
+                placeholder="000.000.000-00"
+                mask="cpf"
+                maxLength={14}
               />
             </div>
           </div>
@@ -106,8 +109,10 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
               <FormInput
                 control={form.control}
                 name="C_USER_CCEP"
-                label="CEP (Somente números)"
-                placeholder="04821230"
+                label="CEP"
+                placeholder="00000-000"
+                mask="cep"
+                maxLength={9}
               />
               <FormInput
                 control={form.control}
@@ -132,6 +137,7 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
                 name="C_USER_UFED"
                 label="Unidade Federal (UF)"
                 placeholder="SP"
+                maxLength={2}
               />
               <FormInput
                 control={form.control}
