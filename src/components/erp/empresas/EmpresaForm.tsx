@@ -84,7 +84,7 @@ export function EmpresaForm({ initialData, onSubmit, onCancel }: EmpresaFormProp
                 const val = maskFn ? maskFn(e.target.value) : e.target.value
                 field.onChange(val)
               }}
-              className="bg-white border-blue-200 focus-visible:ring-blue-500 text-gray-800 shadow-sm"
+              className="bg-white border-blue-200 focus-visible:ring-blue-500 text-gray-800 shadow-sm w-full"
             />
           </FormControl>
           <FormMessage className="text-white bg-red-500 px-2 py-1 mt-1 rounded text-xs inline-block shadow-sm" />
@@ -106,7 +106,7 @@ export function EmpresaForm({ initialData, onSubmit, onCancel }: EmpresaFormProp
             <h3 className="text-sm font-bold text-amber-800 uppercase flex items-center gap-2 mb-4">
               <FileText className="h-4 w-4" /> Dados Principais
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-4">
               {renderField('razaoSocial', 'Razão Social', <Building2 className="h-4 w-4" />)}
               {renderField('nomeFantasia', 'Nome Fantasia', <Building2 className="h-4 w-4" />)}
             </div>

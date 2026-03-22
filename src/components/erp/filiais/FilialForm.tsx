@@ -92,7 +92,7 @@ export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: F
                 const val = maskFn ? maskFn(e.target.value) : e.target.value
                 field.onChange(val)
               }}
-              className="bg-white border-blue-200 focus-visible:ring-blue-500 text-gray-800 shadow-sm"
+              className="bg-white border-blue-200 focus-visible:ring-blue-500 text-gray-800 shadow-sm w-full"
             />
           </FormControl>
           <FormMessage className="text-white bg-red-500 px-2 py-1 mt-1 rounded text-xs inline-block shadow-sm" />
@@ -114,35 +114,39 @@ export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: F
             <h3 className="text-sm font-bold text-amber-800 uppercase flex items-center gap-2 mb-4">
               <FileText className="h-4 w-4" /> Dados Principais
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <FormField
-                control={form.control}
-                name="empresaId"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
-                      <Building2 className="h-4 w-4 text-amber-800" />
-                      Empresa Matriz
-                    </FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger className="bg-white border-blue-200 focus-visible:ring-blue-500 shadow-sm text-gray-800">
-                          <SelectValue placeholder="Selecione a empresa" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        {empresas.map((emp) => (
-                          <SelectItem key={emp.id} value={emp.id}>
-                            {emp.nomeFantasia}
-                          </SelectItem>
-                        ))}
-                      </SelectContent>
-                    </Select>
-                    <FormMessage className="text-white bg-red-500 px-2 py-1 mt-1 rounded text-xs inline-block shadow-sm" />
-                  </FormItem>
-                )}
-              />
-              {renderField('nome', 'Nome da Filial', <Store className="h-4 w-4" />)}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="md:col-span-1">
+                <FormField
+                  control={form.control}
+                  name="empresaId"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
+                        <Building2 className="h-4 w-4 text-amber-800" />
+                        Empresa Matriz
+                      </FormLabel>
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger className="bg-white border-blue-200 focus-visible:ring-blue-500 shadow-sm text-gray-800">
+                            <SelectValue placeholder="Selecione a empresa" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          {empresas.map((emp) => (
+                            <SelectItem key={emp.id} value={emp.id}>
+                              {emp.nomeFantasia}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                      <FormMessage className="text-white bg-red-500 px-2 py-1 mt-1 rounded text-xs inline-block shadow-sm" />
+                    </FormItem>
+                  )}
+                />
+              </div>
+              <div className="md:col-span-2">
+                {renderField('nome', 'Nome da Filial', <Store className="h-4 w-4" />)}
+              </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {renderField('cnpj', 'CNPJ', <FileText className="h-4 w-4" />, cnpjMask)}

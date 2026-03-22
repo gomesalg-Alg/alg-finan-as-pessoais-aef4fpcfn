@@ -88,7 +88,7 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
                 const val = maskFn ? maskFn(e.target.value) : e.target.value
                 field.onChange(val)
               }}
-              className="bg-white border-blue-200 focus-visible:ring-blue-500 text-gray-800 shadow-sm"
+              className="bg-white border-blue-200 focus-visible:ring-blue-500 text-gray-800 shadow-sm w-full"
             />
           </FormControl>
           <FormMessage className="text-white bg-red-500 px-2 py-1 mt-1 rounded text-xs inline-block shadow-sm" />
@@ -110,9 +110,13 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
             <h3 className="text-sm font-bold text-amber-800 uppercase flex items-center gap-2 mb-4">
               <UserIcon className="h-4 w-4" /> Dados do Usuário
             </h3>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {renderField('name', 'Nome Completo', <UserIcon className="h-4 w-4" />)}
-              {renderField('email', 'E-mail', <Mail className="h-4 w-4" />)}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="md:col-span-2">
+                {renderField('name', 'Nome Completo', <UserIcon className="h-4 w-4" />)}
+              </div>
+              <div className="md:col-span-1">
+                {renderField('email', 'E-mail', <Mail className="h-4 w-4" />)}
+              </div>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               <FormField
