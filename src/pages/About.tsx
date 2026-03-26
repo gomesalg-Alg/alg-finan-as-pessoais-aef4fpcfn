@@ -7,6 +7,7 @@ import {
   Rocket,
   BarChart,
   Landmark,
+  Lock,
 } from 'lucide-react'
 import logoUrl from '@/assets/logo_escolhido_alg-bc19d.jpeg'
 
@@ -37,6 +38,12 @@ const valuesList = [
     description:
       'Tratar as finanças dos nossos clientes com o mesmo cuidado e atenção que tratamos as nossas próprias.',
     icon: Landmark,
+  },
+  {
+    title: 'Confidencialidade',
+    description:
+      'Garantir o sigilo absoluto e a segurança das informações financeiras de nossos clientes em todas as etapas.',
+    icon: Lock,
   },
 ]
 
@@ -142,13 +149,11 @@ export default function About() {
               return (
                 <div
                   key={index}
-                  className={`flex flex-col items-center text-center p-8 rounded-2xl bg-card hover:bg-secondary/50 shadow-lg border border-border hover:border-primary/30 transition-all duration-300 group ${
-                    index === 3 ? 'lg:col-start-2 lg:col-span-1 lg:-ml-1/2' : ''
-                  } ${index === 4 ? 'lg:col-span-1' : ''}`}
+                  className="flex flex-col items-center text-center p-8 rounded-2xl bg-card hover:bg-secondary/50 shadow-lg border border-border hover:border-primary/30 transition-all duration-300 group"
                 >
-                  <div className="h-16 w-16 rounded-full bg-secondary flex items-center justify-center mb-6 shadow-md group-hover:scale-110 transition-transform duration-300 group-hover:bg-primary">
+                  <div className="h-20 w-20 rounded-full bg-secondary flex items-center justify-center mb-8 shadow-inner group-hover:scale-110 transition-transform duration-300 group-hover:bg-primary">
                     <Icon
-                      className="h-8 w-8 text-foreground group-hover:text-primary-foreground"
+                      className="h-10 w-10 text-primary group-hover:text-primary-foreground"
                       strokeWidth={1.5}
                     />
                   </div>

@@ -1,4 +1,4 @@
-import { ShieldCheck, TrendingUp, Rocket, BarChart, Landmark } from 'lucide-react'
+import { ShieldCheck, TrendingUp, Rocket, BarChart, Landmark, Lock } from 'lucide-react'
 
 const valuesList = [
   {
@@ -28,6 +28,12 @@ const valuesList = [
       'Tratar as finanças dos nossos clientes com o mesmo cuidado e atenção que tratamos as nossas próprias.',
     icon: Landmark,
   },
+  {
+    title: 'Confidencialidade',
+    description:
+      'Garantir o sigilo absoluto e a segurança das informações financeiras de nossos clientes em todas as etapas.',
+    icon: Lock,
+  },
 ]
 
 export function Values() {
@@ -53,13 +59,11 @@ export function Values() {
             return (
               <div
                 key={index}
-                className={`flex flex-col items-center text-center p-8 rounded-2xl bg-background hover:bg-secondary hover:shadow-2xl transition-all duration-300 border border-border hover:border-primary/30 group ${
-                  index === 3 ? 'lg:col-start-2 lg:col-span-1 lg:-ml-1/2' : ''
-                } ${index === 4 ? 'lg:col-span-1' : ''}`}
+                className="flex flex-col items-center text-center p-8 rounded-2xl bg-background hover:bg-secondary hover:shadow-2xl transition-all duration-300 border border-border hover:border-primary/30 group"
               >
-                <div className="h-16 w-16 rounded-full bg-secondary flex items-center justify-center mb-6 shadow-lg shadow-black/20 group-hover:scale-110 transition-transform duration-300 group-hover:bg-primary">
+                <div className="h-20 w-20 rounded-full bg-secondary flex items-center justify-center mb-8 shadow-inner shadow-black/5 group-hover:scale-110 transition-transform duration-300 group-hover:bg-primary">
                   <Icon
-                    className="h-8 w-8 text-foreground group-hover:text-primary-foreground"
+                    className="h-10 w-10 text-primary group-hover:text-primary-foreground"
                     strokeWidth={1.5}
                   />
                 </div>
