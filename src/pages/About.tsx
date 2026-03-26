@@ -1,5 +1,44 @@
-import { CheckCircle2, Target, Eye } from 'lucide-react'
+import {
+  CheckCircle2,
+  Target,
+  Eye,
+  ShieldCheck,
+  TrendingUp,
+  Rocket,
+  BarChart,
+  Landmark,
+} from 'lucide-react'
 import logoUrl from '@/assets/logo_escolhido_alg-bc19d.jpeg'
+
+const valuesList = [
+  {
+    title: 'Responsabilidade',
+    description: 'Agir com ética e comprometimento em todas as nossas ações.',
+    icon: ShieldCheck,
+  },
+  {
+    title: 'Excelência',
+    description: 'Buscar sempre a melhor solução para nossos clientes, com qualidade e eficiência.',
+    icon: TrendingUp,
+  },
+  {
+    title: 'Inovação',
+    description:
+      'Estar à frente das tendências e oferecer ferramentas financeiras modernas e eficazes.',
+    icon: Rocket,
+  },
+  {
+    title: 'Transparência',
+    description: 'Manter uma comunicação clara e aberta com nossos clientes.',
+    icon: BarChart,
+  },
+  {
+    title: 'Zelo',
+    description:
+      'Tratar as finanças dos nossos clientes com o mesmo cuidado e atenção que tratamos as nossas próprias.',
+    icon: Landmark,
+  },
+]
 
 export default function About() {
   return (
@@ -61,28 +100,63 @@ export default function About() {
         </div>
       </section>
 
-      {/* Mission & Vision */}
+      {/* Mission, Vision & Values Section */}
       <section className="py-16 md:py-24 bg-gradient-primary border-t border-border">
         <div className="container mx-auto px-4 md:px-6">
-          <div className="grid md:grid-cols-2 gap-12">
-            <div className="bg-card border border-border rounded-2xl p-8 md:p-12 shadow-lg">
-              <Target className="h-12 w-12 text-primary mb-6" />
-              <h3 className="text-2xl font-bold mb-4 text-foreground">Nossa Missão</h3>
+          <div className="grid md:grid-cols-2 gap-12 mb-20">
+            <div className="bg-card border border-border rounded-2xl p-8 md:p-12 shadow-lg text-center flex flex-col items-center">
+              <div className="h-20 w-20 rounded-full bg-secondary flex items-center justify-center mb-8 shadow-inner">
+                <Target className="h-10 w-10 text-primary" />
+              </div>
+              <h3 className="text-3xl font-bold mb-6 text-foreground">Nossa Missão</h3>
               <p className="text-muted-foreground leading-relaxed text-lg">
                 Proporcionar tranquilidade e segurança financeira aos nossos clientes através de um
                 planejamento personalizado, estratégico e transparente, garantindo a construção e
                 preservação do seu patrimônio.
               </p>
             </div>
-            <div className="bg-card border border-border rounded-2xl p-8 md:p-12 shadow-lg">
-              <Eye className="h-12 w-12 text-primary mb-6" />
-              <h3 className="text-2xl font-bold mb-4 text-foreground">Nossa Visão</h3>
+            <div className="bg-card border border-border rounded-2xl p-8 md:p-12 shadow-lg text-center flex flex-col items-center">
+              <div className="h-20 w-20 rounded-full bg-secondary flex items-center justify-center mb-8 shadow-inner">
+                <Eye className="h-10 w-10 text-primary" />
+              </div>
+              <h3 className="text-3xl font-bold mb-6 text-foreground">Nossa Visão</h3>
               <p className="text-muted-foreground leading-relaxed text-lg">
                 Ser reconhecida como a principal referência em Gestão de Controle Financeiro
                 Pessoal, transformando a relação das pessoas com o dinheiro e impactando
                 positivamente gerações.
               </p>
             </div>
+          </div>
+
+          <div className="text-center max-w-3xl mx-auto mb-12">
+            <h3 className="text-3xl md:text-4xl font-bold mb-6 text-foreground">Nossos Valores</h3>
+            <p className="text-lg text-muted-foreground">
+              A fundação da ALG Finanças Pessoais é construída sobre princípios sólidos que orientam
+              cada decisão, análise e recomendação que fazemos.
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {valuesList.map((value, index) => {
+              const Icon = value.icon
+              return (
+                <div
+                  key={index}
+                  className={`flex flex-col items-center text-center p-8 rounded-2xl bg-card hover:bg-secondary/50 shadow-lg border border-border hover:border-primary/30 transition-all duration-300 group ${
+                    index === 3 ? 'lg:col-start-2 lg:col-span-1 lg:-ml-1/2' : ''
+                  } ${index === 4 ? 'lg:col-span-1' : ''}`}
+                >
+                  <div className="h-16 w-16 rounded-full bg-secondary flex items-center justify-center mb-6 shadow-md group-hover:scale-110 transition-transform duration-300 group-hover:bg-primary">
+                    <Icon
+                      className="h-8 w-8 text-foreground group-hover:text-primary-foreground"
+                      strokeWidth={1.5}
+                    />
+                  </div>
+                  <h4 className="text-2xl font-bold mb-3 text-foreground">{value.title}</h4>
+                  <p className="text-muted-foreground leading-relaxed">{value.description}</p>
+                </div>
+              )
+            })}
           </div>
         </div>
       </section>
