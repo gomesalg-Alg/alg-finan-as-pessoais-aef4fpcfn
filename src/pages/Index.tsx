@@ -1,7 +1,6 @@
 import { Hero } from '@/components/home/Hero'
 import { Duality } from '@/components/home/Duality'
 import { ServicesPreview } from '@/components/home/ServicesPreview'
-import { Values } from '@/components/home/Values'
 import { Audience } from '@/components/home/Audience'
 
 export default function Index() {
@@ -10,7 +9,6 @@ export default function Index() {
       <Hero />
       <Duality />
       <ServicesPreview />
-      <Values />
       <Audience />
     </>
   )
