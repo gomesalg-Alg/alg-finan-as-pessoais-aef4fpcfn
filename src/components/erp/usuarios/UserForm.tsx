@@ -41,7 +41,6 @@ interface UserFormProps {
   initialData?: Partial<UserFormData>
   onSubmit: (data: UserFormData) => void
   onCancel?: () => void
-  isTi?: boolean
 }
 
 const FieldWrapper = ({
@@ -68,9 +67,9 @@ const FieldWrapper = ({
   return <>{children}</>
 }
 
-export function UserForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: UserFormProps) {
-  const { currentUser, fieldConfigs } = useERPStore()
-  const isTi = isTiProp || currentUser?.role === 'ti' || currentUser?.C_USER_PERF === 'TI'
+export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
+  const { isTiModeEnabled, fieldConfigs } = useERPStore()
+  const isTi = isTiModeEnabled
 
   const form = useForm<UserFormData>({
     resolver: zodResolver(userSchema),

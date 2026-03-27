@@ -25,7 +25,6 @@ interface PerfilFormProps {
   initialData?: Partial<PerfilFormData>
   onSubmit: (data: PerfilFormData) => void
   onCancel: () => void
-  isTi?: boolean
 }
 
 const PERMISSIONS = [
@@ -65,9 +64,9 @@ const FieldWrapper = ({
   return <>{children}</>
 }
 
-export function PerfilForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: PerfilFormProps) {
-  const { currentUser, fieldConfigs } = useERPStore()
-  const isTi = isTiProp || currentUser?.role === 'ti' || currentUser?.C_USER_PERF === 'TI'
+export function PerfilForm({ initialData, onSubmit, onCancel }: PerfilFormProps) {
+  const { isTiModeEnabled, fieldConfigs } = useERPStore()
+  const isTi = isTiModeEnabled
 
   const form = useForm<PerfilFormData>({
     resolver: zodResolver(perfilSchema),

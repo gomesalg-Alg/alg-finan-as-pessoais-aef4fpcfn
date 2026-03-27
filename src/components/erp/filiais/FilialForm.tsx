@@ -43,7 +43,6 @@ interface FilialFormProps {
   empresas?: { id: string; nomeFantasia: string }[]
   onSubmit: (data: FilialFormData) => void
   onCancel?: () => void
-  isTi?: boolean
 }
 
 const FieldWrapper = ({
@@ -70,15 +69,9 @@ const FieldWrapper = ({
   return <>{children}</>
 }
 
-export function FilialForm({
-  initialData,
-  empresas = [],
-  onSubmit,
-  onCancel,
-  isTi: isTiProp,
-}: FilialFormProps) {
-  const { currentUser, fieldConfigs } = useERPStore()
-  const isTi = isTiProp || currentUser?.role === 'ti' || currentUser?.C_USER_PERF === 'TI'
+export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: FilialFormProps) {
+  const { isTiModeEnabled, fieldConfigs } = useERPStore()
+  const isTi = isTiModeEnabled
 
   const form = useForm<FilialFormData>({
     resolver: zodResolver(filialSchema),

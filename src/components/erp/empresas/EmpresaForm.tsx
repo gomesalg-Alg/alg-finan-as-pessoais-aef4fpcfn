@@ -34,7 +34,6 @@ interface EmpresaFormProps {
   initialData?: Partial<EmpresaFormData>
   onSubmit: (data: EmpresaFormData) => void
   onCancel?: () => void
-  isTi?: boolean
 }
 
 const FieldWrapper = ({
@@ -61,9 +60,9 @@ const FieldWrapper = ({
   return <>{children}</>
 }
 
-export function EmpresaForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: EmpresaFormProps) {
-  const { currentUser, fieldConfigs } = useERPStore()
-  const isTi = isTiProp || currentUser?.role === 'ti' || currentUser?.C_USER_PERF === 'TI'
+export function EmpresaForm({ initialData, onSubmit, onCancel }: EmpresaFormProps) {
+  const { isTiModeEnabled, fieldConfigs } = useERPStore()
+  const isTi = isTiModeEnabled
 
   const form = useForm<EmpresaFormData>({
     resolver: zodResolver(empresaSchema),

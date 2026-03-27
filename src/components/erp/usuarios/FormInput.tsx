@@ -27,8 +27,8 @@ export function FormInput<T extends FieldValues>({
   maxLength,
   techName,
 }: FormInputProps<T>) {
-  const { currentUser } = useERPStore()
-  const isTi = currentUser?.role === 'ti' || currentUser?.C_USER_PERF === 'TI'
+  const { isTiModeEnabled } = useERPStore()
+  const isTi = isTiModeEnabled
 
   const applyMask = (value: string) => {
     if (mask === 'cpf') return maskCPF(value)

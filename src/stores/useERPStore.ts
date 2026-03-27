@@ -1,4 +1,12 @@
-import React, { createContext, useContext, useState, ReactNode, useMemo, useCallback } from 'react'
+import React, {
+  createContext,
+  useContext,
+  useState,
+  ReactNode,
+  useMemo,
+  useCallback,
+  useEffect,
+} from 'react'
 import { User } from '@/types/user'
 import { Profile } from '@/types/profile'
 import { Empresa } from '@/types/empresa'
@@ -27,6 +35,8 @@ interface ERPContextData {
   setPeriodos: React.Dispatch<React.SetStateAction<PeriodoFechamento[]>>
   isDateInClosedPeriod: (dateStr: string) => boolean
   currentUser: User | null
+  setCurrentUser: React.Dispatch<React.SetStateAction<User | null>>
+  isTiModeEnabled: boolean
   hasPermission: (perm: string) => boolean
   fieldConfigs: FieldConfig[]
   setFieldConfigs: React.Dispatch<React.SetStateAction<FieldConfig[]>>
@@ -187,7 +197,7 @@ const initialNotifications: Notification[] = []
 const initialLogs: S_CLOG[] = Array.from({ length: 45 }).map((_, i) => ({
   id: `log-${i}`,
   action: i % 3 === 0 ? 'LOGIN' : i % 2 === 0 ? 'UPDATE' : 'CREATE',
-  timestamp: new Date(Date.now() - i * 86400000 * 2).toISOString(), // Spread over past 90 days
+  timestamp: new Date(Date.now() - i * 86400000 * 2).toISOString(),
   userId: i % 2 === 0 ? '1' : '2',
   details: `Ação gerada automaticamente para histórico #${i}`,
   archived: false,
@@ -197,7 +207,7 @@ const initialPeriodos: PeriodoFechamento[] = [
   {
     id: 'p1',
     ano: new Date().getFullYear(),
-    mes: new Date().getMonth(), // Last month
+    mes: new Date().getMonth(),
     status: 'Fechado',
     updatedAt: new Date(Date.now() - 86400000 * 5).toISOString(),
     updatedBy: 'ADM01',
@@ -205,7 +215,7 @@ const initialPeriodos: PeriodoFechamento[] = [
   {
     id: 'p2',
     ano: new Date().getFullYear(),
-    mes: new Date().getMonth() + 1, // Current month
+    mes: new Date().getMonth() + 1,
     status: 'Aberto',
     updatedAt: new Date().toISOString(),
     updatedBy: 'ADM01',
@@ -224,8 +234,29 @@ export const ERPProvider = ({ children }: { children: ReactNode }) => {
   const [periodos, setPeriodos] = useState<PeriodoFechamento[]>(initialPeriodos)
   const [fieldConfigs, setFieldConfigs] = useState<FieldConfig[]>(initialFieldConfigs)
 
-  // In a real scenario you would have a login flow updating this. We default to admin (0) or TI (2) for tests
-  const currentUser = useMemo(() => users[2] || null, [users])
+  const [currentUser, setCurrentUser] = useState<User | null>(() => {
+    try {
+      const saved = localStorage.getItem('erp_current_user')
+      if (saved) {
+        return JSON.parse(saved)
+      }
+    } catch (e) {
+      console.error(e)
+    }
+    return initialUsers[0]
+  })
+
+  useEffect(() => {
+    if (currentUser) {
+      localStorage.setItem('erp_current_user', JSON.stringify(currentUser))
+    } else {
+      localStorage.removeItem('erp_current_user')
+    }
+  }, [currentUser])
+
+  const isTiModeEnabled = useMemo(() => {
+    return currentUser?.role === 'ti' || currentUser?.C_USER_PERF === 'TI'
+  }, [currentUser])
 
   const hasPermission = useCallback(
     (perm: string) => {
@@ -301,7 +332,7 @@ export const ERPProvider = ({ children }: { children: ReactNode }) => {
     (dateStr: string) => {
       const date = new Date(dateStr)
       const year = date.getFullYear()
-      const month = date.getMonth() + 1 // 1-12
+      const month = date.getMonth() + 1
 
       const periodo = periodos.find((p) => p.ano === year && p.mes === month)
       return periodo?.status === 'Fechado'
@@ -341,6 +372,8 @@ export const ERPProvider = ({ children }: { children: ReactNode }) => {
         setPeriodos,
         isDateInClosedPeriod,
         currentUser,
+        setCurrentUser,
+        isTiModeEnabled,
         hasPermission,
         fieldConfigs,
         setFieldConfigs,

@@ -4,13 +4,32 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import logoUrl from '@/assets/logo_escolhido_alg-bc19d.jpeg'
+import useERPStore from '@/stores/useERPStore'
+import { toast } from 'sonner'
 
 export default function Login() {
   const navigate = useNavigate()
+  const { users, setCurrentUser, addLog } = useERPStore()
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    navigate('/erp')
+    const formData = new FormData(e.currentTarget)
+    const email = formData.get('email') as string
+
+    const user = users.find((u) => u.email === email)
+
+    if (user) {
+      setCurrentUser(user)
+      addLog('LOGIN', `Usuário ${user.name} autenticado no sistema.`)
+      toast.success('Login realizado com sucesso', {
+        description: `Bem-vindo, ${user.name}`,
+      })
+      navigate('/erp')
+    } else {
+      toast.error('Acesso Negado', {
+        description: 'Usuário não encontrado na base de dados.',
+      })
+    }
   }
 
   return (
@@ -42,8 +61,10 @@ export default function Login() {
                 <Mail className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                 <Input
                   id="email"
+                  name="email"
                   type="email"
-                  placeholder="admin@alg.com.br"
+                  defaultValue="ti@alg.com.br"
+                  placeholder="ti@alg.com.br"
                   className="pl-10 bg-background/50 border-border focus:border-primary"
                   required
                 />
@@ -63,7 +84,9 @@ export default function Login() {
                 <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                 <Input
                   id="password"
+                  name="password"
                   type="password"
+                  defaultValue="123456"
                   placeholder="••••••••"
                   className="pl-10 bg-background/50 border-border focus:border-primary"
                   required
@@ -78,6 +101,21 @@ export default function Login() {
               Acessar Sistema
               <ArrowRight className="ml-2 h-4 w-4 group-hover:translate-x-1 transition-transform" />
             </Button>
+
+            <div className="mt-6 p-4 bg-blue-500/10 border border-blue-500/20 rounded-lg text-xs text-muted-foreground">
+              <p className="font-semibold text-blue-400 mb-2">Contas de Teste:</p>
+              <ul className="space-y-1">
+                <li>
+                  Admin: <span className="text-foreground">admin@alg.com.br</span>
+                </li>
+                <li>
+                  Operador: <span className="text-foreground">joao@alg.com.br</span>
+                </li>
+                <li>
+                  TI (Hints Habilitados): <span className="text-foreground">ti@alg.com.br</span>
+                </li>
+              </ul>
+            </div>
           </form>
         </div>
 
