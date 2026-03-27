@@ -5,4 +5,5 @@ export interface FieldConfig {
   customLabel?: string
   isRequired?: boolean
   maxLength?: number
+  maskType?: 'none' | 'cpf' | 'cnpj' | 'cep' | 'phone'
 }

@@ -30,6 +30,7 @@ import { dataDictionary } from '@/utils/metadata'
 import useERPStore from '@/stores/useERPStore'
 import { Settings, Edit2, ShieldAlert } from 'lucide-react'
 import { toast } from 'sonner'
+import { FieldConfig } from '@/types/fieldConfig'
 
 export default function CustomizacaoCampos() {
   const { fieldConfigs, updateFieldConfig, addLog, currentUser, isTiModeEnabled } = useERPStore()
@@ -39,13 +40,14 @@ export default function CustomizacaoCampos() {
   const [customLabel, setCustomLabel] = useState('')
   const [isRequired, setIsRequired] = useState(false)
   const [maxLength, setMaxLength] = useState<number | ''>('')
+  const [maskType, setMaskType] = useState<FieldConfig['maskType']>('none')
 
   if (!isTiModeEnabled) {
     return (
-      <div className="bg-card min-h-[50vh] p-6 rounded-xl border border-destructive/50 shadow-sm flex flex-col items-center justify-center text-center">
-        <ShieldAlert className="h-16 w-16 text-destructive mb-4" />
-        <h2 className="text-2xl font-bold text-foreground mb-2">Acesso Restrito</h2>
-        <p className="text-muted-foreground max-w-md">
+      <div className="bg-[#0A192F] min-h-[50vh] p-6 rounded-xl border border-red-800/50 shadow-2xl flex flex-col items-center justify-center text-center">
+        <ShieldAlert className="h-16 w-16 text-red-500 mb-4" />
+        <h2 className="text-2xl font-bold text-white mb-2">Acesso Restrito</h2>
+        <p className="text-red-200/80 max-w-md">
           A customização de campos é uma funcionalidade técnica avançada exclusiva para usuários com
           o nível de acesso <strong>Tecnologia da Informação</strong>.
         </p>
@@ -60,6 +62,7 @@ export default function CustomizacaoCampos() {
     setCustomLabel(config?.customLabel || '')
     setIsRequired(config?.isRequired || false)
     setMaxLength(config?.maxLength || '')
+    setMaskType(config?.maskType || 'none')
     setEditingField(fieldDef)
   }
 
@@ -74,6 +77,7 @@ export default function CustomizacaoCampos() {
       customLabel: customLabel || undefined,
       isRequired,
       maxLength: maxLength ? Number(maxLength) : undefined,
+      maskType: maskType !== 'none' ? maskType : undefined,
     })
 
     addLog(
@@ -94,16 +98,30 @@ export default function CustomizacaoCampos() {
 
   const fields = dataDictionary[selectedEntity as keyof typeof dataDictionary] || []
 
+  const getMaskLabel = (type?: string) => {
+    switch (type) {
+      case 'cpf':
+        return 'CPF'
+      case 'cnpj':
+        return 'CNPJ'
+      case 'cep':
+        return 'CEP'
+      case 'phone':
+        return 'Telefone'
+      default:
+        return 'Nenhuma'
+    }
+  }
+
   return (
     <div className="space-y-6">
       <div>
         <h1 className="text-3xl font-bold text-foreground flex items-center gap-3">
           <Settings className="h-8 w-8 text-primary" />
-          Customização de Campos
+          Customização de Campos e Máscaras
         </h1>
         <p className="text-muted-foreground mt-1">
-          Altere labels, obrigatoriedade e limite de caracteres dos formulários sem alterar o
-          código.
+          Altere labels, obrigatoriedade, máscaras de entrada e limite de caracteres dinamicamente.
         </p>
       </div>
 
@@ -141,6 +159,7 @@ export default function CustomizacaoCampos() {
                   <TableHead>Nome Técnico</TableHead>
                   <TableHead>Label Customizado</TableHead>
                   <TableHead>Obrigatório</TableHead>
+                  <TableHead>Máscara</TableHead>
                   <TableHead>Tam. Máx</TableHead>
                   <TableHead className="text-right">Ações</TableHead>
                 </TableRow>
@@ -164,6 +183,11 @@ export default function CustomizacaoCampos() {
                           'Não'
                         )}
                       </TableCell>
+                      <TableCell>
+                        <span className="inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-secondary text-secondary-foreground">
+                          {getMaskLabel(config?.maskType)}
+                        </span>
+                      </TableCell>
                       <TableCell>{config?.maxLength || '-'}</TableCell>
                       <TableCell className="text-right">
                         <Button variant="ghost" size="sm" onClick={() => handleEdit(field)}>
@@ -180,11 +204,11 @@ export default function CustomizacaoCampos() {
       </Card>
 
       <Dialog open={!!editingField} onOpenChange={(o) => !o && setEditingField(null)}>
-        <DialogContent className="border-border">
+        <DialogContent className="border-border sm:max-w-md">
           <DialogHeader>
             <DialogTitle>Customizar Campo: {editingField?.description}</DialogTitle>
           </DialogHeader>
-          <div className="space-y-4 py-4">
+          <div className="space-y-5 py-4">
             <div className="space-y-2">
               <Label>Label Customizado (Descrição em Tela)</Label>
               <Input
@@ -193,6 +217,26 @@ export default function CustomizacaoCampos() {
                 placeholder={`Padrão: ${editingField?.description}`}
               />
             </div>
+
+            <div className="space-y-2">
+              <Label>Máscara de Entrada (Formatação Automática)</Label>
+              <Select
+                value={maskType || 'none'}
+                onValueChange={(v) => setMaskType(v as FieldConfig['maskType'])}
+              >
+                <SelectTrigger>
+                  <SelectValue placeholder="Nenhuma" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">Nenhuma</SelectItem>
+                  <SelectItem value="cpf">CPF (000.000.000-00)</SelectItem>
+                  <SelectItem value="cnpj">CNPJ (00.000.000/0000-00)</SelectItem>
+                  <SelectItem value="cep">CEP (00000-000)</SelectItem>
+                  <SelectItem value="phone">Telefone / Celular</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+
             <div className="space-y-2">
               <Label>Tamanho Máximo (Caracteres)</Label>
               <Input
@@ -202,7 +246,8 @@ export default function CustomizacaoCampos() {
                 placeholder="Ex: 50"
               />
             </div>
-            <div className="flex items-center space-x-2 pt-2">
+
+            <div className="flex items-center space-x-2 pt-2 border-t border-border/50">
               <Checkbox
                 id="required"
                 checked={isRequired}

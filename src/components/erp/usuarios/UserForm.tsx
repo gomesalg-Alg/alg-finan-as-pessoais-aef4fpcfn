@@ -12,7 +12,7 @@ import {
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
 import { useCepAutofill } from '@/hooks/use-cep-autofill'
-import { cepMask } from '@/utils/mask'
+import { maskCPF, cnpjMask, cepMask, phoneMask } from '@/utils/mask'
 import {
   Select,
   SelectContent,
@@ -116,12 +116,19 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
     label: string,
     icon: any,
     techName?: string,
-    maskFn?: (v: string) => string,
+    defaultMaskFn?: (v: string) => string,
   ) => {
     const config = fieldConfigs.find((c) => c.entity === 'users' && c.field === name)
     const displayLabel = config?.customLabel || label
     const isRequired = config?.isRequired || false
     const maxLength = config?.maxLength || undefined
+
+    let finalMaskFn = defaultMaskFn
+    if (config?.maskType === 'cpf') finalMaskFn = maskCPF
+    else if (config?.maskType === 'cnpj') finalMaskFn = cnpjMask
+    else if (config?.maskType === 'cep') finalMaskFn = cepMask
+    else if (config?.maskType === 'phone') finalMaskFn = phoneMask
+    else if (config?.maskType === 'none') finalMaskFn = undefined
 
     return (
       <FormField
@@ -140,7 +147,7 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
                   {...field}
                   value={(field.value as string) || ''}
                   onChange={(e) => {
-                    const val = maskFn ? maskFn(e.target.value) : e.target.value
+                    const val = finalMaskFn ? finalMaskFn(e.target.value) : e.target.value
                     field.onChange(val)
                   }}
                   required={isRequired}

@@ -11,6 +11,7 @@ import {
   LogOut,
   Tags,
   Settings,
+  Activity,
 } from 'lucide-react'
 import profileImg from '@/assets/image-6ef14.png'
 import {
@@ -59,6 +60,13 @@ const adminItems = [
     icon: CalendarDays,
     path: '/erp/admin/periodos-contabeis',
     perm: 'admin-periodos',
+  },
+  {
+    title: 'Performance (DB)',
+    icon: Activity,
+    path: '/erp/admin/performance',
+    perm: 'admin-config',
+    requireTi: true,
   },
   {
     title: 'Manutenção de Logs',
