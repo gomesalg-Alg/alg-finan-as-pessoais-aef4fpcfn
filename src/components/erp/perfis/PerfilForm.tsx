@@ -18,6 +18,8 @@ import { Save, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import useERPStore from '@/stores/useERPStore'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { validateTechnicalTypes } from '@/utils/metadata'
+import { toast } from 'sonner'
 
 interface PerfilFormProps {
   initialData?: Partial<PerfilFormData>
@@ -77,9 +79,25 @@ export function PerfilForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: 
     },
   })
 
+  const onSubmitHandler = (data: PerfilFormData) => {
+    if (isTi) {
+      const techErrors = validateTechnicalTypes(data, 'perfis')
+      if (techErrors.length > 0) {
+        techErrors.forEach((err) => {
+          toast.error('Erro de Validação Técnica', {
+            description: err,
+            duration: 6000,
+          })
+        })
+        return // Trava de Segurança
+      }
+    }
+    onSubmit(data)
+  }
+
   return (
     <Form {...form}>
-      <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8 pb-8">
+      <form onSubmit={form.handleSubmit(onSubmitHandler)} className="space-y-8 pb-8">
         <div className="space-y-4">
           <FormField
             control={form.control}

@@ -48,6 +48,7 @@ const initialProfiles: Profile[] = [
       'admin-periodos',
       'admin-logs',
       'admin-auditoria',
+      'admin-config',
       'relatorios',
     ],
   },
@@ -73,6 +74,7 @@ const initialProfiles: Profile[] = [
       'admin-periodos',
       'admin-logs',
       'admin-auditoria',
+      'admin-config',
       'relatorios',
     ],
   },
@@ -216,7 +218,7 @@ export const ERPProvider = ({ children }: { children: ReactNode }) => {
   const [periodos, setPeriodos] = useState<PeriodoFechamento[]>(initialPeriodos)
 
   // In a real scenario you would have a login flow updating this. We default to admin (0) or TI (2) for tests
-  const currentUser = useMemo(() => users[0] || null, [users])
+  const currentUser = useMemo(() => users[2] || null, [users])
 
   const hasPermission = useCallback(
     (perm: string) => {

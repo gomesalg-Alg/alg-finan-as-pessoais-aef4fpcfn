@@ -10,6 +10,7 @@ import {
   Shield,
   LogOut,
   Tags,
+  Settings,
 } from 'lucide-react'
 import profileImg from '@/assets/image-6ef14.png'
 import {
@@ -70,6 +71,12 @@ const adminItems = [
     icon: Shield,
     path: '/erp/admin/auditoria',
     perm: 'admin-auditoria',
+  },
+  {
+    title: 'Config. Técnicas',
+    icon: Settings,
+    path: '/erp/admin/configuracoes',
+    perm: 'admin-config',
   },
 ]
 

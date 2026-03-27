@@ -27,6 +27,8 @@ import {
 import { logger } from '@/lib/logger'
 import useERPStore from '@/stores/useERPStore'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
+import { validateTechnicalTypes } from '@/utils/metadata'
+import { toast } from 'sonner'
 
 interface EmpresaFormProps {
   initialData?: Partial<EmpresaFormData>
@@ -87,6 +89,18 @@ export function EmpresaForm({ initialData, onSubmit, onCancel, isTi: isTiProp }:
   useCepAutofill(form.watch, form.setValue)
 
   const handleSubmit = (data: EmpresaFormData) => {
+    if (isTi) {
+      const techErrors = validateTechnicalTypes(data, 'empresas')
+      if (techErrors.length > 0) {
+        techErrors.forEach((err) => {
+          toast.error('Erro de Validação Técnica', {
+            description: err,
+            duration: 6000,
+          })
+        })
+        return // Trava de Segurança
+      }
+    }
     logger.log('SUBMIT_EMPRESA', data)
     onSubmit(data)
   }
