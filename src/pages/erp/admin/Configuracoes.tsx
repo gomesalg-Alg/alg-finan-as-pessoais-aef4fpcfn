@@ -1,11 +1,27 @@
 import { Link } from 'react-router-dom'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Database, FileJson, FileSpreadsheet, Settings } from 'lucide-react'
+import { Database, FileJson, FileSpreadsheet, Settings, ShieldAlert } from 'lucide-react'
 import { dataDictionary } from '@/utils/metadata'
 import { toast } from 'sonner'
+import useERPStore from '@/stores/useERPStore'
 
 export default function Configuracoes() {
+  const { isTiModeEnabled } = useERPStore()
+
+  if (!isTiModeEnabled) {
+    return (
+      <div className="bg-card min-h-[50vh] p-6 rounded-xl border border-destructive/50 shadow-sm flex flex-col items-center justify-center text-center">
+        <ShieldAlert className="h-16 w-16 text-destructive mb-4" />
+        <h2 className="text-2xl font-bold text-foreground mb-2">Acesso Restrito</h2>
+        <p className="text-muted-foreground max-w-md">
+          As configurações técnicas e exportação de metadados são exclusivas para usuários com o
+          nível de acesso <strong>Tecnologia da Informação</strong>.
+        </p>
+      </div>
+    )
+  }
+
   const handleExportJSON = () => {
     try {
       const dataStr =

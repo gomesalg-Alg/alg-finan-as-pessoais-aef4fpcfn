@@ -65,27 +65,33 @@ const adminItems = [
     icon: Database,
     path: '/erp/admin/manutencao-logs',
     perm: 'admin-logs',
+    requireTi: true,
   },
   {
     title: 'Auditoria de Ações',
     icon: Shield,
     path: '/erp/admin/auditoria',
     perm: 'admin-auditoria',
+    requireTi: true,
   },
   {
     title: 'Config. Técnicas',
     icon: Settings,
     path: '/erp/admin/configuracoes',
     perm: 'admin-config',
+    requireTi: true,
   },
 ]
 
 export function ERPSidebar() {
   const location = useLocation()
-  const { hasPermission, currentUser } = useERPStore()
+  const { hasPermission, currentUser, isTiModeEnabled } = useERPStore()
 
-  const renderMenu = (items: typeof navItems) => {
+  const renderMenu = (items: any[]) => {
     return items.map((item) => {
+      // Bloqueia itens que requerem perfil de TI se o usuário não for TI
+      if (item.requireTi && !isTiModeEnabled) return null
+
       if (!hasPermission(item.perm)) return null
 
       const isActive =

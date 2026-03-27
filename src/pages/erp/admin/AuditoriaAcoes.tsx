@@ -19,16 +19,29 @@ import {
   TableRow,
 } from '@/components/ui/table'
 import { Badge } from '@/components/ui/badge'
-import { Shield, Filter } from 'lucide-react'
+import { Shield, Filter, ShieldAlert } from 'lucide-react'
 import useERPStore from '@/stores/useERPStore'
 
 export default function AuditoriaAcoes() {
-  const { logs, users, profiles } = useERPStore()
+  const { logs, users, profiles, isTiModeEnabled } = useERPStore()
 
   const [userFilter, setUserFilter] = useState('ALL')
   const [actionFilter, setActionFilter] = useState('ALL')
   const [startDate, setStartDate] = useState('')
   const [endDate, setEndDate] = useState('')
+
+  if (!isTiModeEnabled) {
+    return (
+      <div className="bg-[#0A192F] min-h-[calc(100vh-100px)] p-6 rounded-xl border border-red-800/50 shadow-2xl flex flex-col items-center justify-center text-center">
+        <ShieldAlert className="h-16 w-16 text-red-500 mb-4" />
+        <h2 className="text-2xl font-bold text-white mb-2">Acesso Restrito</h2>
+        <p className="text-red-200/80 max-w-md">
+          A auditoria de ações é uma funcionalidade técnica exclusiva para usuários com o nível de
+          acesso <strong>Tecnologia da Informação</strong>.
+        </p>
+      </div>
+    )
+  }
 
   const userOptions = useMemo(() => {
     return users.map((u) => ({

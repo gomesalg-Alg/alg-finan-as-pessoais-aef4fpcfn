@@ -28,17 +28,30 @@ import { Label } from '@/components/ui/label'
 import { Checkbox } from '@/components/ui/checkbox'
 import { dataDictionary } from '@/utils/metadata'
 import useERPStore from '@/stores/useERPStore'
-import { Settings, Edit2 } from 'lucide-react'
+import { Settings, Edit2, ShieldAlert } from 'lucide-react'
 import { toast } from 'sonner'
 
 export default function CustomizacaoCampos() {
-  const { fieldConfigs, updateFieldConfig, addLog, currentUser } = useERPStore()
+  const { fieldConfigs, updateFieldConfig, addLog, currentUser, isTiModeEnabled } = useERPStore()
   const [selectedEntity, setSelectedEntity] = useState<string>('users')
   const [editingField, setEditingField] = useState<any>(null)
 
   const [customLabel, setCustomLabel] = useState('')
   const [isRequired, setIsRequired] = useState(false)
   const [maxLength, setMaxLength] = useState<number | ''>('')
+
+  if (!isTiModeEnabled) {
+    return (
+      <div className="bg-card min-h-[50vh] p-6 rounded-xl border border-destructive/50 shadow-sm flex flex-col items-center justify-center text-center">
+        <ShieldAlert className="h-16 w-16 text-destructive mb-4" />
+        <h2 className="text-2xl font-bold text-foreground mb-2">Acesso Restrito</h2>
+        <p className="text-muted-foreground max-w-md">
+          A customização de campos é uma funcionalidade técnica avançada exclusiva para usuários com
+          o nível de acesso <strong>Tecnologia da Informação</strong>.
+        </p>
+      </div>
+    )
+  }
 
   const handleEdit = (fieldDef: any) => {
     const config = fieldConfigs.find(
