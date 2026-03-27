@@ -77,7 +77,7 @@ export function FilialForm({
   onCancel,
   isTi: isTiProp,
 }: FilialFormProps) {
-  const { currentUser } = useERPStore()
+  const { currentUser, fieldConfigs } = useERPStore()
   const isTi = isTiProp || currentUser?.role === 'ti' || currentUser?.C_USER_PERF === 'TI'
 
   const form = useForm<FilialFormData>({
@@ -126,6 +126,11 @@ export function FilialForm({
     techName?: string,
     maskFn?: (v: string) => string,
   ) => {
+    const config = fieldConfigs.find((c) => c.entity === 'filiais' && c.field === name)
+    const displayLabel = config?.customLabel || label
+    const isRequired = config?.isRequired || false
+    const maxLength = config?.maxLength || undefined
+
     return (
       <FormField
         control={form.control}
@@ -134,7 +139,8 @@ export function FilialForm({
           <FormItem>
             <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
               {icon && <span className="text-amber-800">{icon}</span>}
-              {label}
+              {displayLabel}
+              {isRequired && <span className="text-red-500 ml-1">*</span>}
             </FormLabel>
             <FieldWrapper isTi={isTi} techName={techName}>
               <FormControl>
@@ -145,6 +151,8 @@ export function FilialForm({
                     const val = maskFn ? maskFn(e.target.value) : e.target.value
                     field.onChange(val)
                   }}
+                  required={isRequired}
+                  maxLength={maxLength}
                   className="bg-white border-blue-200 focus-visible:ring-blue-500 text-gray-800 shadow-sm w-full"
                 />
               </FormControl>
@@ -155,6 +163,8 @@ export function FilialForm({
       />
     )
   }
+
+  const empresaConfig = fieldConfigs.find((c) => c.entity === 'filiais' && c.field === 'empresaId')
 
   return (
     <div className="bg-blue-50 p-6 rounded-xl border border-blue-100 shadow-sm">
@@ -178,10 +188,15 @@ export function FilialForm({
                     <FormItem>
                       <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
                         <Building2 className="h-4 w-4 text-amber-800" />
-                        Empresa Matriz
+                        {empresaConfig?.customLabel || 'Empresa Matriz'}
+                        {empresaConfig?.isRequired && <span className="text-red-500 ml-1">*</span>}
                       </FormLabel>
                       <FieldWrapper isTi={isTi} techName="C_FILI_EMPR">
-                        <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <Select
+                          onValueChange={field.onChange}
+                          defaultValue={field.value}
+                          required={empresaConfig?.isRequired}
+                        >
                           <FormControl>
                             <SelectTrigger className="bg-white border-blue-200 focus-visible:ring-blue-500 shadow-sm text-gray-800">
                               <SelectValue placeholder="Selecione a empresa" />

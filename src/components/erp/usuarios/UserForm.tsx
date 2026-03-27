@@ -69,7 +69,7 @@ const FieldWrapper = ({
 }
 
 export function UserForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: UserFormProps) {
-  const { currentUser } = useERPStore()
+  const { currentUser, fieldConfigs } = useERPStore()
   const isTi = isTiProp || currentUser?.role === 'ti' || currentUser?.C_USER_PERF === 'TI'
 
   const form = useForm<UserFormData>({
@@ -119,6 +119,11 @@ export function UserForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: Us
     techName?: string,
     maskFn?: (v: string) => string,
   ) => {
+    const config = fieldConfigs.find((c) => c.entity === 'users' && c.field === name)
+    const displayLabel = config?.customLabel || label
+    const isRequired = config?.isRequired || false
+    const maxLength = config?.maxLength || undefined
+
     return (
       <FormField
         control={form.control}
@@ -127,7 +132,8 @@ export function UserForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: Us
           <FormItem>
             <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
               {icon && <span className="text-amber-800">{icon}</span>}
-              {label}
+              {displayLabel}
+              {isRequired && <span className="text-red-500 ml-1">*</span>}
             </FormLabel>
             <FieldWrapper isTi={isTi} techName={techName}>
               <FormControl>
@@ -138,6 +144,8 @@ export function UserForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: Us
                     const val = maskFn ? maskFn(e.target.value) : e.target.value
                     field.onChange(val)
                   }}
+                  required={isRequired}
+                  maxLength={maxLength}
                   className="bg-white border-blue-200 focus-visible:ring-blue-500 text-gray-800 shadow-sm w-full"
                 />
               </FormControl>
@@ -148,6 +156,9 @@ export function UserForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: Us
       />
     )
   }
+
+  const roleConfig = fieldConfigs.find((c) => c.entity === 'users' && c.field === 'role')
+  const statusConfig = fieldConfigs.find((c) => c.entity === 'users' && c.field === 'status')
 
   return (
     <div className="bg-blue-50 p-6 rounded-xl border border-blue-100 shadow-sm">
@@ -183,10 +194,15 @@ export function UserForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: Us
                   <FormItem>
                     <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
                       <Shield className="h-4 w-4 text-amber-800" />
-                      Nível de Acesso
+                      {roleConfig?.customLabel || 'Nível de Acesso'}
+                      {roleConfig?.isRequired && <span className="text-red-500 ml-1">*</span>}
                     </FormLabel>
                     <FieldWrapper isTi={isTi} techName="C_USER_PERF">
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        required={roleConfig?.isRequired}
+                      >
                         <FormControl>
                           <SelectTrigger className="bg-white border-blue-200 focus-visible:ring-blue-500 shadow-sm text-gray-800">
                             <SelectValue placeholder="Selecione o nível" />
@@ -211,10 +227,15 @@ export function UserForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: Us
                   <FormItem>
                     <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
                       <Activity className="h-4 w-4 text-amber-800" />
-                      Status
+                      {statusConfig?.customLabel || 'Status'}
+                      {statusConfig?.isRequired && <span className="text-red-500 ml-1">*</span>}
                     </FormLabel>
                     <FieldWrapper isTi={isTi} techName="C_USER_STAT">
-                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                      <Select
+                        onValueChange={field.onChange}
+                        defaultValue={field.value}
+                        required={statusConfig?.isRequired}
+                      >
                         <FormControl>
                           <SelectTrigger className="bg-white border-blue-200 focus-visible:ring-blue-500 shadow-sm text-gray-800">
                             <SelectValue placeholder="Selecione o status" />

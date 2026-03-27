@@ -6,6 +6,7 @@ import { Filial } from '@/types/filial'
 import { Notification } from '@/types/notification'
 import { S_CLOG } from '@/types/log'
 import { PeriodoFechamento } from '@/types/periodo'
+import { FieldConfig } from '@/types/fieldConfig'
 
 interface ERPContextData {
   users: User[]
@@ -27,6 +28,9 @@ interface ERPContextData {
   isDateInClosedPeriod: (dateStr: string) => boolean
   currentUser: User | null
   hasPermission: (perm: string) => boolean
+  fieldConfigs: FieldConfig[]
+  setFieldConfigs: React.Dispatch<React.SetStateAction<FieldConfig[]>>
+  updateFieldConfig: (config: FieldConfig) => void
 }
 
 const ERPContext = createContext<ERPContextData | undefined>(undefined)
@@ -208,6 +212,8 @@ const initialPeriodos: PeriodoFechamento[] = [
   },
 ]
 
+const initialFieldConfigs: FieldConfig[] = []
+
 export const ERPProvider = ({ children }: { children: ReactNode }) => {
   const [users, setUsers] = useState<User[]>(initialUsers)
   const [profiles, setProfiles] = useState<Profile[]>(initialProfiles)
@@ -216,6 +222,7 @@ export const ERPProvider = ({ children }: { children: ReactNode }) => {
   const [notifications, setNotifications] = useState<Notification[]>(initialNotifications)
   const [logs, setLogs] = useState<S_CLOG[]>(initialLogs)
   const [periodos, setPeriodos] = useState<PeriodoFechamento[]>(initialPeriodos)
+  const [fieldConfigs, setFieldConfigs] = useState<FieldConfig[]>(initialFieldConfigs)
 
   // In a real scenario you would have a login flow updating this. We default to admin (0) or TI (2) for tests
   const currentUser = useMemo(() => users[2] || null, [users])
@@ -302,6 +309,16 @@ export const ERPProvider = ({ children }: { children: ReactNode }) => {
     [periodos],
   )
 
+  const updateFieldConfig = useCallback((config: FieldConfig) => {
+    setFieldConfigs((prev) => {
+      const exists = prev.find((c) => c.id === config.id)
+      if (exists) {
+        return prev.map((c) => (c.id === config.id ? config : c))
+      }
+      return [...prev, config]
+    })
+  }, [])
+
   return React.createElement(
     ERPContext.Provider,
     {
@@ -325,6 +342,9 @@ export const ERPProvider = ({ children }: { children: ReactNode }) => {
         isDateInClosedPeriod,
         currentUser,
         hasPermission,
+        fieldConfigs,
+        setFieldConfigs,
+        updateFieldConfig,
       },
     },
     children,

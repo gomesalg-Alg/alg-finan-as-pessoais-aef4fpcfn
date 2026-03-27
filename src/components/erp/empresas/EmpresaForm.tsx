@@ -62,7 +62,7 @@ const FieldWrapper = ({
 }
 
 export function EmpresaForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: EmpresaFormProps) {
-  const { currentUser } = useERPStore()
+  const { currentUser, fieldConfigs } = useERPStore()
   const isTi = isTiProp || currentUser?.role === 'ti' || currentUser?.C_USER_PERF === 'TI'
 
   const form = useForm<EmpresaFormData>({
@@ -112,6 +112,11 @@ export function EmpresaForm({ initialData, onSubmit, onCancel, isTi: isTiProp }:
     techName?: string,
     maskFn?: (v: string) => string,
   ) => {
+    const config = fieldConfigs.find((c) => c.entity === 'empresas' && c.field === name)
+    const displayLabel = config?.customLabel || label
+    const isRequired = config?.isRequired || false
+    const maxLength = config?.maxLength || undefined
+
     return (
       <FormField
         control={form.control}
@@ -120,7 +125,8 @@ export function EmpresaForm({ initialData, onSubmit, onCancel, isTi: isTiProp }:
           <FormItem>
             <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
               {icon && <span className="text-amber-800">{icon}</span>}
-              {label}
+              {displayLabel}
+              {isRequired && <span className="text-red-500 ml-1">*</span>}
             </FormLabel>
             <FieldWrapper isTi={isTi} techName={techName}>
               <FormControl>
@@ -131,6 +137,8 @@ export function EmpresaForm({ initialData, onSubmit, onCancel, isTi: isTiProp }:
                     const val = maskFn ? maskFn(e.target.value) : e.target.value
                     field.onChange(val)
                   }}
+                  required={isRequired}
+                  maxLength={maxLength}
                   className="bg-white border-blue-200 focus-visible:ring-blue-500 text-gray-800 shadow-sm w-full"
                 />
               </FormControl>

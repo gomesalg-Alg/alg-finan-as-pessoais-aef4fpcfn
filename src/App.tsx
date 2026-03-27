@@ -24,6 +24,7 @@ import PeriodosContabeis from '@/pages/erp/admin/PeriodosContabeis'
 import ManutencaoLogs from '@/pages/erp/admin/ManutencaoLogs'
 import AuditoriaAcoes from '@/pages/erp/admin/AuditoriaAcoes'
 import Configuracoes from '@/pages/erp/admin/Configuracoes'
+import CustomizacaoCampos from '@/pages/erp/admin/CustomizacaoCampos'
 import RelatoriosGerenciais from '@/pages/erp/relatorios/RelatoriosGerenciais'
 
 import { ERPProvider } from '@/stores/useERPStore'
@@ -62,6 +63,7 @@ const App = () => (
             <Route path="admin/manutencao-logs" element={<ManutencaoLogs />} />
             <Route path="admin/auditoria" element={<AuditoriaAcoes />} />
             <Route path="admin/configuracoes" element={<Configuracoes />} />
+            <Route path="admin/customizacao-campos" element={<CustomizacaoCampos />} />
           </Route>
 
           <Route path="*" element={<NotFound />} />

@@ -66,7 +66,7 @@ const FieldWrapper = ({
 }
 
 export function PerfilForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: PerfilFormProps) {
-  const { currentUser } = useERPStore()
+  const { currentUser, fieldConfigs } = useERPStore()
   const isTi = isTiProp || currentUser?.role === 'ti' || currentUser?.C_USER_PERF === 'TI'
 
   const form = useForm<PerfilFormData>({
@@ -95,6 +95,10 @@ export function PerfilForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: 
     onSubmit(data)
   }
 
+  const configNome = fieldConfigs.find((c) => c.entity === 'perfis' && c.field === 'C_PERF_NOME')
+  const configDesc = fieldConfigs.find((c) => c.entity === 'perfis' && c.field === 'C_PERF_DESC')
+  const configPerm = fieldConfigs.find((c) => c.entity === 'perfis' && c.field === 'C_PERF_PERM')
+
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmitHandler)} className="space-y-8 pb-8">
@@ -110,12 +114,15 @@ export function PerfilForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: 
                     fieldState.error && '!text-white font-semibold',
                   )}
                 >
-                  Nome do Perfil
+                  {configNome?.customLabel || 'Nome do Perfil'}
+                  {configNome?.isRequired && <span className="text-red-500 ml-1">*</span>}
                 </FormLabel>
                 <FieldWrapper isTi={isTi} techName="C_PERF_NOME">
                   <FormControl>
                     <Input
                       placeholder="Ex: Gerente Financeiro"
+                      required={configNome?.isRequired}
+                      maxLength={configNome?.maxLength || undefined}
                       className={cn(
                         'bg-background/50 border-border focus:border-primary',
                         fieldState.error && 'border-white focus:border-white ring-offset-white',
@@ -140,12 +147,15 @@ export function PerfilForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: 
                     fieldState.error && '!text-white font-semibold',
                   )}
                 >
-                  Descrição
+                  {configDesc?.customLabel || 'Descrição'}
+                  {configDesc?.isRequired && <span className="text-red-500 ml-1">*</span>}
                 </FormLabel>
                 <FieldWrapper isTi={isTi} techName="C_PERF_DESC">
                   <FormControl>
                     <Textarea
                       placeholder="Descreva as responsabilidades deste perfil..."
+                      required={configDesc?.isRequired}
+                      maxLength={configDesc?.maxLength || undefined}
                       className={cn(
                         'bg-background/50 border-border focus:border-primary min-h-[100px]',
                         fieldState.error && 'border-white focus:border-white ring-offset-white',
@@ -167,7 +177,8 @@ export function PerfilForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: 
             <FormItem>
               <div className="mb-4">
                 <FormLabel className="text-base font-semibold text-foreground border-b border-border/50 pb-2 block">
-                  Permissões de Acesso
+                  {configPerm?.customLabel || 'Permissões de Acesso'}
+                  {configPerm?.isRequired && <span className="text-red-500 ml-1">*</span>}
                 </FormLabel>
                 <FormDescription>
                   Selecione as áreas do sistema que os usuários com este perfil terão acesso.

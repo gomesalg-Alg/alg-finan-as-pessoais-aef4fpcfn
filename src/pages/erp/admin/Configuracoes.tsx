@@ -1,6 +1,7 @@
+import { Link } from 'react-router-dom'
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { Database, FileJson, FileSpreadsheet } from 'lucide-react'
+import { Database, FileJson, FileSpreadsheet, Settings } from 'lucide-react'
 import { dataDictionary } from '@/utils/metadata'
 import { toast } from 'sonner'
 
@@ -56,48 +57,82 @@ export default function Configuracoes() {
         </p>
       </div>
 
-      <Card className="border-border shadow-sm max-w-3xl">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Database className="h-5 w-5 text-primary" />
-            Dicionário de Dados
-          </CardTitle>
-          <CardDescription>
-            Exporte o mapeamento completo dos campos de formulário para as respectivas colunas no
-            banco de dados. Utilize estes relatórios para documentação interna e auditoria de
-            integrações.
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="bg-secondary/30 p-4 rounded-lg border border-border">
-            <p className="text-sm text-foreground font-medium mb-2">
-              Opções de Exportação Disponíveis:
-            </p>
-            <ul className="text-sm text-muted-foreground space-y-1 ml-4 list-disc">
-              <li>
-                Formato JSON: Ideal para consumo por APIs ou importação em outras ferramentas.
-              </li>
-              <li>Formato CSV: Ideal para visualização em planilhas (Excel, Google Sheets).</li>
-            </ul>
-          </div>
-          <div className="flex gap-4 pt-2">
-            <Button
-              onClick={handleExportJSON}
-              className="flex-1 bg-blue-800 hover:bg-blue-900 text-white"
-            >
-              <FileJson className="w-4 h-4 mr-2" />
-              Exportar como JSON
-            </Button>
-            <Button
-              onClick={handleExportCSV}
-              className="flex-1 bg-green-800 hover:bg-green-900 text-white"
-            >
-              <FileSpreadsheet className="w-4 h-4 mr-2" />
-              Exportar como CSV
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+      <div className="grid gap-6 md:grid-cols-2">
+        <Card className="border-border shadow-sm">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Database className="h-5 w-5 text-primary" />
+              Dicionário de Dados
+            </CardTitle>
+            <CardDescription>
+              Exporte o mapeamento completo dos campos de formulário para as respectivas colunas no
+              banco de dados. Utilize estes relatórios para documentação interna e auditoria de
+              integrações.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="bg-secondary/30 p-4 rounded-lg border border-border">
+              <p className="text-sm text-foreground font-medium mb-2">
+                Opções de Exportação Disponíveis:
+              </p>
+              <ul className="text-sm text-muted-foreground space-y-1 ml-4 list-disc">
+                <li>
+                  Formato JSON: Ideal para consumo por APIs ou importação em outras ferramentas.
+                </li>
+                <li>Formato CSV: Ideal para visualização em planilhas (Excel, Google Sheets).</li>
+              </ul>
+            </div>
+            <div className="flex gap-4 pt-2">
+              <Button
+                onClick={handleExportJSON}
+                className="flex-1 bg-blue-800 hover:bg-blue-900 text-white"
+              >
+                <FileJson className="w-4 h-4 mr-2" />
+                Exportar JSON
+              </Button>
+              <Button
+                onClick={handleExportCSV}
+                className="flex-1 bg-green-800 hover:bg-green-900 text-white"
+              >
+                <FileSpreadsheet className="w-4 h-4 mr-2" />
+                Exportar CSV
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+
+        <Card className="border-border shadow-sm">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Settings className="h-5 w-5 text-primary" />
+              Customização de Interface
+            </CardTitle>
+            <CardDescription>
+              Ajuste dinamicamente as propriedades dos campos nos formulários (labels, tamanhos e
+              obrigatoriedade) sem a necessidade de alterar o código-fonte do sistema.
+            </CardDescription>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="bg-secondary/30 p-4 rounded-lg border border-border">
+              <p className="text-sm text-muted-foreground">
+                Permite que a equipe de TI personalize a experiência de preenchimento dos cadastros
+                para os usuários finais, garantindo agilidade.
+              </p>
+            </div>
+            <div className="pt-2">
+              <Button
+                asChild
+                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+              >
+                <Link to="/erp/admin/customizacao-campos">
+                  <Settings className="w-4 h-4 mr-2" />
+                  Acessar Painel de Customização
+                </Link>
+              </Button>
+            </div>
+          </CardContent>
+        </Card>
+      </div>
     </div>
   )
 }
