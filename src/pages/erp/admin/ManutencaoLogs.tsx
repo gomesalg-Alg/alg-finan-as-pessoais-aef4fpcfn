@@ -38,19 +38,6 @@ export default function ManutencaoLogs() {
   const [archiveFilter, setArchiveFilter] = useState('30') // days
   const [searchTerm, setSearchTerm] = useState('')
 
-  if (!isTiModeEnabled) {
-    return (
-      <div className="bg-[#0A192F] min-h-[calc(100vh-100px)] p-6 rounded-xl border border-red-800/50 shadow-2xl flex flex-col items-center justify-center text-center">
-        <ShieldAlert className="h-16 w-16 text-red-500 mb-4" />
-        <h2 className="text-2xl font-bold text-white mb-2">Acesso Restrito</h2>
-        <p className="text-red-200/80 max-w-md">
-          A manutenção de logs é uma funcionalidade técnica exclusiva para usuários com o nível de
-          acesso <strong>Tecnologia da Informação</strong>.
-        </p>
-      </div>
-    )
-  }
-
   const activeLogs = useMemo(
     () =>
       logs
@@ -73,6 +60,19 @@ export default function ManutencaoLogs() {
     })
     return Array.from(batches.entries()).map(([id, data]) => ({ id, ...data }))
   }, [archivedLogs])
+
+  if (!isTiModeEnabled) {
+    return (
+      <div className="bg-[#0A192F] min-h-[calc(100vh-100px)] p-6 rounded-xl border border-red-800/50 shadow-2xl flex flex-col items-center justify-center text-center">
+        <ShieldAlert className="h-16 w-16 text-red-500 mb-4" />
+        <h2 className="text-2xl font-bold text-white mb-2">Acesso Restrito</h2>
+        <p className="text-red-200/80 max-w-md">
+          A manutenção de logs é uma funcionalidade técnica exclusiva para usuários com o nível de
+          acesso <strong>Tecnologia da Informação</strong>.
+        </p>
+      </div>
+    )
+  }
 
   const handleArchive = () => {
     const days = parseInt(archiveFilter)
