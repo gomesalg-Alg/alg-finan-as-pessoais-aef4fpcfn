@@ -33,12 +33,37 @@ import {
 } from 'lucide-react'
 import { logger } from '@/lib/logger'
 import useERPStore from '@/stores/useERPStore'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
 interface UserFormProps {
   initialData?: Partial<UserFormData>
   onSubmit: (data: UserFormData) => void
   onCancel?: () => void
   isTi?: boolean
+}
+
+const FieldWrapper = ({
+  children,
+  isTi,
+  techName,
+}: {
+  children: React.ReactNode
+  isTi: boolean
+  techName?: string
+}) => {
+  if (isTi && techName) {
+    return (
+      <Tooltip delayDuration={300}>
+        <TooltipTrigger asChild>
+          <div className="w-full cursor-help">{children}</div>
+        </TooltipTrigger>
+        <TooltipContent side="top" className="bg-slate-800 text-white border-slate-700 shadow-sm">
+          <p className="font-mono text-xs">{techName}</p>
+        </TooltipContent>
+      </Tooltip>
+    )
+  }
+  return <>{children}</>
 }
 
 export function UserForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: UserFormProps) {
@@ -80,7 +105,6 @@ export function UserForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: Us
     techName?: string,
     maskFn?: (v: string) => string,
   ) => {
-    const displayLabel = isTi && techName ? `[${techName}] - ${label}` : label
     return (
       <FormField
         control={form.control}
@@ -89,19 +113,21 @@ export function UserForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: Us
           <FormItem>
             <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
               {icon && <span className="text-amber-800">{icon}</span>}
-              {displayLabel}
+              {label}
             </FormLabel>
-            <FormControl>
-              <Input
-                {...field}
-                value={(field.value as string) || ''}
-                onChange={(e) => {
-                  const val = maskFn ? maskFn(e.target.value) : e.target.value
-                  field.onChange(val)
-                }}
-                className="bg-white border-blue-200 focus-visible:ring-blue-500 text-gray-800 shadow-sm w-full"
-              />
-            </FormControl>
+            <FieldWrapper isTi={isTi} techName={techName}>
+              <FormControl>
+                <Input
+                  {...field}
+                  value={(field.value as string) || ''}
+                  onChange={(e) => {
+                    const val = maskFn ? maskFn(e.target.value) : e.target.value
+                    field.onChange(val)
+                  }}
+                  className="bg-white border-blue-200 focus-visible:ring-blue-500 text-gray-800 shadow-sm w-full"
+                />
+              </FormControl>
+            </FieldWrapper>
             <FormMessage className="text-white bg-red-500 px-2 py-1 mt-1 rounded text-xs inline-block shadow-sm" />
           </FormItem>
         )}
@@ -113,9 +139,7 @@ export function UserForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: Us
     <div className="bg-blue-50 p-6 rounded-xl border border-blue-100 shadow-sm">
       <div className="mb-6 pb-2 border-b border-blue-200 flex items-center gap-2">
         <UserIcon className="h-6 w-6 text-amber-700" />
-        <h2 className="text-xl font-bold text-blue-900">
-          {isTi ? '[C_USER] - ' : ''}Cadastro de Usuário
-        </h2>
+        <h2 className="text-xl font-bold text-blue-900">Cadastro de Usuário</h2>
       </div>
 
       <Form {...form}>
@@ -145,21 +169,23 @@ export function UserForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: Us
                   <FormItem>
                     <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
                       <Shield className="h-4 w-4 text-amber-800" />
-                      {isTi ? '[C_USER_PERF] - Nível de Acesso' : 'Nível de Acesso'}
+                      Nível de Acesso
                     </FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger className="bg-white border-blue-200 focus-visible:ring-blue-500 shadow-sm text-gray-800">
-                          <SelectValue placeholder="Selecione o nível" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="admin">Administrador</SelectItem>
-                        <SelectItem value="manager">Gerente</SelectItem>
-                        <SelectItem value="user">Usuário Comum</SelectItem>
-                        <SelectItem value="ti">Tecnologia da Informação</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <FieldWrapper isTi={isTi} techName="C_USER_PERF">
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger className="bg-white border-blue-200 focus-visible:ring-blue-500 shadow-sm text-gray-800">
+                            <SelectValue placeholder="Selecione o nível" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="admin">Administrador</SelectItem>
+                          <SelectItem value="manager">Gerente</SelectItem>
+                          <SelectItem value="user">Usuário Comum</SelectItem>
+                          <SelectItem value="ti">Tecnologia da Informação</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FieldWrapper>
                     <FormMessage className="text-white bg-red-500 px-2 py-1 mt-1 rounded text-xs inline-block shadow-sm" />
                   </FormItem>
                 )}
@@ -171,19 +197,21 @@ export function UserForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: Us
                   <FormItem>
                     <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
                       <Activity className="h-4 w-4 text-amber-800" />
-                      {isTi ? '[C_USER_STAT] - Status' : 'Status'}
+                      Status
                     </FormLabel>
-                    <Select onValueChange={field.onChange} defaultValue={field.value}>
-                      <FormControl>
-                        <SelectTrigger className="bg-white border-blue-200 focus-visible:ring-blue-500 shadow-sm text-gray-800">
-                          <SelectValue placeholder="Selecione o status" />
-                        </SelectTrigger>
-                      </FormControl>
-                      <SelectContent>
-                        <SelectItem value="active">Ativo</SelectItem>
-                        <SelectItem value="inactive">Inativo</SelectItem>
-                      </SelectContent>
-                    </Select>
+                    <FieldWrapper isTi={isTi} techName="C_USER_STAT">
+                      <Select onValueChange={field.onChange} defaultValue={field.value}>
+                        <FormControl>
+                          <SelectTrigger className="bg-white border-blue-200 focus-visible:ring-blue-500 shadow-sm text-gray-800">
+                            <SelectValue placeholder="Selecione o status" />
+                          </SelectTrigger>
+                        </FormControl>
+                        <SelectContent>
+                          <SelectItem value="active">Ativo</SelectItem>
+                          <SelectItem value="inactive">Inativo</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    </FieldWrapper>
                     <FormMessage className="text-white bg-red-500 px-2 py-1 mt-1 rounded text-xs inline-block shadow-sm" />
                   </FormItem>
                 )}

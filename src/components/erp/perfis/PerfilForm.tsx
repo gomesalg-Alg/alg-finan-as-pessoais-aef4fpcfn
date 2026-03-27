@@ -17,6 +17,7 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Save, X } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import useERPStore from '@/stores/useERPStore'
+import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 
 interface PerfilFormProps {
   initialData?: Partial<PerfilFormData>
@@ -37,6 +38,30 @@ const PERMISSIONS = [
     desc: 'Plano de contas e categorias',
   },
 ]
+
+const FieldWrapper = ({
+  children,
+  isTi,
+  techName,
+}: {
+  children: React.ReactNode
+  isTi: boolean
+  techName?: string
+}) => {
+  if (isTi && techName) {
+    return (
+      <Tooltip delayDuration={300}>
+        <TooltipTrigger asChild>
+          <div className="w-full cursor-help">{children}</div>
+        </TooltipTrigger>
+        <TooltipContent side="top" className="bg-slate-800 text-white border-slate-700 shadow-sm">
+          <p className="font-mono text-xs">{techName}</p>
+        </TooltipContent>
+      </Tooltip>
+    )
+  }
+  return <>{children}</>
+}
 
 export function PerfilForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: PerfilFormProps) {
   const { currentUser } = useERPStore()
@@ -67,18 +92,20 @@ export function PerfilForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: 
                     fieldState.error && '!text-white font-semibold',
                   )}
                 >
-                  {isTi ? '[C_PERF_NOME] - Nome do Perfil' : 'Nome do Perfil'}
+                  Nome do Perfil
                 </FormLabel>
-                <FormControl>
-                  <Input
-                    placeholder="Ex: Gerente Financeiro"
-                    className={cn(
-                      'bg-background/50 border-border focus:border-primary',
-                      fieldState.error && 'border-white focus:border-white ring-offset-white',
-                    )}
-                    {...field}
-                  />
-                </FormControl>
+                <FieldWrapper isTi={isTi} techName="C_PERF_NOME">
+                  <FormControl>
+                    <Input
+                      placeholder="Ex: Gerente Financeiro"
+                      className={cn(
+                        'bg-background/50 border-border focus:border-primary',
+                        fieldState.error && 'border-white focus:border-white ring-offset-white',
+                      )}
+                      {...field}
+                    />
+                  </FormControl>
+                </FieldWrapper>
                 <FormMessage className="!text-white font-medium drop-shadow-md" />
               </FormItem>
             )}
@@ -95,18 +122,20 @@ export function PerfilForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: 
                     fieldState.error && '!text-white font-semibold',
                   )}
                 >
-                  {isTi ? '[C_PERF_DESC] - Descrição' : 'Descrição'}
+                  Descrição
                 </FormLabel>
-                <FormControl>
-                  <Textarea
-                    placeholder="Descreva as responsabilidades deste perfil..."
-                    className={cn(
-                      'bg-background/50 border-border focus:border-primary min-h-[100px]',
-                      fieldState.error && 'border-white focus:border-white ring-offset-white',
-                    )}
-                    {...field}
-                  />
-                </FormControl>
+                <FieldWrapper isTi={isTi} techName="C_PERF_DESC">
+                  <FormControl>
+                    <Textarea
+                      placeholder="Descreva as responsabilidades deste perfil..."
+                      className={cn(
+                        'bg-background/50 border-border focus:border-primary min-h-[100px]',
+                        fieldState.error && 'border-white focus:border-white ring-offset-white',
+                      )}
+                      {...field}
+                    />
+                  </FormControl>
+                </FieldWrapper>
                 <FormMessage className="!text-white font-medium drop-shadow-md" />
               </FormItem>
             )}
@@ -120,50 +149,52 @@ export function PerfilForm({ initialData, onSubmit, onCancel, isTi: isTiProp }: 
             <FormItem>
               <div className="mb-4">
                 <FormLabel className="text-base font-semibold text-foreground border-b border-border/50 pb-2 block">
-                  {isTi ? '[C_PERF_PERM] - Permissões de Acesso' : 'Permissões de Acesso'}
+                  Permissões de Acesso
                 </FormLabel>
                 <FormDescription>
                   Selecione as áreas do sistema que os usuários com este perfil terão acesso.
                 </FormDescription>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {PERMISSIONS.map((perm) => (
-                  <FormField
-                    key={perm.id}
-                    control={form.control}
-                    name="C_PERF_PERM"
-                    render={({ field }) => {
-                      return (
-                        <FormItem
-                          key={perm.id}
-                          className="flex flex-row items-start space-x-3 space-y-0 rounded-md border border-border p-4 bg-background/50 hover:border-primary/50 transition-colors cursor-pointer"
-                        >
-                          <FormControl>
-                            <Checkbox
-                              checked={field.value?.includes(perm.id)}
-                              onCheckedChange={(checked) => {
-                                return checked
-                                  ? field.onChange([...(field.value || []), perm.id])
-                                  : field.onChange(
-                                      field.value?.filter((value) => value !== perm.id),
-                                    )
-                              }}
-                            />
-                          </FormControl>
-                          <div className="space-y-1 leading-none cursor-pointer">
-                            <FormLabel className="font-medium cursor-pointer">
-                              {perm.label}
-                            </FormLabel>
-                            <FormDescription className="cursor-pointer">
-                              {perm.desc}
-                            </FormDescription>
-                          </div>
-                        </FormItem>
-                      )
-                    }}
-                  />
-                ))}
-              </div>
+              <FieldWrapper isTi={isTi} techName="C_PERF_PERM">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  {PERMISSIONS.map((perm) => (
+                    <FormField
+                      key={perm.id}
+                      control={form.control}
+                      name="C_PERF_PERM"
+                      render={({ field }) => {
+                        return (
+                          <FormItem
+                            key={perm.id}
+                            className="flex flex-row items-start space-x-3 space-y-0 rounded-md border border-border p-4 bg-background/50 hover:border-primary/50 transition-colors cursor-pointer"
+                          >
+                            <FormControl>
+                              <Checkbox
+                                checked={field.value?.includes(perm.id)}
+                                onCheckedChange={(checked) => {
+                                  return checked
+                                    ? field.onChange([...(field.value || []), perm.id])
+                                    : field.onChange(
+                                        field.value?.filter((value) => value !== perm.id),
+                                      )
+                                }}
+                              />
+                            </FormControl>
+                            <div className="space-y-1 leading-none cursor-pointer">
+                              <FormLabel className="font-medium cursor-pointer">
+                                {perm.label}
+                              </FormLabel>
+                              <FormDescription className="cursor-pointer">
+                                {perm.desc}
+                              </FormDescription>
+                            </div>
+                          </FormItem>
+                        )
+                      }}
+                    />
+                  ))}
+                </div>
+              </FieldWrapper>
               <FormMessage className="!text-white font-medium drop-shadow-md mt-2" />
             </FormItem>
           )}
