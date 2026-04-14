@@ -207,17 +207,31 @@ export function EmpresaForm({ initialData, onSubmit, onCancel }: EmpresaFormProp
             </FormLabel>
             <FieldWrapper isTi={isTi} techName={techName}>
               <FormControl>
-                <Input
-                  {...field}
-                  value={(field.value as string) || ''}
-                  onChange={(e) => {
-                    const val = finalMaskFn ? finalMaskFn(e.target.value) : e.target.value
-                    field.onChange(val)
-                  }}
-                  required={isRequired}
-                  maxLength={maxLength}
-                  className="bg-white border-blue-200 focus-visible:ring-blue-500 text-gray-800 shadow-sm w-full"
-                />
+                <div className="relative">
+                  <Input
+                    {...field}
+                    value={(field.value as string) || ''}
+                    onChange={(e) => {
+                      const val = finalMaskFn ? finalMaskFn(e.target.value) : e.target.value
+                      field.onChange(val)
+                    }}
+                    required={isRequired}
+                    maxLength={maxLength}
+                    className={cn(
+                      'bg-white border-blue-200 focus-visible:ring-blue-500 text-gray-800 shadow-sm w-full',
+                      techName?.endsWith('_MAIL') && 'pr-10',
+                    )}
+                  />
+                  {techName?.endsWith('_MAIL') && field.value && (
+                    <a
+                      href={`mailto:${field.value}`}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-amber-600 hover:text-amber-800"
+                      title="Enviar e-mail"
+                    >
+                      <Mail className="h-4 w-4" />
+                    </a>
+                  )}
+                </div>
               </FormControl>
             </FieldWrapper>
             <FormMessage className="text-white bg-red-500 px-2 py-1 mt-1 rounded text-xs inline-block shadow-sm" />
@@ -254,7 +268,7 @@ export function EmpresaForm({ initialData, onSubmit, onCancel }: EmpresaFormProp
                 'C_EMPR_FANT',
               )}
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {renderField(
                 'cnpj',
                 'CNPJ',
@@ -262,18 +276,20 @@ export function EmpresaForm({ initialData, onSubmit, onCancel }: EmpresaFormProp
                 'C_EMPR_CNPJ',
                 cnpjMask,
               )}
+              {renderDateField(
+                'dataAbertura',
+                'Data de Abertura',
+                <CalendarIcon className="h-4 w-4" />,
+                'C_ACIA_DTAB',
+              )}
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {renderField('ie', 'Inscrição Estadual', <Hash className="h-4 w-4" />, 'C_EMPR_INSC')}
               {renderField(
                 'im',
                 'Inscrição Municipal',
                 <Hash className="h-4 w-4" />,
                 'C_EMPR_IMUN',
-              )}
-              {renderDateField(
-                'dataAbertura',
-                'Data de Abertura',
-                <CalendarIcon className="h-4 w-4" />,
-                'C_ACIA_DTAB',
               )}
             </div>
           </div>
