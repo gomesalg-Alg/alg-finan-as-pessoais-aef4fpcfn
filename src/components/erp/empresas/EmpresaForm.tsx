@@ -23,12 +23,18 @@ import {
   Landmark,
   Map as MapIcon,
   Navigation,
+  Calendar as CalendarIcon,
 } from 'lucide-react'
 import { logger } from '@/lib/logger'
 import useERPStore from '@/stores/useERPStore'
 import { Tooltip, TooltipContent, TooltipTrigger } from '@/components/ui/tooltip'
 import { validateTechnicalTypes } from '@/utils/metadata'
 import { toast } from 'sonner'
+import { Calendar } from '@/components/ui/calendar'
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover'
+import { format } from 'date-fns'
+import { ptBR } from 'date-fns/locale'
+import { cn } from '@/lib/utils'
 
 interface EmpresaFormProps {
   initialData?: Partial<EmpresaFormData>
@@ -81,6 +87,7 @@ export function EmpresaForm({ initialData, onSubmit, onCancel }: EmpresaFormProp
       uf: initialData?.uf || '',
       telefone: initialData?.telefone || '',
       email: initialData?.email || '',
+      dataAbertura: initialData?.dataAbertura ? new Date(initialData.dataAbertura) : undefined,
       ...initialData,
     },
   })
@@ -122,6 +129,70 @@ export function EmpresaForm({ initialData, onSubmit, onCancel }: EmpresaFormProp
     else if (config?.maskType === 'cep') finalMaskFn = cepMask
     else if (config?.maskType === 'phone') finalMaskFn = phoneMask
     else if (config?.maskType === 'none') finalMaskFn = undefined
+
+    const renderDateField = (
+      name: keyof EmpresaFormData,
+      label: string,
+      icon: any,
+      techName?: string,
+    ) => {
+      const config = fieldConfigs.find((c) => c.entity === 'empresas' && c.field === name)
+      const displayLabel = config?.customLabel || label
+      const isRequired = config?.isRequired || false
+
+      return (
+        <FormField
+          control={form.control}
+          name={name}
+          render={({ field }) => (
+            <FormItem className="flex flex-col justify-end">
+              <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold mb-1 mt-1">
+                {icon && <span className="text-amber-800">{icon}</span>}
+                {displayLabel}
+                {isRequired && <span className="text-red-500 ml-1">*</span>}
+              </FormLabel>
+              <FieldWrapper isTi={isTi} techName={techName}>
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <FormControl>
+                      <Button
+                        variant={'outline'}
+                        className={cn(
+                          'w-full pl-3 text-left font-normal bg-white border-blue-200 focus-visible:ring-blue-500 text-gray-800 shadow-sm',
+                          !field.value && 'text-muted-foreground',
+                        )}
+                      >
+                        {field.value ? (
+                          format(new Date(field.value as Date | string), 'dd/MM/yyyy', {
+                            locale: ptBR,
+                          })
+                        ) : (
+                          <span>Selecione uma data</span>
+                        )}
+                        <CalendarIcon className="ml-auto h-4 w-4 opacity-50" />
+                      </Button>
+                    </FormControl>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-auto p-0" align="start">
+                    <Calendar
+                      mode="single"
+                      selected={field.value ? new Date(field.value as Date | string) : undefined}
+                      onSelect={field.onChange}
+                      disabled={(date) => date > new Date() || date < new Date('1900-01-01')}
+                      initialFocus
+                      captionLayout="dropdown-buttons"
+                      fromYear={1900}
+                      toYear={new Date().getFullYear()}
+                    />
+                  </PopoverContent>
+                </Popover>
+              </FieldWrapper>
+              <FormMessage className="text-white bg-red-500 px-2 py-1 mt-1 rounded text-xs inline-block shadow-sm" />
+            </FormItem>
+          )}
+        />
+      )
+    }
 
     return (
       <FormField
@@ -183,7 +254,7 @@ export function EmpresaForm({ initialData, onSubmit, onCancel }: EmpresaFormProp
                 'C_EMPR_FANT',
               )}
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
               {renderField(
                 'cnpj',
                 'CNPJ',
@@ -197,6 +268,12 @@ export function EmpresaForm({ initialData, onSubmit, onCancel }: EmpresaFormProp
                 'Inscrição Municipal',
                 <Hash className="h-4 w-4" />,
                 'C_EMPR_IMUN',
+              )}
+              {renderDateField(
+                'dataAbertura',
+                'Data de Abertura',
+                <CalendarIcon className="h-4 w-4" />,
+                'C_ACIA_DTAB',
               )}
             </div>
           </div>

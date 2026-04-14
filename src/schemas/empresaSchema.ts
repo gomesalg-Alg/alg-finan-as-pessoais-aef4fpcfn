@@ -16,6 +16,7 @@ export const empresaSchema = z.object({
   uf: z.string().optional(),
   telefone: z.string().optional(),
   email: z.string().email('E-mail inválido').optional().or(z.literal('')),
+  dataAbertura: z.coerce.date().optional(),
 })
 
 export type EmpresaFormData = z.infer<typeof empresaSchema>

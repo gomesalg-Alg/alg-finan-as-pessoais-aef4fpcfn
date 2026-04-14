@@ -14,6 +14,7 @@ export interface Empresa {
   uf?: string
   telefone?: string
   email?: string
+  dataAbertura?: string | Date
   createdAt?: string
   updatedAt?: string
 }
