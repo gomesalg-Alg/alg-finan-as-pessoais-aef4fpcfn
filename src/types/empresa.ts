@@ -1,5 +1,9 @@
 export interface Empresa {
   id: string
+  C_ACIA_PKID?: string
+  C_ACIA_CREA?: string
+  C_ACIA_UPDT?: string
+  C_EMPR_CODI?: string
   razaoSocial: string
   nomeFantasia: string
   cnpj: string

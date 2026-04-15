@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-15T19:42:24.084Z",
+  "generatedAt": "2026-04-15T20:11:18.865Z",
   "collections": [
     {
       "name": "users",
@@ -37,6 +37,122 @@
           "required": false,
           "system": false,
           "autodateTriggers": ["onCreate", "onUpdate"]
+        },
+        {
+          "name": "C_USER_PKID",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_USER_CREA",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "C_USER_UPDT",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        },
+        {
+          "name": "C_USER_CODI",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_USER_NOME",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_USER_FANT",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_USER_NCPF",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_USER_MAIL",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_USER_PERF",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_USER_EMPR",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_USER_FILI",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_USER_STAT",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_USER_CCEP",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_USER_ENDE",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_USER_NUME",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_USER_COMP",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_USER_BAIR",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_USER_MUNI",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_USER_UFED",
+          "type": "text",
+          "required": false,
+          "system": false
         }
       ],
       "indexes": [
@@ -150,6 +266,159 @@
           "type": "date",
           "required": false,
           "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        },
+        {
+          "name": "C_ACIA_PKID",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_ACIA_CREA",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "C_ACIA_UPDT",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "name": "filiais",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.id != ''",
+        "view": "@request.auth.id != ''",
+        "create": "@request.auth.id != ''",
+        "update": "@request.auth.id != ''",
+        "delete": "@request.auth.id != ''"
+      },
+      "fields": [
+        {
+          "name": "C_FILI_CODI",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "C_FILI_NOME",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "C_FILI_EMPR",
+          "type": "relation",
+          "required": false,
+          "system": false,
+          "collectionRef": "empresas"
+        },
+        {
+          "name": "C_FILI_CNPJ",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_FILI_INSC",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_FILI_CCEP",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_FILI_ENDE",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_FILI_NUME",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_FILI_COMP",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_FILI_BAIR",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_FILI_MUNI",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_FILI_UFED",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_FILI_FONE",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_FILI_MAIL",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_FILI_PKID",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_FILI_CREA",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "C_FILI_UPDT",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
         },
         {
           "name": "created",

@@ -1,5 +1,8 @@
 export interface User {
   id: string
+  C_USER_PKID?: string
+  C_USER_CREA?: string
+  C_USER_UPDT?: string
   name: string
   email: string
   role: 'admin' | 'user' | 'manager' | 'ti'

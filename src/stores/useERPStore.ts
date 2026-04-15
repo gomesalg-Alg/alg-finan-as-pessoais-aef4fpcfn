@@ -18,6 +18,8 @@ import { FieldConfig } from '@/types/fieldConfig'
 import pb from '@/lib/pocketbase/client'
 import { useRealtime } from '@/hooks/use-realtime'
 import { mapRecordToEmpresa } from '@/services/empresas'
+import { mapRecordToFilial } from '@/services/filiais'
+import { mapRecordToUser } from '@/services/users'
 
 interface ERPContextData {
   users: User[]
@@ -247,15 +249,21 @@ export const ERPProvider = ({ children }: { children: ReactNode }) => {
   }, [currentUser])
 
   useEffect(() => {
-    const fetchEmpresas = async () => {
+    const fetchData = async () => {
       try {
-        const records = await pb.collection('empresas').getFullList({ sort: '-created' })
-        setEmpresas(records.map(mapRecordToEmpresa))
+        const [empresasRecords, filiaisRecords, usersRecords] = await Promise.all([
+          pb.collection('empresas').getFullList({ sort: '-created' }),
+          pb.collection('filiais').getFullList({ sort: '-created' }),
+          pb.collection('users').getFullList({ sort: '-created' }),
+        ])
+        if (empresasRecords.length) setEmpresas(empresasRecords.map(mapRecordToEmpresa))
+        if (filiaisRecords.length) setFiliais(filiaisRecords.map(mapRecordToFilial))
+        if (usersRecords.length) setUsers(usersRecords.map(mapRecordToUser))
       } catch (err) {
-        console.error('Failed to fetch empresas:', err)
+        console.error('Failed to fetch data:', err)
       }
     }
-    fetchEmpresas()
+    fetchData()
   }, [])
 
   useRealtime('empresas', (e) => {
@@ -270,6 +278,34 @@ export const ERPProvider = ({ children }: { children: ReactNode }) => {
       )
     } else if (e.action === 'delete') {
       setEmpresas((prev) => prev.filter((m) => m.id !== e.record.id))
+    }
+  })
+
+  useRealtime('filiais', (e) => {
+    if (e.action === 'create') {
+      setFiliais((prev) => {
+        if (prev.find((m) => m.id === e.record.id)) return prev
+        return [mapRecordToFilial(e.record), ...prev]
+      })
+    } else if (e.action === 'update') {
+      setFiliais((prev) =>
+        prev.map((m) => (m.id === e.record.id ? mapRecordToFilial(e.record) : m)),
+      )
+    } else if (e.action === 'delete') {
+      setFiliais((prev) => prev.filter((m) => m.id !== e.record.id))
+    }
+  })
+
+  useRealtime('users', (e) => {
+    if (e.action === 'create') {
+      setUsers((prev) => {
+        if (prev.find((m) => m.id === e.record.id)) return prev
+        return [mapRecordToUser(e.record), ...prev]
+      })
+    } else if (e.action === 'update') {
+      setUsers((prev) => prev.map((m) => (m.id === e.record.id ? mapRecordToUser(e.record) : m)))
+    } else if (e.action === 'delete') {
+      setUsers((prev) => prev.filter((m) => m.id !== e.record.id))
     }
   })
 

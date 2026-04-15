@@ -3,6 +3,9 @@ import { Empresa } from '@/types/empresa'
 
 export const mapRecordToEmpresa = (record: any): Empresa => ({
   id: record.id,
+  C_ACIA_PKID: record.C_ACIA_PKID || record.id,
+  C_ACIA_CREA: record.C_ACIA_CREA || record.created,
+  C_ACIA_UPDT: record.C_ACIA_UPDT || record.updated,
   razaoSocial: record.C_EMPR_NOME,
   nomeFantasia: record.C_EMPR_FANT,
   cnpj: record.C_EMPR_CNPJ,
