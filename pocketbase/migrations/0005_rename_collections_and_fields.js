@@ -7,15 +7,29 @@ migrate(
     // Fix relation fields pointing to these collections BEFORE doing any renames
     // to avoid "referenced collection does not exist" validation errors.
     const fixRelations = (col) => {
+      const toUpdate = []
       for (const f of col.fields) {
         if (f.type === 'relation') {
-          if (f.collectionId === 'empresas' || f.collectionId === 'C_EMPR') {
+          if (
+            f.collectionId === 'empresas' ||
+            f.collectionId === 'C_EMPR' ||
+            f.name === 'C_USER_EMPR' ||
+            f.name === 'C_FILI_EMPR'
+          ) {
             f.collectionId = empresas.id
-          }
-          if (f.collectionId === 'filiais' || f.collectionId === 'C_FILI') {
+            toUpdate.push(f)
+          } else if (
+            f.collectionId === 'filiais' ||
+            f.collectionId === 'C_FILI' ||
+            f.name === 'C_USER_FILI'
+          ) {
             f.collectionId = filiais.id
+            toUpdate.push(f)
           }
         }
+      }
+      for (const f of toUpdate) {
+        col.fields.add(f)
       }
     }
 
@@ -33,10 +47,16 @@ migrate(
     } catch (_) {}
 
     const aciaDtab = empresas.fields.getByName('C_ACIA_DTAB')
-    if (aciaDtab) aciaDtab.name = 'C_EMPR_DTAB'
+    if (aciaDtab) {
+      aciaDtab.name = 'C_EMPR_DTAB'
+      empresas.fields.add(aciaDtab)
+    }
 
     const aciaPkid = empresas.fields.getByName('C_ACIA_PKID')
-    if (aciaPkid) aciaPkid.name = 'C_EMPR_PKID'
+    if (aciaPkid) {
+      aciaPkid.name = 'C_EMPR_PKID'
+      empresas.fields.add(aciaPkid)
+    }
 
     if (!empresas.fields.getByName('C_EMPR_CREA')) {
       empresas.fields.add(
