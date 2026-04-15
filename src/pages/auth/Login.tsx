@@ -1,7 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '@/hooks/use-auth'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
+import { Label } from '@/components/ui/label'
 import {
   Card,
   CardContent,
@@ -10,123 +12,96 @@ import {
   CardTitle,
   CardFooter,
 } from '@/components/ui/card'
-import { Label } from '@/components/ui/label'
-import { Lock, Mail, Building, ArrowRight } from 'lucide-react'
 import { toast } from 'sonner'
-import pb from '@/lib/pocketbase/client'
-import useERPStore from '@/stores/useERPStore'
+import { Loader2, Lock } from 'lucide-react'
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const { signIn } = useAuth()
   const navigate = useNavigate()
-  const { setCurrentUser } = useERPStore()
 
-  const handleLogin = async (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     setIsLoading(true)
 
-    try {
-      const authData = await pb.collection('users').authWithPassword(email, password)
+    const { error } = await signIn(email, password)
 
-      setCurrentUser({
-        id: authData.record.id,
-        C_USER_CODI: authData.record.username || 'USER',
-        C_USER_NOME: authData.record.name || email,
-        C_USER_MAIL: authData.record.email,
-        C_USER_PERF: authData.record.role || 'ADMIN',
-        C_USER_EMPR: authData.record.company_id || '1',
-        C_USER_STAT: 'A',
+    if (error) {
+      toast.error('Falha no login', {
+        description: 'Credenciais inválidas. Tente novamente.',
       })
-      toast.success('Login realizado com sucesso!')
-      navigate('/erp')
-    } catch (error: any) {
-      console.error(error)
-      if (email.includes('admin') || email.includes('ti')) {
-        setCurrentUser({
-          id: '1',
-          C_USER_CODI: 'ADMIN',
-          C_USER_NOME: 'Administrador',
-          C_USER_MAIL: email,
-          C_USER_PERF: 'ADMIN',
-          C_USER_EMPR: '1',
-          C_USER_STAT: 'A',
-        })
-        toast.success('Login offline realizado (Modo de Desenvolvimento)')
-        navigate('/erp')
-      } else {
-        toast.error('Erro de autenticação', {
-          description: 'E-mail ou senha incorretos.',
-        })
-      }
-    } finally {
       setIsLoading(false)
+      return
     }
+
+    toast.success('Login realizado com sucesso!')
+    navigate('/erp')
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col justify-center items-center p-4">
-      <div className="w-full max-w-md">
-        <div className="text-center mb-8 flex flex-col items-center">
-          <div className="bg-primary p-3 rounded-full mb-4">
-            <Building className="h-8 w-8 text-primary-foreground" />
+    <div className="min-h-screen flex items-center justify-center bg-slate-50 p-4">
+      <Card className="w-full max-w-md shadow-lg border-blue-100">
+        <CardHeader className="space-y-3 text-center pb-8">
+          <div className="mx-auto bg-blue-100 w-16 h-16 rounded-full flex items-center justify-center mb-2">
+            <Lock className="w-8 h-8 text-blue-800" />
           </div>
-          <h1 className="text-3xl font-bold text-slate-900">ALG Finanças</h1>
-          <p className="text-slate-500 mt-2">Sistema Integrado de Gestão</p>
-        </div>
-
-        <Card className="border-border shadow-lg">
-          <CardHeader className="space-y-1 pb-6">
-            <CardTitle className="text-2xl text-center">Área Restrita</CardTitle>
-            <CardDescription className="text-center">
-              Insira suas credenciais para acessar o sistema
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <form onSubmit={handleLogin} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="email">E-mail</Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
-                  <Input
-                    id="email"
-                    type="email"
-                    placeholder="seu@email.com"
-                    className="pl-10"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </div>
-              </div>
-              <div className="space-y-2">
-                <div className="flex items-center justify-between">
-                  <Label htmlFor="password">Senha</Label>
-                </div>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-3 h-4 w-4 text-slate-400" />
-                  <Input
-                    id="password"
-                    type="password"
-                    className="pl-10"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                </div>
-              </div>
-              <Button type="submit" className="w-full mt-6" disabled={isLoading}>
-                {isLoading ? 'Autenticando...' : 'Acessar Sistema'}
-                {!isLoading && <ArrowRight className="ml-2 h-4 w-4" />}
-              </Button>
-            </form>
+          <CardTitle className="text-3xl font-bold tracking-tight text-blue-950">
+            Área Restrita
+          </CardTitle>
+          <CardDescription className="text-base">
+            Entre com suas credenciais para acessar o sistema ERP
+          </CardDescription>
+        </CardHeader>
+        <form onSubmit={handleSubmit}>
+          <CardContent className="space-y-5">
+            <div className="space-y-2">
+              <Label htmlFor="email" className="text-blue-900 font-semibold">
+                E-mail
+              </Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="admin@alg.com.br"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="h-12 border-blue-200 focus-visible:ring-blue-500"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="password" className="text-blue-900 font-semibold">
+                Senha
+              </Label>
+              <Input
+                id="password"
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className="h-12 border-blue-200 focus-visible:ring-blue-500"
+              />
+            </div>
           </CardContent>
-          <CardFooter className="flex justify-center border-t p-4 bg-slate-50/50 rounded-b-xl">
-            <p className="text-sm text-slate-500">Acesso seguro e monitorado</p>
+          <CardFooter className="pt-4 pb-8">
+            <Button
+              className="w-full h-12 bg-blue-800 hover:bg-blue-900 text-white font-bold text-lg"
+              type="submit"
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <>
+                  <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                  Entrando...
+                </>
+              ) : (
+                'Acessar Sistema'
+              )}
+            </Button>
           </CardFooter>
-        </Card>
-      </div>
+        </form>
+      </Card>
     </div>
   )
 }

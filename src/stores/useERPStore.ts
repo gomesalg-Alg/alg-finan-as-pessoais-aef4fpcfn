@@ -15,6 +15,9 @@ import { Notification } from '@/types/notification'
 import { S_CLOG } from '@/types/log'
 import { PeriodoFechamento } from '@/types/periodo'
 import { FieldConfig } from '@/types/fieldConfig'
+import pb from '@/lib/pocketbase/client'
+import { useRealtime } from '@/hooks/use-realtime'
+import { mapRecordToEmpresa } from '@/services/empresas'
 
 interface ERPContextData {
   users: User[]
@@ -94,18 +97,7 @@ const initialProfiles: Profile[] = [
   },
 ]
 
-const initialEmpresas: Empresa[] = [
-  {
-    id: '1',
-    razaoSocial: 'ALG Finanças S.A.',
-    nomeFantasia: 'ALG Finanças',
-    cnpj: '12345678000199',
-    C_EMPR_CODI: 'EMP01',
-    C_EMPR_NOME: 'ALG Finanças S.A.',
-    C_EMPR_FANT: 'ALG Finanças',
-    C_EMPR_CNPJ: '12345678000199',
-  },
-]
+const initialEmpresas: Empresa[] = []
 
 const initialFiliais: Filial[] = [
   {
@@ -253,6 +245,33 @@ export const ERPProvider = ({ children }: { children: ReactNode }) => {
       localStorage.removeItem('erp_current_user')
     }
   }, [currentUser])
+
+  useEffect(() => {
+    const fetchEmpresas = async () => {
+      try {
+        const records = await pb.collection('empresas').getFullList({ sort: '-created' })
+        setEmpresas(records.map(mapRecordToEmpresa))
+      } catch (err) {
+        console.error('Failed to fetch empresas:', err)
+      }
+    }
+    fetchEmpresas()
+  }, [])
+
+  useRealtime('empresas', (e) => {
+    if (e.action === 'create') {
+      setEmpresas((prev) => {
+        if (prev.find((m) => m.id === e.record.id)) return prev
+        return [mapRecordToEmpresa(e.record), ...prev]
+      })
+    } else if (e.action === 'update') {
+      setEmpresas((prev) =>
+        prev.map((m) => (m.id === e.record.id ? mapRecordToEmpresa(e.record) : m)),
+      )
+    } else if (e.action === 'delete') {
+      setEmpresas((prev) => prev.filter((m) => m.id !== e.record.id))
+    }
+  })
 
   const isTiModeEnabled = useMemo(() => {
     return currentUser?.role === 'ti' || currentUser?.C_USER_PERF === 'TI'

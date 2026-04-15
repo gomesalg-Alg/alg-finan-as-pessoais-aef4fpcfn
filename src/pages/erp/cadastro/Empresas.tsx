@@ -41,6 +41,7 @@ import { toast } from 'sonner'
 import { maskCNPJ } from '@/utils/mask'
 import { addAuditLog } from '@/lib/logger'
 import useERPStore from '@/stores/useERPStore'
+import { createEmpresa, updateEmpresa, deleteEmpresa } from '@/services/empresas'
 
 export default function Empresas() {
   const { empresas, setEmpresas, currentUser } = useERPStore()
@@ -68,36 +69,38 @@ export default function Empresas() {
     setIsSheetOpen(true)
   }
 
-  const handleSave = (data: EmpresaFormData) => {
-    if (editingEmpresa) {
-      setEmpresas(empresas.map((e) => (e.id === editingEmpresa.id ? { ...e, ...data } : e)))
-      addAuditLog(
-        'UPDATE',
-        editingEmpresa.id,
-        currentUser?.C_USER_CODI,
-        `Empresa ${data.C_EMPR_CODI} atualizada.`,
-      )
-      toast.success('Empresa atualizada com sucesso!')
-    } else {
-      const newId = Date.now().toString()
-      setEmpresas([{ ...data, id: newId } as Empresa, ...empresas])
-      addAuditLog('CREATE', newId, currentUser?.C_USER_CODI, `Empresa ${data.C_EMPR_CODI} criada.`)
-      toast.success('Empresa criada com sucesso!')
+  const handleSave = async (data: EmpresaFormData) => {
+    try {
+      if (editingEmpresa) {
+        await updateEmpresa(editingEmpresa.id, data)
+        addAuditLog('UPDATE', editingEmpresa.id, currentUser?.C_USER_CODI, `Empresa atualizada.`)
+        toast.success('Empresa atualizada com sucesso!')
+      } else {
+        const newEmpresa = await createEmpresa(data)
+        addAuditLog('CREATE', newEmpresa.id, currentUser?.C_USER_CODI, `Empresa criada.`)
+        toast.success('Empresa criada com sucesso!')
+      }
+      setIsSheetOpen(false)
+    } catch (err: any) {
+      toast.error('Erro ao salvar empresa', { description: err.message })
     }
-    setIsSheetOpen(false)
   }
 
-  const handleDelete = () => {
+  const handleDelete = async () => {
     if (empresaToDelete) {
-      setEmpresas(empresas.filter((e) => e.id !== empresaToDelete.id))
-      addAuditLog(
-        'DELETE',
-        empresaToDelete.id,
-        currentUser?.C_USER_CODI,
-        `Empresa ${empresaToDelete.C_EMPR_CODI} removida`,
-      )
-      toast.success('Empresa removida com sucesso!')
-      setEmpresaToDelete(undefined)
+      try {
+        await deleteEmpresa(empresaToDelete.id)
+        addAuditLog(
+          'DELETE',
+          empresaToDelete.id,
+          currentUser?.C_USER_CODI,
+          `Empresa ${empresaToDelete.C_EMPR_CODI} removida`,
+        )
+        toast.success('Empresa removida com sucesso!')
+        setEmpresaToDelete(undefined)
+      } catch (err: any) {
+        toast.error('Erro ao remover empresa', { description: err.message })
+      }
     }
   }
 

@@ -29,50 +29,55 @@ import PerformanceDashboard from '@/pages/erp/admin/PerformanceDashboard'
 import RelatoriosGerenciais from '@/pages/erp/relatorios/RelatoriosGerenciais'
 
 import { ERPProvider } from '@/stores/useERPStore'
+import { AuthProvider } from '@/hooks/use-auth'
 
 const App = () => (
   <ERPProvider>
-    <BrowserRouter future={{ v7_startTransition: false, v7_relativeSplatPath: false }}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner position="top-right" theme="dark" />
-        <Routes>
-          <Route element={<Layout />}>
-            <Route path="/" element={<Index />} />
-            <Route path="/servicos" element={<Services />} />
-            <Route path="/sobre" element={<About />} />
-            <Route path="/contato" element={<Contact />} />
-          </Route>
+    <AuthProvider>
+      <BrowserRouter future={{ v7_startTransition: false, v7_relativeSplatPath: false }}>
+        <TooltipProvider>
+          <Toaster />
+          <Sonner position="top-right" theme="dark" />
+          <Routes>
+            <Route element={<Layout />}>
+              <Route path="/" element={<Index />} />
+              <Route path="/servicos" element={<Services />} />
+              <Route path="/sobre" element={<About />} />
+              <Route path="/contato" element={<Contact />} />
+            </Route>
 
-          <Route path="/login" element={<Login />} />
+            <Route path="/login" element={<Login />} />
 
-          <Route path="/erp" element={<ERPLayout />}>
-            <Route index element={<Dashboard />} />
-            <Route path="cadastro/empresas" element={<Empresas />} />
-            <Route path="cadastro/filiais" element={<Filiais />} />
-            <Route path="cadastro/usuarios" element={<Usuarios />} />
-            <Route path="cadastro/perfis" element={<Perfis />} />
-            <Route path="cadastro/clientes" element={<Clientes />} />
-            <Route path="cadastro/fornecedores" element={<Fornecedores />} />
-            <Route path="cadastro/classificacao-financeira" element={<ClassificacaoFinanceira />} />
+            <Route path="/erp" element={<ERPLayout />}>
+              <Route index element={<Dashboard />} />
+              <Route path="cadastro/empresas" element={<Empresas />} />
+              <Route path="cadastro/filiais" element={<Filiais />} />
+              <Route path="cadastro/usuarios" element={<Usuarios />} />
+              <Route path="cadastro/perfis" element={<Perfis />} />
+              <Route path="cadastro/clientes" element={<Clientes />} />
+              <Route path="cadastro/fornecedores" element={<Fornecedores />} />
+              <Route
+                path="cadastro/classificacao-financeira"
+                element={<ClassificacaoFinanceira />}
+              />
 
-            {/* Relatórios Routes */}
-            <Route path="relatorios/gerenciais" element={<RelatoriosGerenciais />} />
+              {/* Relatórios Routes */}
+              <Route path="relatorios/gerenciais" element={<RelatoriosGerenciais />} />
 
-            {/* Admin Routes */}
-            <Route path="admin/periodos-contabeis" element={<PeriodosContabeis />} />
-            <Route path="admin/manutencao-logs" element={<ManutencaoLogs />} />
-            <Route path="admin/auditoria" element={<AuditoriaAcoes />} />
-            <Route path="admin/configuracoes" element={<Configuracoes />} />
-            <Route path="admin/customizacao-campos" element={<CustomizacaoCampos />} />
-            <Route path="admin/performance" element={<PerformanceDashboard />} />
-          </Route>
+              {/* Admin Routes */}
+              <Route path="admin/periodos-contabeis" element={<PeriodosContabeis />} />
+              <Route path="admin/manutencao-logs" element={<ManutencaoLogs />} />
+              <Route path="admin/auditoria" element={<AuditoriaAcoes />} />
+              <Route path="admin/configuracoes" element={<Configuracoes />} />
+              <Route path="admin/customizacao-campos" element={<CustomizacaoCampos />} />
+              <Route path="admin/performance" element={<PerformanceDashboard />} />
+            </Route>
 
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </TooltipProvider>
-    </BrowserRouter>
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </TooltipProvider>
+      </BrowserRouter>
+    </AuthProvider>
   </ERPProvider>
 )
-
 export default App

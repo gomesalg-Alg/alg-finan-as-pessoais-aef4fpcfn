@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-15T19:25:50.804Z",
+  "generatedAt": "2026-04-15T19:42:24.084Z",
   "collections": [
     {
       "name": "users",
@@ -29,25 +29,144 @@
           "type": "autodate",
           "required": false,
           "system": false,
-          "autodateTriggers": [
-            "onCreate"
-          ]
+          "autodateTriggers": ["onCreate"]
         },
         {
           "name": "updated",
           "type": "autodate",
           "required": false,
           "system": false,
-          "autodateTriggers": [
-            "onCreate",
-            "onUpdate"
-          ]
+          "autodateTriggers": ["onCreate", "onUpdate"]
         }
       ],
       "indexes": [
         "CREATE UNIQUE INDEX `idx_tokenKey__pb_users_auth_` ON `users` (`tokenKey`)",
         "CREATE UNIQUE INDEX `idx_email__pb_users_auth_` ON `users` (`email`) WHERE `email` != ''"
       ]
+    },
+    {
+      "name": "empresas",
+      "type": "base",
+      "apiRules": {
+        "list": "@request.auth.id != ''",
+        "view": "@request.auth.id != ''",
+        "create": "@request.auth.id != ''",
+        "update": "@request.auth.id != ''",
+        "delete": "@request.auth.id != ''"
+      },
+      "fields": [
+        {
+          "name": "C_EMPR_CODI",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "C_EMPR_NOME",
+          "type": "text",
+          "required": true,
+          "system": false
+        },
+        {
+          "name": "C_EMPR_FANT",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_EMPR_CNPJ",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_EMPR_INSC",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_EMPR_IMUN",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_EMPR_CCEP",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_EMPR_ENDE",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_EMPR_NUME",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_EMPR_COMP",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_EMPR_BAIR",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_EMPR_MUNI",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_EMPR_UFED",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_EMPR_FONE",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_EMPR_MAIL",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_ACIA_DTAB",
+          "type": "date",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
+        }
+      ],
+      "indexes": []
     }
   ]
 }
