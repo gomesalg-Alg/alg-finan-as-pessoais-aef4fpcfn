@@ -1,6 +1,28 @@
 migrate(
   (app) => {
     const empresas = app.findCollectionByNameOrId('empresas')
+    const filiais = app.findCollectionByNameOrId('filiais')
+    const users = app.findCollectionByNameOrId('_pb_users_auth_')
+
+    // Fix relation fields pointing to these collections BEFORE doing any renames
+    // to avoid "referenced collection does not exist" validation errors.
+    const fixRelations = (col) => {
+      for (const f of col.fields) {
+        if (f.type === 'relation') {
+          if (f.collectionId === 'empresas' || f.collectionId === 'C_EMPR') {
+            f.collectionId = empresas.id
+          }
+          if (f.collectionId === 'filiais' || f.collectionId === 'C_FILI') {
+            f.collectionId = filiais.id
+          }
+        }
+      }
+    }
+
+    fixRelations(empresas)
+    fixRelations(filiais)
+    fixRelations(users)
+
     empresas.name = 'C_EMPR'
 
     try {
@@ -16,13 +38,6 @@ migrate(
     const aciaPkid = empresas.fields.getByName('C_ACIA_PKID')
     if (aciaPkid) aciaPkid.name = 'C_EMPR_PKID'
 
-    try {
-      empresas.fields.removeByName('created')
-    } catch (_) {}
-    try {
-      empresas.fields.removeByName('updated')
-    } catch (_) {}
-
     if (!empresas.fields.getByName('C_EMPR_CREA')) {
       empresas.fields.add(
         new AutodateField({ name: 'C_EMPR_CREA', onCreate: true, onUpdate: false }),
@@ -36,15 +51,7 @@ migrate(
 
     app.save(empresas)
 
-    const filiais = app.findCollectionByNameOrId('filiais')
     filiais.name = 'C_FILI'
-
-    try {
-      filiais.fields.removeByName('created')
-    } catch (_) {}
-    try {
-      filiais.fields.removeByName('updated')
-    } catch (_) {}
 
     if (!filiais.fields.getByName('C_FILI_CREA')) {
       filiais.fields.add(
@@ -57,15 +64,7 @@ migrate(
 
     app.save(filiais)
 
-    const users = app.findCollectionByNameOrId('_pb_users_auth_')
     users.name = 'C_USER'
-
-    try {
-      users.fields.removeByName('created')
-    } catch (_) {}
-    try {
-      users.fields.removeByName('updated')
-    } catch (_) {}
 
     if (!users.fields.getByName('C_USER_CREA')) {
       users.fields.add(new AutodateField({ name: 'C_USER_CREA', onCreate: true, onUpdate: false }))
@@ -85,8 +84,8 @@ migrate(
     filiais.name = 'filiais'
     app.save(filiais)
 
-    const users = app.findCollectionByNameOrId('_pb_users_auth_')
-    users.name = 'users'
+    const users = app.findCollectionByNameOrId('C_USER')
+    users.name = '_pb_users_auth_'
     app.save(users)
   },
 )
