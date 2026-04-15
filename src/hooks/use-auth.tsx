@@ -33,8 +33,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signUp = async (email: string, password: string) => {
     try {
-      await pb.collection('users').create({ email, password, passwordConfirm: password })
-      await pb.collection('users').authWithPassword(email, password)
+      await pb.collection('C_USER').create({ email, password, passwordConfirm: password })
+      await pb.collection('C_USER').authWithPassword(email, password)
       return { error: null }
     } catch (error) {
       return { error }
@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signIn = async (email: string, password: string) => {
     try {
-      await pb.collection('users').authWithPassword(email, password)
+      await pb.collection('C_USER').authWithPassword(email, password)
       return { error: null }
     } catch (error) {
       return { error }

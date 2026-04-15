@@ -252,9 +252,9 @@ export const ERPProvider = ({ children }: { children: ReactNode }) => {
     const fetchData = async () => {
       try {
         const [empresasRecords, filiaisRecords, usersRecords] = await Promise.all([
-          pb.collection('empresas').getFullList({ sort: '-created' }),
-          pb.collection('filiais').getFullList({ sort: '-created' }),
-          pb.collection('users').getFullList({ sort: '-created' }),
+          pb.collection('C_EMPR').getFullList({ sort: '-C_EMPR_CREA' }),
+          pb.collection('C_FILI').getFullList({ sort: '-C_FILI_CREA' }),
+          pb.collection('C_USER').getFullList({ sort: '-C_USER_CREA' }),
         ])
         if (empresasRecords.length) setEmpresas(empresasRecords.map(mapRecordToEmpresa))
         if (filiaisRecords.length) setFiliais(filiaisRecords.map(mapRecordToFilial))
@@ -266,7 +266,7 @@ export const ERPProvider = ({ children }: { children: ReactNode }) => {
     fetchData()
   }, [])
 
-  useRealtime('empresas', (e) => {
+  useRealtime('C_EMPR', (e) => {
     if (e.action === 'create') {
       setEmpresas((prev) => {
         if (prev.find((m) => m.id === e.record.id)) return prev
@@ -281,7 +281,7 @@ export const ERPProvider = ({ children }: { children: ReactNode }) => {
     }
   })
 
-  useRealtime('filiais', (e) => {
+  useRealtime('C_FILI', (e) => {
     if (e.action === 'create') {
       setFiliais((prev) => {
         if (prev.find((m) => m.id === e.record.id)) return prev
@@ -296,7 +296,7 @@ export const ERPProvider = ({ children }: { children: ReactNode }) => {
     }
   })
 
-  useRealtime('users', (e) => {
+  useRealtime('C_USER', (e) => {
     if (e.action === 'create') {
       setUsers((prev) => {
         if (prev.find((m) => m.id === e.record.id)) return prev

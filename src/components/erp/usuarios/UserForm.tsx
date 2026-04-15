@@ -96,7 +96,7 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
 
   const handleSubmit = (data: UserFormData) => {
     if (isTi) {
-      const techErrors = validateTechnicalTypes(data, 'users')
+      const techErrors = validateTechnicalTypes(data, 'C_USER')
       if (techErrors.length > 0) {
         techErrors.forEach((err) => {
           toast.error('Erro de Validação Técnica', {
@@ -118,7 +118,7 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
     techName?: string,
     defaultMaskFn?: (v: string) => string,
   ) => {
-    const config = fieldConfigs.find((c) => c.entity === 'users' && c.field === name)
+    const config = fieldConfigs.find((c) => c.entity === 'C_USER' && c.field === name)
     const displayLabel = config?.customLabel || label
     const isRequired = config?.isRequired || false
     const maxLength = config?.maxLength || undefined
@@ -163,8 +163,8 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
     )
   }
 
-  const roleConfig = fieldConfigs.find((c) => c.entity === 'users' && c.field === 'role')
-  const statusConfig = fieldConfigs.find((c) => c.entity === 'users' && c.field === 'status')
+  const roleConfig = fieldConfigs.find((c) => c.entity === 'C_USER' && c.field === 'role')
+  const statusConfig = fieldConfigs.find((c) => c.entity === 'C_USER' && c.field === 'status')
 
   return (
     <div className="bg-blue-50 p-6 rounded-xl border border-blue-100 shadow-sm">

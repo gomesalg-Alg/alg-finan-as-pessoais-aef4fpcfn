@@ -96,7 +96,7 @@ export function EmpresaForm({ initialData, onSubmit, onCancel }: EmpresaFormProp
 
   const handleSubmit = (data: EmpresaFormData) => {
     if (isTi) {
-      const techErrors = validateTechnicalTypes(data, 'empresas')
+      const techErrors = validateTechnicalTypes(data, 'C_EMPR')
       if (techErrors.length > 0) {
         techErrors.forEach((err) => {
           toast.error('Erro de Validação Técnica', {
@@ -117,7 +117,7 @@ export function EmpresaForm({ initialData, onSubmit, onCancel }: EmpresaFormProp
     icon: any,
     techName?: string,
   ) => {
-    const config = fieldConfigs.find((c) => c.entity === 'empresas' && c.field === name)
+    const config = fieldConfigs.find((c) => c.entity === 'C_EMPR' && c.field === name)
     const displayLabel = config?.customLabel || label
     const isRequired = config?.isRequired || false
 
@@ -182,7 +182,7 @@ export function EmpresaForm({ initialData, onSubmit, onCancel }: EmpresaFormProp
     techName?: string,
     defaultMaskFn?: (v: string) => string,
   ) => {
-    const config = fieldConfigs.find((c) => c.entity === 'empresas' && c.field === name)
+    const config = fieldConfigs.find((c) => c.entity === 'C_EMPR' && c.field === name)
     const displayLabel = config?.customLabel || label
     const isRequired = config?.isRequired || false
     const maxLength = config?.maxLength || undefined
@@ -280,7 +280,7 @@ export function EmpresaForm({ initialData, onSubmit, onCancel }: EmpresaFormProp
                 'dataAbertura',
                 'Data de Abertura',
                 <CalendarIcon className="h-4 w-4" />,
-                'C_ACIA_DTAB',
+                'C_EMPR_DTAB',
               )}
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

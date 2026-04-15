@@ -97,7 +97,7 @@ export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: F
 
   const handleSubmit = (data: FilialFormData) => {
     if (isTi) {
-      const techErrors = validateTechnicalTypes(data, 'filiais')
+      const techErrors = validateTechnicalTypes(data, 'C_FILI')
       if (techErrors.length > 0) {
         techErrors.forEach((err) => {
           toast.error('Erro de Validação Técnica', {
@@ -119,7 +119,7 @@ export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: F
     techName?: string,
     defaultMaskFn?: (v: string) => string,
   ) => {
-    const config = fieldConfigs.find((c) => c.entity === 'filiais' && c.field === name)
+    const config = fieldConfigs.find((c) => c.entity === 'C_FILI' && c.field === name)
     const displayLabel = config?.customLabel || label
     const isRequired = config?.isRequired || false
     const maxLength = config?.maxLength || undefined
@@ -164,7 +164,7 @@ export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: F
     )
   }
 
-  const empresaConfig = fieldConfigs.find((c) => c.entity === 'filiais' && c.field === 'empresaId')
+  const empresaConfig = fieldConfigs.find((c) => c.entity === 'C_FILI' && c.field === 'empresaId')
 
   return (
     <div className="bg-blue-50 p-6 rounded-xl border border-blue-100 shadow-sm">

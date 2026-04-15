@@ -3,9 +3,9 @@ import { Empresa } from '@/types/empresa'
 
 export const mapRecordToEmpresa = (record: any): Empresa => ({
   id: record.id,
-  C_ACIA_PKID: record.C_ACIA_PKID || record.id,
-  C_ACIA_CREA: record.C_ACIA_CREA || record.created,
-  C_ACIA_UPDT: record.C_ACIA_UPDT || record.updated,
+  C_EMPR_PKID: record.C_EMPR_PKID || record.id,
+  C_EMPR_CREA: record.C_EMPR_CREA || record.created,
+  C_EMPR_UPDT: record.C_EMPR_UPDT || record.updated,
   razaoSocial: record.C_EMPR_NOME,
   nomeFantasia: record.C_EMPR_FANT,
   cnpj: record.C_EMPR_CNPJ,
@@ -20,11 +20,12 @@ export const mapRecordToEmpresa = (record: any): Empresa => ({
   uf: record.C_EMPR_UFED,
   telefone: record.C_EMPR_FONE,
   email: record.C_EMPR_MAIL,
-  dataAbertura: record.C_ACIA_DTAB,
+  dataAbertura: record.C_EMPR_DTAB,
   C_EMPR_CODI: record.C_EMPR_CODI,
   C_EMPR_NOME: record.C_EMPR_NOME,
   C_EMPR_FANT: record.C_EMPR_FANT,
   C_EMPR_CNPJ: record.C_EMPR_CNPJ,
+  C_EMPR_DTAB: record.C_EMPR_DTAB,
 })
 
 const mapDataToRecord = (data: any) => ({
@@ -43,24 +44,24 @@ const mapDataToRecord = (data: any) => ({
   C_EMPR_UFED: data.uf,
   C_EMPR_FONE: data.telefone?.replace(/\D/g, ''),
   C_EMPR_MAIL: data.email,
-  C_ACIA_DTAB: data.dataAbertura ? new Date(data.dataAbertura).toISOString() : null,
+  C_EMPR_DTAB: data.dataAbertura ? new Date(data.dataAbertura).toISOString() : null,
 })
 
 export const getEmpresas = async () => {
-  const records = await pb.collection('empresas').getFullList({ sort: '-created' })
+  const records = await pb.collection('C_EMPR').getFullList({ sort: '-C_EMPR_CREA' })
   return records.map(mapRecordToEmpresa)
 }
 
 export const createEmpresa = async (data: any) => {
-  const record = await pb.collection('empresas').create(mapDataToRecord(data))
+  const record = await pb.collection('C_EMPR').create(mapDataToRecord(data))
   return mapRecordToEmpresa(record)
 }
 
 export const updateEmpresa = async (id: string, data: any) => {
-  const record = await pb.collection('empresas').update(id, mapDataToRecord(data))
+  const record = await pb.collection('C_EMPR').update(id, mapDataToRecord(data))
   return mapRecordToEmpresa(record)
 }
 
 export const deleteEmpresa = async (id: string) => {
-  return pb.collection('empresas').delete(id)
+  return pb.collection('C_EMPR').delete(id)
 }

@@ -40,20 +40,20 @@ const mapDataToRecord = (data: any) => ({
 })
 
 export const getFiliais = async () => {
-  const records = await pb.collection('filiais').getFullList({ sort: '-created' })
+  const records = await pb.collection('C_FILI').getFullList({ sort: '-C_FILI_CREA' })
   return records.map(mapRecordToFilial)
 }
 
 export const createFilial = async (data: any) => {
-  const record = await pb.collection('filiais').create(mapDataToRecord(data))
+  const record = await pb.collection('C_FILI').create(mapDataToRecord(data))
   return mapRecordToFilial(record)
 }
 
 export const updateFilial = async (id: string, data: any) => {
-  const record = await pb.collection('filiais').update(id, mapDataToRecord(data))
+  const record = await pb.collection('C_FILI').update(id, mapDataToRecord(data))
   return mapRecordToFilial(record)
 }
 
 export const deleteFilial = async (id: string) => {
-  return pb.collection('filiais').delete(id)
+  return pb.collection('C_FILI').delete(id)
 }

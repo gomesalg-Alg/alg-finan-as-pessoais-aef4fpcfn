@@ -54,20 +54,20 @@ const mapDataToRecord = (data: any) => {
 }
 
 export const getUsers = async () => {
-  const records = await pb.collection('users').getFullList({ sort: '-created' })
+  const records = await pb.collection('C_USER').getFullList({ sort: '-C_USER_CREA' })
   return records.map(mapRecordToUser)
 }
 
 export const createUser = async (data: any) => {
-  const record = await pb.collection('users').create(mapDataToRecord(data))
+  const record = await pb.collection('C_USER').create(mapDataToRecord(data))
   return mapRecordToUser(record)
 }
 
 export const updateUser = async (id: string, data: any) => {
-  const record = await pb.collection('users').update(id, mapDataToRecord(data))
+  const record = await pb.collection('C_USER').update(id, mapDataToRecord(data))
   return mapRecordToUser(record)
 }
 
 export const deleteUser = async (id: string) => {
-  return pb.collection('users').delete(id)
+  return pb.collection('C_USER').delete(id)
 }
