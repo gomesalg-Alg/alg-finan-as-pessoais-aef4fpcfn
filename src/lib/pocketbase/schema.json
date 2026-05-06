@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-04-15T20:46:09.860Z",
+  "generatedAt": "2026-05-06T19:24:38.728Z",
   "collections": [
     {
       "name": "C_USER",
@@ -23,20 +23,6 @@
           "type": "file",
           "required": false,
           "system": false
-        },
-        {
-          "name": "created",
-          "type": "autodate",
-          "required": false,
-          "system": false,
-          "autodateTriggers": ["onCreate"]
-        },
-        {
-          "name": "updated",
-          "type": "autodate",
-          "required": false,
-          "system": false,
-          "autodateTriggers": ["onCreate", "onUpdate"]
         },
         {
           "name": "C_USER_PKID",
@@ -395,20 +381,6 @@
         },
         {
           "name": "C_FILI_UPDT",
-          "type": "autodate",
-          "required": false,
-          "system": false,
-          "autodateTriggers": ["onCreate", "onUpdate"]
-        },
-        {
-          "name": "created",
-          "type": "autodate",
-          "required": false,
-          "system": false,
-          "autodateTriggers": ["onCreate"]
-        },
-        {
-          "name": "updated",
           "type": "autodate",
           "required": false,
           "system": false,
