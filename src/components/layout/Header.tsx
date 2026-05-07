@@ -88,7 +88,7 @@ export function Header() {
             >
               <Link to="/login">
                 <Lock className="w-4 h-4 mr-2" />
-                Área Restrita
+                Área restrita
               </Link>
             </Button>
             <Button
@@ -128,7 +128,7 @@ export function Header() {
                 className="flex items-center gap-3 text-lg font-medium p-3 rounded-lg text-foreground/80 hover:bg-secondary hover:text-primary transition-colors"
               >
                 <Lock className="h-5 w-5" />
-                Área Restrita
+                Área restrita
               </Link>
             </div>
           </div>

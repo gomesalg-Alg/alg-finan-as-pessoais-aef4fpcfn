@@ -44,7 +44,7 @@ export function Hero() {
             >
               <Link to="/login">
                 <Lock className="mr-2 h-5 w-5" />
-                Área Restrita
+                Área restrita
               </Link>
             </Button>
             <Button size="lg" variant="outline" className="text-lg px-8 glass-effect" asChild>

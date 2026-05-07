@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '@/hooks/use-auth'
+import pb from '@/lib/pocketbase/client'
+import { z } from 'zod'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Label } from '@/components/ui/label'
 import {
   Card,
   CardContent,
@@ -12,22 +15,42 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { toast } from 'sonner'
-import { getErrorMessage, extractFieldErrors, type FieldErrors } from '@/lib/pocketbase/errors'
-import { Lock, Mail, AlertCircle } from 'lucide-react'
+import { getErrorMessage, extractFieldErrors } from '@/lib/pocketbase/errors'
+import { Lock, Mail, AlertCircle, Loader2 } from 'lucide-react'
 
 import logoImg from '@/assets/logoescolhidoalg-48d57.jpeg'
 
+const formSchema = z.object({
+  email: z.string().email('E-mail inválido'),
+  password: z.string().min(1, 'A senha é obrigatória'),
+})
+
+type FormValues = z.infer<typeof formSchema>
+
 export default function Login() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
-  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({})
-  const { signIn, user } = useAuth()
+  const { signIn, user, loading: authLoading } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
+
+  const form = useForm<FormValues>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  })
 
   const targetPath =
     location.state?.from?.pathname && location.state.from.pathname !== '/'
@@ -35,19 +58,17 @@ export default function Login() {
       : '/erp'
 
   useEffect(() => {
-    if (user) {
+    if (!authLoading && user && pb.authStore.isValid) {
       navigate(targetPath, { replace: true })
     }
-  }, [user, navigate, targetPath])
+  }, [user, authLoading, navigate, targetPath])
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
+  const onSubmit = async (values: FormValues) => {
     setLoading(true)
     setErrorMsg('')
-    setFieldErrors({})
 
     try {
-      const { error } = await signIn(email, password)
+      const { error } = await signIn(values.email, values.password)
       if (error) throw error
 
       toast.success('Login realizado com sucesso!')
@@ -55,11 +76,25 @@ export default function Login() {
     } catch (error) {
       const msg = getErrorMessage(error)
       const fErrors = extractFieldErrors(error)
-      setFieldErrors(fErrors)
+
+      if (Object.keys(fErrors).length > 0) {
+        if (fErrors.email) form.setError('email', { message: fErrors.email })
+        if (fErrors.identity) form.setError('email', { message: fErrors.identity })
+        if (fErrors.password) form.setError('password', { message: fErrors.password })
+      }
+
       setErrorMsg(msg || 'E-mail ou senha incorretos.')
     } finally {
       setLoading(false)
     }
+  }
+
+  if (authLoading) {
+    return (
+      <div className="flex h-screen w-full items-center justify-center bg-background">
+        <Loader2 className="h-8 w-8 animate-spin text-primary" />
+      </div>
+    )
   }
 
   return (
@@ -78,61 +113,63 @@ export default function Login() {
             <CardTitle>Bem-vindo de volta</CardTitle>
             <CardDescription>Faça login para acessar o painel administrativo.</CardDescription>
           </CardHeader>
-          <form onSubmit={handleLogin}>
-            <CardContent className="space-y-4">
-              {errorMsg && (
-                <Alert variant="destructive">
-                  <AlertCircle className="h-4 w-4" />
-                  <AlertTitle>Erro na autenticação</AlertTitle>
-                  <AlertDescription>{errorMsg}</AlertDescription>
-                </Alert>
-              )}
-              <div className="space-y-2">
-                <Label htmlFor="login-email">E-mail</Label>
-                <div className="relative">
-                  <Mail className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    id="login-email"
-                    type="email"
-                    placeholder="seu@email.com"
-                    className="pl-9"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                  />
-                </div>
-                {fieldErrors.identity && (
-                  <p className="text-sm text-destructive">{fieldErrors.identity}</p>
+          <Form {...form}>
+            <form onSubmit={form.handleSubmit(onSubmit)}>
+              <CardContent className="space-y-4">
+                {errorMsg && (
+                  <Alert variant="destructive">
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertTitle>Erro na autenticação</AlertTitle>
+                    <AlertDescription>{errorMsg}</AlertDescription>
+                  </Alert>
                 )}
-                {fieldErrors.email && (
-                  <p className="text-sm text-destructive">{fieldErrors.email}</p>
-                )}
-              </div>
-              <div className="space-y-2">
-                <Label htmlFor="login-password">Senha</Label>
-                <div className="relative">
-                  <Lock className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                  <Input
-                    id="login-password"
-                    type="password"
-                    placeholder="••••••••"
-                    className="pl-9"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                  />
-                </div>
-                {fieldErrors.password && (
-                  <p className="text-sm text-destructive">{fieldErrors.password}</p>
-                )}
-              </div>
-            </CardContent>
-            <CardFooter>
-              <Button type="submit" className="w-full" disabled={loading}>
-                {loading ? 'Entrando...' : 'Login'}
-              </Button>
-            </CardFooter>
-          </form>
+
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>E-mail</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <Mail className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                          <Input placeholder="seu@email.com" className="pl-9" {...field} />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel>Senha</FormLabel>
+                      <FormControl>
+                        <div className="relative">
+                          <Lock className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                          <Input
+                            type="password"
+                            placeholder="••••••••"
+                            className="pl-9"
+                            {...field}
+                          />
+                        </div>
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+              </CardContent>
+              <CardFooter>
+                <Button type="submit" className="w-full" disabled={loading}>
+                  {loading ? 'Entrando...' : 'Entrar'}
+                </Button>
+              </CardFooter>
+            </form>
+          </Form>
         </Card>
       </div>
     </div>
