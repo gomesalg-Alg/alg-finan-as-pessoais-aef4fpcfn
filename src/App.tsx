@@ -40,13 +40,7 @@ const App = () => (
           <Toaster />
           <Sonner position="top-right" theme="dark" />
           <Routes>
-            <Route
-              element={
-                <ProtectedRoute>
-                  <Layout />
-                </ProtectedRoute>
-              }
-            >
+            <Route element={<Layout />}>
               <Route path="/" element={<Index />} />
               <Route path="/servicos" element={<Services />} />
               <Route path="/sobre" element={<About />} />

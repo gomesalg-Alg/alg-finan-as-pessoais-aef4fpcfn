@@ -29,15 +29,16 @@ export default function Login() {
   const navigate = useNavigate()
   const location = useLocation()
 
-  const from = location.state?.from?.pathname
-    ? `${location.state.from.pathname}${location.state.from.search || ''}`
-    : '/'
+  const targetPath =
+    location.state?.from?.pathname && location.state.from.pathname !== '/'
+      ? `${location.state.from.pathname}${location.state.from.search || ''}`
+      : '/erp'
 
   useEffect(() => {
     if (user) {
-      navigate(from, { replace: true })
+      navigate(targetPath, { replace: true })
     }
-  }, [user, navigate, from])
+  }, [user, navigate, targetPath])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -50,7 +51,7 @@ export default function Login() {
       if (error) throw error
 
       toast.success('Login realizado com sucesso!')
-      navigate(from, { replace: true })
+      navigate(targetPath, { replace: true })
     } catch (error) {
       const msg = getErrorMessage(error)
       const fErrors = extractFieldErrors(error)

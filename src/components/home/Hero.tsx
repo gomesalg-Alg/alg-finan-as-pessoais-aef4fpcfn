@@ -1,9 +1,12 @@
-import { ArrowRight, MessageCircle } from 'lucide-react'
+import { ArrowRight, MessageCircle, LayoutDashboard } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Link } from 'react-router-dom'
 import logoUrl from '@/assets/logo_escolhido_alg-bc19d.jpeg'
+import { useAuth } from '@/hooks/use-auth'
 
 export function Hero() {
+  const { user } = useAuth()
+
   return (
     <section className="relative min-h-[90vh] flex items-center pt-20 overflow-hidden bg-gradient-primary">
       {/* Abstract Background Elements */}
@@ -42,16 +45,29 @@ export function Hero() {
               className="flex flex-col sm:flex-row gap-4 animate-fade-in-up"
               style={{ animationDelay: '300ms' }}
             >
-              <Button
-                asChild
-                size="lg"
-                className="h-14 px-8 text-base bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/20 border-0"
-              >
-                <Link to="/contato">
-                  Solicitar Consultoria
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Link>
-              </Button>
+              {user ? (
+                <Button
+                  asChild
+                  size="lg"
+                  className="h-14 px-8 text-base bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/20 border-0"
+                >
+                  <Link to="/erp">
+                    Acessar Painel ERP
+                    <LayoutDashboard className="ml-2 h-5 w-5" />
+                  </Link>
+                </Button>
+              ) : (
+                <Button
+                  asChild
+                  size="lg"
+                  className="h-14 px-8 text-base bg-primary hover:bg-primary/90 text-primary-foreground font-semibold shadow-lg shadow-primary/20 border-0"
+                >
+                  <Link to="/contato">
+                    Solicitar Consultoria
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Link>
+                </Button>
+              )}
               <Button
                 asChild
                 variant="outline"

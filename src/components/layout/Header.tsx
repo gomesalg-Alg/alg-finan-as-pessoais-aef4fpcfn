@@ -1,9 +1,10 @@
 import { useState, useEffect } from 'react'
 import { Link, useLocation } from 'react-router-dom'
-import { Menu, X, Lock } from 'lucide-react'
+import { Menu, X, Lock, LayoutDashboard } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
 import logoUrl from '@/assets/logoescolhidoalg-b2e91.jpeg'
+import { useAuth } from '@/hooks/use-auth'
 
 const navigation = [
   { name: 'Início', href: '/' },
@@ -29,6 +30,8 @@ export function Header() {
   useEffect(() => {
     setMobileMenuOpen(false)
   }, [location])
+
+  const { user } = useAuth()
 
   return (
     <header
@@ -86,10 +89,17 @@ export function Header() {
               variant="ghost"
               className="hidden lg:flex text-foreground hover:text-primary transition-colors border border-transparent hover:border-border hover:bg-secondary"
             >
-              <Link to="/login">
-                <Lock className="w-4 h-4 mr-2" />
-                Área Restrita
-              </Link>
+              {user ? (
+                <Link to="/erp">
+                  <LayoutDashboard className="w-4 h-4 mr-2" />
+                  Painel ERP
+                </Link>
+              ) : (
+                <Link to="/login">
+                  <Lock className="w-4 h-4 mr-2" />
+                  Área Restrita
+                </Link>
+              )}
             </Button>
             <Button
               asChild
@@ -123,13 +133,23 @@ export function Header() {
               </Link>
             ))}
             <div className="mt-4 pt-4 border-t border-border">
-              <Link
-                to="/login"
-                className="flex items-center gap-3 text-lg font-medium p-3 rounded-lg text-foreground/80 hover:bg-secondary hover:text-primary transition-colors"
-              >
-                <Lock className="h-5 w-5" />
-                Área Restrita
-              </Link>
+              {user ? (
+                <Link
+                  to="/erp"
+                  className="flex items-center gap-3 text-lg font-medium p-3 rounded-lg text-foreground/80 hover:bg-secondary hover:text-primary transition-colors"
+                >
+                  <LayoutDashboard className="h-5 w-5" />
+                  Painel ERP
+                </Link>
+              ) : (
+                <Link
+                  to="/login"
+                  className="flex items-center gap-3 text-lg font-medium p-3 rounded-lg text-foreground/80 hover:bg-secondary hover:text-primary transition-colors"
+                >
+                  <Lock className="h-5 w-5" />
+                  Área Restrita
+                </Link>
+              )}
             </div>
           </div>
         </div>
