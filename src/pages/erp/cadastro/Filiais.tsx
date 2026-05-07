@@ -52,6 +52,7 @@ export default function Filiais() {
 
   const loadData = async () => {
     try {
+      setLoading(true)
       const [filiaisData, empresasData] = await Promise.all([
         getFiliais(),
         pb.collection('C_EMPR').getFullList({ sort: '-created' }),
@@ -182,7 +183,8 @@ export default function Filiais() {
   const exportData = () => {
     const headers = ['Código', 'Nome da Filial', 'Empresa', 'CNPJ']
     const rows = filteredFiliais.map((f) => {
-      const empresa = empresas.find((e) => e.id === (f.empresaId || f.C_FILI_EMPR))
+      const empresa =
+        f.expand?.C_FILI_EMPR || empresas.find((e) => e.id === (f.empresaId || f.C_FILI_EMPR))
       const empresaNome = empresa?.C_EMPR_NOME || empresa?.nomeFantasia || 'N/A'
       return [
         f.codigo || f.C_FILI_CODI || f.id.substring(0, 8),
@@ -244,6 +246,7 @@ export default function Filiais() {
                   <TableHead>Nome da Filial</TableHead>
                   <TableHead className="min-w-[300px]">Empresa (Matriz)</TableHead>
                   <TableHead>CNPJ</TableHead>
+                  <TableHead>Cidade/UF</TableHead>
                   <TableHead className="text-right pr-6">Ações</TableHead>
                 </TableRow>
               </TableHeader>
@@ -256,8 +259,8 @@ export default function Filiais() {
                   </TableRow>
                 ) : filteredFiliais.length === 0 ? (
                   <TableRow>
-                    <TableCell colSpan={5} className="text-center py-12 text-muted-foreground">
-                      Nenhuma filial encontrada ou sem permissão de acesso.
+                    <TableCell colSpan={6} className="text-center py-12 text-muted-foreground">
+                      Nenhuma filial encontrada
                     </TableCell>
                   </TableRow>
                 ) : (
@@ -271,14 +274,19 @@ export default function Filiais() {
                       </TableCell>
                       <TableCell className="text-muted-foreground truncate max-w-[300px]">
                         {(() => {
-                          const empresa = empresas.find(
-                            (e) => e.id === (filial.empresaId || filial.C_FILI_EMPR),
-                          )
+                          const empresa =
+                            filial.expand?.C_FILI_EMPR ||
+                            empresas.find((e) => e.id === (filial.empresaId || filial.C_FILI_EMPR))
                           return empresa?.C_EMPR_NOME || empresa?.nomeFantasia || '-'
                         })()}
                       </TableCell>
                       <TableCell className="text-muted-foreground">
                         {maskCNPJ(filial.cnpj || filial.C_FILI_CNPJ || '')}
+                      </TableCell>
+                      <TableCell className="text-muted-foreground">
+                        {filial.cidade && filial.uf
+                          ? `${filial.cidade}/${filial.uf}`
+                          : filial.cidade || filial.uf || '-'}
                       </TableCell>
                       <TableCell className="text-right pr-6">
                         <div className="flex justify-end gap-2">

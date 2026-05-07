@@ -20,4 +20,5 @@ export interface Filial {
   email?: string
   createdAt?: string
   updatedAt?: string
+  expand?: any
 }

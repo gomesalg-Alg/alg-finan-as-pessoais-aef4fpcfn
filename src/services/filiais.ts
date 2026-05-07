@@ -23,6 +23,7 @@ export const mapRecordToFilial = (record: any): Filial => ({
   email: record.C_FILI_MAIL,
   createdAt: record.created,
   updatedAt: record.updated,
+  expand: record.expand,
 })
 
 const mapDataToRecord = (data: any) => ({
