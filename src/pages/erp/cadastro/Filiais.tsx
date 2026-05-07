@@ -58,8 +58,12 @@ export default function Filiais() {
       ])
       setFiliais(filiaisData)
       setEmpresas(empresasData)
-    } catch (error) {
-      toast.error('Erro ao carregar dados do banco.')
+    } catch (error: any) {
+      const errorMsg =
+        error?.status === 0 ? 'Erro de conexão com o servidor.' : 'Erro ao carregar dados do banco.'
+      toast.error('Falha no carregamento', {
+        description: errorMsg,
+      })
     } finally {
       setLoading(false)
     }
@@ -136,11 +140,21 @@ export default function Filiais() {
           if (formField) {
             form.setError(formField, { type: 'server', message: msg })
           } else {
-            toast.error(`${pbField}: ${msg}`)
+            toast.error(`Campo inválido (${pbField})`, { description: msg })
           }
         })
+        toast.error('Erro de Validação', {
+          description: 'Verifique os campos destacados no formulário e tente novamente.',
+        })
       } else {
-        toast.error(error.message || 'Erro ao salvar filial.')
+        const errorMsg =
+          error?.status === 0
+            ? 'Erro de conexão com o servidor. Verifique sua internet.'
+            : error?.message || 'Erro inesperado ao salvar filial.'
+
+        toast.error('Falha ao salvar', {
+          description: errorMsg,
+        })
       }
       throw error
     }
