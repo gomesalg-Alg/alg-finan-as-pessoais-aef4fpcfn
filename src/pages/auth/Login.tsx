@@ -12,17 +12,17 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { toast } from 'sonner'
-import { extractFieldErrors, getErrorMessage } from '@/lib/pocketbase/errors'
-import { Building2, Lock, Mail, User } from 'lucide-react'
+import { getErrorMessage } from '@/lib/pocketbase/errors'
+import { Lock, Mail } from 'lucide-react'
+
+import logoImg from '@/assets/logoescolhidoalg-48d57.jpeg'
 
 export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
-  const [name, setName] = useState('')
   const [loading, setLoading] = useState(false)
-  const { signIn, signUp } = useAuth()
+  const { signIn } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -46,159 +46,63 @@ export default function Login() {
     }
   }
 
-  const handleRegister = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setLoading(true)
-
-    try {
-      const { error } = await signUp(email, password, {
-        name,
-        C_USER_NOME: name,
-        C_USER_MAIL: email,
-      })
-      if (error) throw error
-
-      toast.success('Conta criada com sucesso!')
-      navigate(from, { replace: true })
-    } catch (error) {
-      const msgs = extractFieldErrors(error)
-      const msg = getErrorMessage(error)
-
-      toast.error('Erro ao criar conta', {
-        description: Object.values(msgs).join(', ') || msg,
-      })
-    } finally {
-      setLoading(false)
-    }
-  }
-
   return (
     <div className="min-h-screen bg-background flex flex-col justify-center items-center p-4">
       <div className="w-full max-w-md mb-8 text-center flex flex-col items-center">
-        <div className="bg-primary/10 p-3 rounded-xl mb-4 shadow-sm">
-          <Building2 className="h-10 w-10 text-primary" />
+        <div className="mb-4 shadow-md rounded-full overflow-hidden w-28 h-28 border-4 border-background">
+          <img src={logoImg} alt="ALG Finanças Logo" className="w-full h-full object-cover" />
         </div>
         <h1 className="text-3xl font-bold tracking-tight text-foreground">ALG Finanças</h1>
         <p className="text-muted-foreground mt-2">Sistema de Gestão Empresarial</p>
       </div>
 
-      <Tabs defaultValue="login" className="w-full max-w-md">
-        <TabsList className="grid w-full grid-cols-2 mb-4">
-          <TabsTrigger value="login">Entrar</TabsTrigger>
-          <TabsTrigger value="register">Cadastrar</TabsTrigger>
-        </TabsList>
-
-        <TabsContent value="login">
-          <Card className="shadow-md">
-            <CardHeader>
-              <CardTitle>Bem-vindo de volta</CardTitle>
-              <CardDescription>Faça login para acessar o painel administrativo.</CardDescription>
-            </CardHeader>
-            <form onSubmit={handleLogin}>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="login-email">E-mail</Label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="login-email"
-                      type="email"
-                      placeholder="seu@email.com"
-                      className="pl-9"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                    />
-                  </div>
+      <div className="w-full max-w-md">
+        <Card className="shadow-md">
+          <CardHeader>
+            <CardTitle>Bem-vindo de volta</CardTitle>
+            <CardDescription>Faça login para acessar o painel administrativo.</CardDescription>
+          </CardHeader>
+          <form onSubmit={handleLogin}>
+            <CardContent className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="login-email">E-mail</Label>
+                <div className="relative">
+                  <Mail className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    id="login-email"
+                    type="email"
+                    placeholder="seu@email.com"
+                    className="pl-9"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    required
+                  />
                 </div>
-                <div className="space-y-2">
-                  <Label htmlFor="login-password">Senha</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="login-password"
-                      type="password"
-                      placeholder="••••••••"
-                      className="pl-9"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                    />
-                  </div>
+              </div>
+              <div className="space-y-2">
+                <Label htmlFor="login-password">Senha</Label>
+                <div className="relative">
+                  <Lock className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
+                  <Input
+                    id="login-password"
+                    type="password"
+                    placeholder="••••••••"
+                    className="pl-9"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    required
+                  />
                 </div>
-              </CardContent>
-              <CardFooter>
-                <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? 'Entrando...' : 'Entrar'}
-                </Button>
-              </CardFooter>
-            </form>
-          </Card>
-        </TabsContent>
-
-        <TabsContent value="register">
-          <Card className="shadow-md">
-            <CardHeader>
-              <CardTitle>Criar nova conta</CardTitle>
-              <CardDescription>Preencha os dados abaixo para criar seu acesso.</CardDescription>
-            </CardHeader>
-            <form onSubmit={handleRegister}>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="reg-name">Nome Completo</Label>
-                  <div className="relative">
-                    <User className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="reg-name"
-                      placeholder="Seu nome"
-                      className="pl-9"
-                      value={name}
-                      onChange={(e) => setName(e.target.value)}
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="reg-email">E-mail</Label>
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="reg-email"
-                      type="email"
-                      placeholder="seu@email.com"
-                      className="pl-9"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                    />
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="reg-password">Senha</Label>
-                  <div className="relative">
-                    <Lock className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
-                    <Input
-                      id="reg-password"
-                      type="password"
-                      placeholder="•••••••• (mínimo 8 caracteres)"
-                      className="pl-9"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      minLength={8}
-                    />
-                  </div>
-                </div>
-              </CardContent>
-              <CardFooter>
-                <Button type="submit" className="w-full" disabled={loading}>
-                  {loading ? 'Cadastrando...' : 'Cadastrar'}
-                </Button>
-              </CardFooter>
-            </form>
-          </Card>
-        </TabsContent>
-      </Tabs>
+              </div>
+            </CardContent>
+            <CardFooter>
+              <Button type="submit" className="w-full" disabled={loading}>
+                {loading ? 'Entrando...' : 'Entrar'}
+              </Button>
+            </CardFooter>
+          </form>
+        </Card>
+      </div>
     </div>
   )
 }
