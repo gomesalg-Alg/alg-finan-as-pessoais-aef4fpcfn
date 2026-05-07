@@ -39,9 +39,13 @@ import { getFiliais, createFilial, updateFilial, deleteFilial } from '@/services
 import pb from '@/lib/pocketbase/client'
 import { useRealtime } from '@/hooks/use-realtime'
 import { extractFieldErrors } from '@/lib/pocketbase/errors'
+import { useAuth } from '@/hooks/use-auth'
 
 export default function Filiais() {
   const { currentUser } = useERPStore()
+  const { user: authUser } = useAuth()
+  const activeUser = currentUser || authUser
+
   const [filiais, setFiliais] = useState<Filial[]>([])
   const [empresas, setEmpresas] = useState<any[]>([])
   const [search, setSearch] = useState('')
@@ -60,6 +64,11 @@ export default function Filiais() {
       setFiliais(filiaisData)
       setEmpresas(empresasData)
     } catch (error: any) {
+      if (error?.status === 401 || error?.status === 403) {
+        pb.authStore.clear()
+        toast.error('Sessão expirada ou acesso negado. Faça login novamente.')
+        return
+      }
       const errorMsg =
         error?.status === 0 ? 'Erro de conexão com o servidor.' : 'Erro ao carregar dados do banco.'
       toast.error('Falha no carregamento', {
@@ -81,10 +90,11 @@ export default function Filiais() {
   const filteredFiliais = useMemo(() => {
     return filiais.filter((f) => {
       const isAllowed =
-        currentUser?.C_USER_PERF === 'ADMIN' ||
-        currentUser?.C_USER_PERF === 'TI' ||
-        f.empresaId === currentUser?.C_USER_EMPR ||
-        f.C_FILI_EMPR === currentUser?.C_USER_EMPR
+        activeUser?.C_USER_PERF === 'ADMIN' ||
+        activeUser?.C_USER_PERF === 'TI' ||
+        f.empresaId === activeUser?.C_USER_EMPR ||
+        f.C_FILI_EMPR === activeUser?.C_USER_EMPR
+
       if (!isAllowed) return false
 
       const matchText =
@@ -92,7 +102,7 @@ export default function Filiais() {
         (f.codigo || f.C_FILI_CODI || f.id)?.toLowerCase().includes(search.toLowerCase())
       return matchText
     })
-  }, [filiais, search, currentUser])
+  }, [filiais, search, activeUser])
 
   const handleOpenNew = () => {
     setEditingFilial(undefined)

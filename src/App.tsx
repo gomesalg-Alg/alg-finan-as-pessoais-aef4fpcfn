@@ -30,6 +30,7 @@ import RelatoriosGerenciais from '@/pages/erp/relatorios/RelatoriosGerenciais'
 
 import { ERPProvider } from '@/stores/useERPStore'
 import { AuthProvider } from '@/hooks/use-auth'
+import { ProtectedRoute } from '@/components/ProtectedRoute'
 
 const App = () => (
   <ERPProvider>
@@ -48,7 +49,14 @@ const App = () => (
 
             <Route path="/login" element={<Login />} />
 
-            <Route path="/erp" element={<ERPLayout />}>
+            <Route
+              path="/erp"
+              element={
+                <ProtectedRoute>
+                  <ERPLayout />
+                </ProtectedRoute>
+              }
+            >
               <Route index element={<Dashboard />} />
               <Route path="cadastro/empresas" element={<Empresas />} />
               <Route path="cadastro/filiais" element={<Filiais />} />
