@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-07T22:45:39.375Z",
+  "generatedAt": "2026-05-07T22:51:24.795Z",
   "collections": [
     {
       "name": "C_USER",
@@ -284,9 +284,9 @@
       },
       "fields": [
         {
-          "name": "C_FILI_CODI",
+          "name": "C_FILI_PKID",
           "type": "text",
-          "required": true,
+          "required": false,
           "system": false
         },
         {
@@ -296,14 +296,19 @@
           "system": false
         },
         {
-          "name": "C_FILI_EMPR",
-          "type": "relation",
+          "name": "C_FILI_FANT",
+          "type": "text",
           "required": false,
-          "system": false,
-          "collectionRef": "C_EMPR"
+          "system": false
         },
         {
           "name": "C_FILI_CNPJ",
+          "type": "text",
+          "required": false,
+          "system": false
+        },
+        {
+          "name": "C_FILI_CODI",
           "type": "text",
           "required": false,
           "system": false
@@ -313,6 +318,13 @@
           "type": "text",
           "required": false,
           "system": false
+        },
+        {
+          "name": "C_FILI_EMPR",
+          "type": "relation",
+          "required": true,
+          "system": false,
+          "collectionRef": "C_EMPR"
         },
         {
           "name": "C_FILI_CCEP",
@@ -369,12 +381,6 @@
           "system": false
         },
         {
-          "name": "C_FILI_PKID",
-          "type": "text",
-          "required": false,
-          "system": false
-        },
-        {
           "name": "C_FILI_CREA",
           "type": "autodate",
           "required": false,
@@ -387,9 +393,23 @@
           "required": false,
           "system": false,
           "autodateTriggers": ["onCreate", "onUpdate"]
+        },
+        {
+          "name": "created",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate"]
+        },
+        {
+          "name": "updated",
+          "type": "autodate",
+          "required": false,
+          "system": false,
+          "autodateTriggers": ["onCreate", "onUpdate"]
         }
       ],
-      "indexes": ["CREATE INDEX `idx_c_fili_empr_fk` ON `C_FILI` (C_FILI_EMPR)"]
+      "indexes": []
     }
   ]
 }
