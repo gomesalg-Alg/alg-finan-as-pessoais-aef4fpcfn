@@ -2,9 +2,10 @@ import { z } from 'zod'
 
 export const filialSchema = z.object({
   id: z.string().optional(),
+  codigo: z.string().min(1, 'Código da filial é obrigatório'),
   empresaId: z.string().min(1, 'Selecione uma empresa'),
   nome: z.string().min(1, 'Nome da filial é obrigatório'),
-  cnpj: z.string().min(14, 'CNPJ inválido'),
+  cnpj: z.string().optional().or(z.literal('')),
   ie: z.string().optional(),
   cep: z.string().min(8, 'CEP inválido').optional().or(z.literal('')),
   logradouro: z.string().optional(),

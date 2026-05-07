@@ -4,6 +4,7 @@ export interface Filial {
   C_FILI_CREA?: string
   C_FILI_UPDT?: string
   C_FILI_CODI?: string
+  codigo?: string
   empresaId: string
   nome: string
   cnpj: string

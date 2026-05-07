@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 import { Filial } from '@/types/filial'
 import { FilialFormData } from '@/schemas/filialSchema'
 import { FilialForm } from '@/components/erp/filiais/FilialForm'
@@ -30,32 +30,61 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
 } from '@/components/ui/alert-dialog'
-import { Plus, Search, MapPin, Edit, Trash2, Download } from 'lucide-react'
+import { Plus, Search, MapPin, Edit, Trash2, Download, Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { maskCNPJ } from '@/utils/mask'
 import { addAuditLog } from '@/lib/logger'
 import useERPStore from '@/stores/useERPStore'
+import { getFiliais, createFilial, updateFilial, deleteFilial } from '@/services/filiais'
+import pb from '@/lib/pocketbase/client'
+import { useRealtime } from '@/hooks/use-realtime'
+import { extractFieldErrors } from '@/lib/pocketbase/errors'
 
 export default function Filiais() {
-  const { filiais, setFiliais, empresas, currentUser } = useERPStore()
+  const { currentUser } = useERPStore()
+  const [filiais, setFiliais] = useState<Filial[]>([])
+  const [empresas, setEmpresas] = useState<any[]>([])
   const [search, setSearch] = useState('')
   const [isSheetOpen, setIsSheetOpen] = useState(false)
   const [editingFilial, setEditingFilial] = useState<Filial | undefined>()
   const [filialToDelete, setFilialToDelete] = useState<Filial | undefined>()
+  const [loading, setLoading] = useState(true)
 
-  const isTi = currentUser?.C_USER_PERF === 'TI' || currentUser?.role === 'ti'
+  const loadData = async () => {
+    try {
+      const [filiaisData, empresasData] = await Promise.all([
+        getFiliais(),
+        pb.collection('C_EMPR').getFullList({ sort: '-created' }),
+      ])
+      setFiliais(filiaisData)
+      setEmpresas(empresasData)
+    } catch (error) {
+      toast.error('Erro ao carregar dados do banco.')
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    loadData()
+  }, [])
+
+  useRealtime('C_FILI', () => {
+    loadData()
+  })
 
   const filteredFiliais = useMemo(() => {
     return filiais.filter((f) => {
       const isAllowed =
         currentUser?.C_USER_PERF === 'ADMIN' ||
         currentUser?.C_USER_PERF === 'TI' ||
+        f.empresaId === currentUser?.C_USER_EMPR ||
         f.C_FILI_EMPR === currentUser?.C_USER_EMPR
       if (!isAllowed) return false
 
       const matchText =
-        (f.C_FILI_NOME || f.nome)?.toLowerCase().includes(search.toLowerCase()) ||
-        (f.C_FILI_CODI || f.id)?.toLowerCase().includes(search.toLowerCase())
+        (f.nome || f.C_FILI_NOME)?.toLowerCase().includes(search.toLowerCase()) ||
+        (f.codigo || f.C_FILI_CODI || f.id)?.toLowerCase().includes(search.toLowerCase())
       return matchText
     })
   }, [filiais, search, currentUser])
@@ -65,49 +94,87 @@ export default function Filiais() {
     setIsSheetOpen(true)
   }
 
-  const handleSave = (data: FilialFormData) => {
-    if (editingFilial) {
-      setFiliais(filiais.map((f) => (f.id === editingFilial.id ? { ...f, ...data } : f)))
-      addAuditLog(
-        'UPDATE',
-        editingFilial.id,
-        currentUser?.C_USER_CODI,
-        `Filial ${data.nome} atualizada.`,
-      )
-      toast.success('Filial atualizada com sucesso!')
-    } else {
-      const newId = Date.now().toString()
-      setFiliais([{ ...data, id: newId } as Filial, ...filiais])
-      addAuditLog('CREATE', newId, currentUser?.C_USER_CODI, `Filial ${data.nome} criada.`)
-      toast.success('Filial criada com sucesso!')
-    }
-    setIsSheetOpen(false)
+  const PB_TO_FORM_MAP: Record<string, any> = {
+    C_FILI_CODI: 'codigo',
+    C_FILI_EMPR: 'empresaId',
+    C_FILI_NOME: 'nome',
+    C_FILI_CNPJ: 'cnpj',
+    C_FILI_INSC: 'ie',
+    C_FILI_CCEP: 'cep',
+    C_FILI_ENDE: 'logradouro',
+    C_FILI_NUME: 'numero',
+    C_FILI_COMP: 'complemento',
+    C_FILI_BAIR: 'bairro',
+    C_FILI_MUNI: 'cidade',
+    C_FILI_UFED: 'uf',
+    C_FILI_FONE: 'telefone',
+    C_FILI_MAIL: 'email',
   }
 
-  const handleDelete = () => {
+  const handleSave = async (data: FilialFormData, form: any) => {
+    try {
+      if (editingFilial) {
+        await updateFilial(editingFilial.id, data)
+        addAuditLog(
+          'UPDATE',
+          editingFilial.id,
+          currentUser?.C_USER_CODI,
+          `Filial ${data.nome} atualizada.`,
+        )
+        toast.success('Filial atualizada com sucesso!')
+      } else {
+        const newFilial = await createFilial(data)
+        addAuditLog('CREATE', newFilial.id, currentUser?.C_USER_CODI, `Filial ${data.nome} criada.`)
+        toast.success('Filial criada com sucesso!')
+      }
+      setIsSheetOpen(false)
+    } catch (error: any) {
+      const fieldErrors = extractFieldErrors(error)
+      if (Object.keys(fieldErrors).length > 0) {
+        Object.entries(fieldErrors).forEach(([pbField, msg]) => {
+          const formField = PB_TO_FORM_MAP[pbField]
+          if (formField) {
+            form.setError(formField, { type: 'server', message: msg })
+          } else {
+            toast.error(`${pbField}: ${msg}`)
+          }
+        })
+      } else {
+        toast.error(error.message || 'Erro ao salvar filial.')
+      }
+      throw error
+    }
+  }
+
+  const handleDelete = async () => {
     if (filialToDelete) {
-      setFiliais(filiais.filter((f) => f.id !== filialToDelete.id))
-      addAuditLog(
-        'DELETE',
-        filialToDelete.id,
-        currentUser?.C_USER_CODI,
-        `Filial ${filialToDelete.C_FILI_CODI || filialToDelete.id} removida`,
-      )
-      toast.success('Filial removida com sucesso!')
-      setFilialToDelete(undefined)
+      try {
+        await deleteFilial(filialToDelete.id)
+        addAuditLog(
+          'DELETE',
+          filialToDelete.id,
+          currentUser?.C_USER_CODI,
+          `Filial ${filialToDelete.codigo || filialToDelete.C_FILI_CODI || filialToDelete.id} removida`,
+        )
+        toast.success('Filial removida com sucesso!')
+      } catch (error) {
+        toast.error('Erro ao excluir filial.')
+      } finally {
+        setFilialToDelete(undefined)
+      }
     }
   }
 
   const exportData = () => {
     const headers = ['Código', 'Nome da Filial', 'Empresa', 'CNPJ']
     const rows = filteredFiliais.map((f) => {
-      const empresa = empresas.find((e) => e.id === (f.C_FILI_EMPR || f.empresaId))
+      const empresa = empresas.find((e) => e.id === (f.empresaId || f.C_FILI_EMPR))
       const empresaNome = empresa?.C_EMPR_NOME || empresa?.nomeFantasia || 'N/A'
       return [
-        f.C_FILI_CODI || f.id.substring(0, 8),
-        f.C_FILI_NOME || f.nome,
+        f.codigo || f.C_FILI_CODI || f.id.substring(0, 8),
+        f.nome || f.C_FILI_NOME,
         empresaNome,
-        maskCNPJ(f.C_FILI_CNPJ || f.cnpj || ''),
+        maskCNPJ(f.cnpj || f.C_FILI_CNPJ || ''),
       ]
     })
     const csvContent = [headers.join(';'), ...rows.map((r) => r.join(';'))].join('\n')
@@ -167,56 +234,63 @@ export default function Filiais() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {filteredFiliais.map((filial) => (
-                  <TableRow key={filial.id} className="group border-border/50">
-                    <TableCell className="font-mono text-xs pl-6 text-muted-foreground">
-                      {filial.C_FILI_CODI || filial.id.substring(0, 8)}
-                    </TableCell>
-                    <TableCell className="font-semibold">
-                      {filial.C_FILI_NOME || filial.nome}
-                    </TableCell>
-                    <TableCell className="text-muted-foreground truncate max-w-[300px]">
-                      {(() => {
-                        const empresa = empresas.find(
-                          (e) => e.id === (filial.C_FILI_EMPR || filial.empresaId),
-                        )
-                        return empresa?.C_EMPR_NOME || empresa?.nomeFantasia || '-'
-                      })()}
-                    </TableCell>
-                    <TableCell className="text-muted-foreground">
-                      {maskCNPJ(filial.C_FILI_CNPJ || filial.cnpj || '')}
-                    </TableCell>
-                    <TableCell className="text-right pr-6">
-                      <div className="flex justify-end gap-2">
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 px-2 text-[#8B4513] hover:bg-[#8B4513]/10"
-                          onClick={() => {
-                            setEditingFilial(filial)
-                            setIsSheetOpen(true)
-                          }}
-                        >
-                          <Edit className="h-4 w-4" />
-                        </Button>
-                        <Button
-                          variant="ghost"
-                          size="sm"
-                          className="h-8 px-2 text-destructive hover:bg-destructive/10"
-                          onClick={() => setFilialToDelete(filial)}
-                        >
-                          <Trash2 className="h-4 w-4" />
-                        </Button>
-                      </div>
+                {loading ? (
+                  <TableRow>
+                    <TableCell colSpan={5} className="text-center py-12">
+                      <Loader2 className="h-8 w-8 animate-spin mx-auto text-muted-foreground" />
                     </TableCell>
                   </TableRow>
-                ))}
-                {filteredFiliais.length === 0 && (
+                ) : filteredFiliais.length === 0 ? (
                   <TableRow>
                     <TableCell colSpan={5} className="text-center py-12 text-muted-foreground">
                       Nenhuma filial encontrada ou sem permissão de acesso.
                     </TableCell>
                   </TableRow>
+                ) : (
+                  filteredFiliais.map((filial) => (
+                    <TableRow key={filial.id} className="group border-border/50">
+                      <TableCell className="font-mono text-xs pl-6 text-muted-foreground">
+                        {filial.codigo || filial.C_FILI_CODI || filial.id.substring(0, 8)}
+                      </TableCell>
+                      <TableCell className="font-semibold">
+                        {filial.nome || filial.C_FILI_NOME}
+                      </TableCell>
+                      <TableCell className="text-muted-foreground truncate max-w-[300px]">
+                        {(() => {
+                          const empresa = empresas.find(
+                            (e) => e.id === (filial.empresaId || filial.C_FILI_EMPR),
+                          )
+                          return empresa?.C_EMPR_NOME || empresa?.nomeFantasia || '-'
+                        })()}
+                      </TableCell>
+                      <TableCell className="text-muted-foreground">
+                        {maskCNPJ(filial.cnpj || filial.C_FILI_CNPJ || '')}
+                      </TableCell>
+                      <TableCell className="text-right pr-6">
+                        <div className="flex justify-end gap-2">
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-8 px-2 text-[#8B4513] hover:bg-[#8B4513]/10"
+                            onClick={() => {
+                              setEditingFilial(filial)
+                              setIsSheetOpen(true)
+                            }}
+                          >
+                            <Edit className="h-4 w-4" />
+                          </Button>
+                          <Button
+                            variant="ghost"
+                            size="sm"
+                            className="h-8 px-2 text-destructive hover:bg-destructive/10"
+                            onClick={() => setFilialToDelete(filial)}
+                          >
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </TableCell>
+                    </TableRow>
+                  ))
                 )}
               </TableBody>
             </Table>
@@ -244,7 +318,6 @@ export default function Filiais() {
               empresas={empresas}
               onSubmit={handleSave}
               onCancel={() => setIsSheetOpen(false)}
-              isTi={isTi}
             />
           )}
         </SheetContent>
@@ -257,7 +330,7 @@ export default function Filiais() {
             <AlertDialogDescription>
               Tem certeza que deseja excluir a filial{' '}
               <strong className="text-foreground">
-                {filialToDelete?.C_FILI_NOME || filialToDelete?.nome}
+                {filialToDelete?.nome || filialToDelete?.C_FILI_NOME}
               </strong>
               ? Esta ação não pode ser desfeita.
             </AlertDialogDescription>

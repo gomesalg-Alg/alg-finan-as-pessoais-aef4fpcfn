@@ -7,6 +7,7 @@ export const mapRecordToFilial = (record: any): Filial => ({
   C_FILI_CREA: record.C_FILI_CREA || record.created,
   C_FILI_UPDT: record.C_FILI_UPDT || record.updated,
   C_FILI_CODI: record.C_FILI_CODI,
+  codigo: record.C_FILI_CODI,
   empresaId: record.C_FILI_EMPR,
   nome: record.C_FILI_NOME,
   cnpj: record.C_FILI_CNPJ,
@@ -25,7 +26,7 @@ export const mapRecordToFilial = (record: any): Filial => ({
 })
 
 const mapDataToRecord = (data: any) => ({
-  C_FILI_CODI: data.C_FILI_CODI || `FIL${Date.now().toString().slice(-4)}`,
+  C_FILI_CODI: data.codigo || data.C_FILI_CODI || `FIL${Date.now().toString().slice(-4)}`,
   C_FILI_EMPR: data.empresaId,
   C_FILI_NOME: data.nome,
   C_FILI_CNPJ: data.cnpj?.replace(/\D/g, ''),

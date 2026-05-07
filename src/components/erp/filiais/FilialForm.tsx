@@ -40,8 +40,14 @@ import { toast } from 'sonner'
 
 interface FilialFormProps {
   initialData?: Partial<FilialFormData>
-  empresas?: { id: string; nomeFantasia: string }[]
-  onSubmit: (data: FilialFormData) => void
+  empresas?: {
+    id: string
+    nomeFantasia?: string
+    C_EMPR_NOME?: string
+    C_EMPR_FANT?: string
+    razaoSocial?: string
+  }[]
+  onSubmit: (data: FilialFormData, form: any) => Promise<void> | void
   onCancel?: () => void
 }
 
@@ -76,6 +82,7 @@ export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: F
   const form = useForm<FilialFormData>({
     resolver: zodResolver(filialSchema),
     defaultValues: {
+      codigo: initialData?.codigo || (initialData as any)?.C_FILI_CODI || '',
       empresaId: initialData?.empresaId || '',
       nome: initialData?.nome || '',
       cnpj: initialData?.cnpj || '',
@@ -95,7 +102,7 @@ export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: F
 
   useCepAutofill(form.watch, form.setValue)
 
-  const handleSubmit = (data: FilialFormData) => {
+  const handleSubmit = async (data: FilialFormData) => {
     if (isTi) {
       const techErrors = validateTechnicalTypes(data, 'C_FILI')
       if (techErrors.length > 0) {
@@ -109,7 +116,11 @@ export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: F
       }
     }
     logger.log('SUBMIT_FILIAL', data)
-    onSubmit(data)
+    try {
+      await onSubmit(data, form)
+    } catch (err) {
+      // Error handled by parent
+    }
   }
 
   const renderField = (
@@ -180,6 +191,9 @@ export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: F
               <FileText className="h-4 w-4" /> Dados Principais
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-5 gap-4">
+              <div className="md:col-span-1">
+                {renderField('codigo', 'Código', <Hash className="h-4 w-4" />, 'C_FILI_CODI')}
+              </div>
               <div className="md:col-span-2">
                 <FormField
                   control={form.control}
@@ -207,7 +221,9 @@ export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: F
                               <SelectItem key={emp.id} value={emp.id}>
                                 {emp.nomeFantasia ||
                                   (emp as any).C_EMPR_FANT ||
-                                  (emp as any).razaoSocial}
+                                  (emp as any).C_EMPR_NOME ||
+                                  (emp as any).razaoSocial ||
+                                  'Empresa Sem Nome'}
                               </SelectItem>
                             ))}
                           </SelectContent>
@@ -218,7 +234,7 @@ export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: F
                   )}
                 />
               </div>
-              <div className="md:col-span-3">
+              <div className="md:col-span-2">
                 {renderField(
                   'nome',
                   'Nome da Filial',
