@@ -14,7 +14,7 @@ import {
 } from '@/components/ui/card'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { toast } from 'sonner'
-import { getErrorMessage } from '@/lib/pocketbase/errors'
+import { getErrorMessage, extractFieldErrors, type FieldErrors } from '@/lib/pocketbase/errors'
 import { Lock, Mail, AlertCircle } from 'lucide-react'
 
 import logoImg from '@/assets/logoescolhidoalg-48d57.jpeg'
@@ -24,6 +24,7 @@ export default function Login() {
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({})
   const { signIn, user } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
@@ -42,6 +43,7 @@ export default function Login() {
     e.preventDefault()
     setLoading(true)
     setErrorMsg('')
+    setFieldErrors({})
 
     try {
       const { error } = await signIn(email, password)
@@ -51,6 +53,8 @@ export default function Login() {
       navigate(from, { replace: true })
     } catch (error) {
       const msg = getErrorMessage(error)
+      const fErrors = extractFieldErrors(error)
+      setFieldErrors(fErrors)
       setErrorMsg(msg || 'E-mail ou senha incorretos.')
     } finally {
       setLoading(false)
@@ -96,6 +100,12 @@ export default function Login() {
                     required
                   />
                 </div>
+                {fieldErrors.identity && (
+                  <p className="text-sm text-destructive">{fieldErrors.identity}</p>
+                )}
+                {fieldErrors.email && (
+                  <p className="text-sm text-destructive">{fieldErrors.email}</p>
+                )}
               </div>
               <div className="space-y-2">
                 <Label htmlFor="login-password">Senha</Label>
@@ -111,6 +121,9 @@ export default function Login() {
                     required
                   />
                 </div>
+                {fieldErrors.password && (
+                  <p className="text-sm text-destructive">{fieldErrors.password}</p>
+                )}
               </div>
             </CardContent>
             <CardFooter>
