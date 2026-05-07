@@ -25,7 +25,7 @@ export const mapRecordToFilial = (record: any): Filial => ({
 const mapDataToRecord = (data: any) => {
   const result: any = {
     C_FILI_CODI: data.C_FILI_CODI || `FIL${Date.now().toString().slice(-4)}`,
-    C_FILI_EMPR: data.empresaId || null,
+    C_FILI_EMPR: data.empresaId || '',
     C_FILI_NOME: data.nome,
     C_FILI_CNPJ: data.cnpj?.replace(/\D/g, ''),
     C_FILI_INSC: data.ie,
