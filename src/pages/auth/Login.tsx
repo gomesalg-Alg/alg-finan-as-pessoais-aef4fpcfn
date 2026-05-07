@@ -5,7 +5,8 @@ import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { toast } from 'sonner'
-import { Loader2, ArrowLeft, ShieldCheck } from 'lucide-react'
+import { Loader2, ArrowLeft } from 'lucide-react'
+import logoUrl from '@/assets/logoescolhidoalg-b2e91.jpeg'
 
 export default function Login() {
   const [email, setEmail] = useState('')
@@ -51,9 +52,13 @@ export default function Login() {
         </div>
 
         <div className="relative z-10 max-w-md">
-          <div className="flex items-center gap-3 mb-8">
-            <div className="bg-amber-500 p-3 rounded-xl shadow-lg">
-              <ShieldCheck className="w-10 h-10 text-white" />
+          <div className="flex items-center gap-4 mb-8">
+            <div className="p-1 rounded-full shadow-lg bg-white/10 backdrop-blur-sm border border-white/20">
+              <img
+                src={logoUrl}
+                alt="ALG Finanças"
+                className="w-14 h-14 rounded-full object-cover"
+              />
             </div>
             <span className="text-4xl font-extrabold tracking-tight text-white">ALG Finanças</span>
           </div>
@@ -84,8 +89,12 @@ export default function Login() {
               Voltar ao Início
             </Link>
             <div className="flex items-center gap-3">
-              <div className="bg-amber-500 p-2.5 rounded-lg shadow-md">
-                <ShieldCheck className="w-8 h-8 text-white" />
+              <div className="p-1 rounded-full shadow-md bg-blue-50 border border-blue-100">
+                <img
+                  src={logoUrl}
+                  alt="ALG Finanças"
+                  className="w-12 h-12 rounded-full object-cover"
+                />
               </div>
               <span className="text-3xl font-extrabold tracking-tight text-blue-950">
                 ALG Finanças

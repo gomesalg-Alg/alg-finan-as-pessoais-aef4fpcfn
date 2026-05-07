@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom'
 import { Menu, X, Lock } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { cn } from '@/lib/utils'
-import logoUrl from '@/assets/logo_escolhido_alg-bc19d.jpeg'
+import logoUrl from '@/assets/logoescolhidoalg-b2e91.jpeg'
 
 const navigation = [
   { name: 'Início', href: '/' },
