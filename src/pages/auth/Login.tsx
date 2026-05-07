@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '@/hooks/use-auth'
 import { Button } from '@/components/ui/button'
@@ -22,11 +22,19 @@ export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
-  const { signIn } = useAuth()
+  const { signIn, user } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
 
-  const from = location.state?.from?.pathname + (location.state?.from?.search || '') || '/erp'
+  const from = location.state?.from?.pathname
+    ? `${location.state.from.pathname}${location.state.from.search || ''}`
+    : '/erp'
+
+  useEffect(() => {
+    if (user) {
+      navigate(from, { replace: true })
+    }
+  }, [user, navigate, from])
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
