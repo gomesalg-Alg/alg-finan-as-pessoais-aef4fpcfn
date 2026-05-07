@@ -4,14 +4,6 @@ import { useAuth } from '@/hooks/use-auth'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-  CardFooter,
-} from '@/components/ui/card'
 import { toast } from 'sonner'
 import { Loader2, ArrowLeft, ShieldCheck } from 'lucide-react'
 
@@ -41,32 +33,76 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-blue-900 to-blue-950 p-4">
-      <div className="absolute top-4 left-4">
-        <Link to="/">
-          <Button variant="ghost" className="text-white hover:text-blue-900 hover:bg-white/90">
-            <ArrowLeft className="w-4 h-4 mr-2" />
-            Voltar ao Início
-          </Button>
-        </Link>
+    <div className="min-h-screen w-full flex bg-white">
+      {/* Left Panel - Branding */}
+      <div className="hidden lg:flex w-1/2 bg-blue-950 text-white flex-col justify-between p-12 relative overflow-hidden">
+        {/* Abstract background elements */}
+        <div className="absolute top-0 right-0 -mt-20 -mr-20 w-96 h-96 bg-blue-600 rounded-full blur-3xl opacity-20 animate-pulse"></div>
+        <div className="absolute bottom-0 left-0 -mb-20 -ml-20 w-96 h-96 bg-amber-500 rounded-full blur-3xl opacity-20"></div>
+
+        <div className="relative z-10">
+          <Link
+            to="/"
+            className="inline-flex items-center gap-2 text-white/80 hover:text-white transition-colors"
+          >
+            <ArrowLeft className="w-5 h-5" />
+            <span className="font-medium">Voltar ao Início</span>
+          </Link>
+        </div>
+
+        <div className="relative z-10 max-w-md">
+          <div className="flex items-center gap-3 mb-8">
+            <div className="bg-amber-500 p-3 rounded-xl shadow-lg">
+              <ShieldCheck className="w-10 h-10 text-white" />
+            </div>
+            <span className="text-4xl font-extrabold tracking-tight text-white">ALG Finanças</span>
+          </div>
+          <h1 className="text-4xl font-bold mb-6 leading-tight">
+            Planejamento e Liderança Financeira
+          </h1>
+          <p className="text-blue-200 text-lg leading-relaxed">
+            Tenha controle total sobre os recursos da sua empresa com nosso sistema ERP focado em
+            análise e gestão inteligente.
+          </p>
+        </div>
+
+        <div className="relative z-10 text-sm text-blue-400">
+          &copy; {new Date().getFullYear()} ALG Finanças Pessoais. Todos os direitos reservados.
+        </div>
       </div>
 
-      <Card className="w-full max-w-md shadow-2xl border-none bg-white/95 backdrop-blur-sm">
-        <CardHeader className="space-y-3 text-center pb-6 pt-8">
-          <div className="mx-auto bg-amber-500 p-3 rounded-2xl shadow-lg mb-4">
-            <ShieldCheck className="w-10 h-10 text-white" />
+      {/* Right Panel - Login Form */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 lg:p-12">
+        <div className="w-full max-w-md space-y-8">
+          {/* Mobile only logo/back */}
+          <div className="lg:hidden flex flex-col mb-8">
+            <Link
+              to="/"
+              className="inline-flex items-center text-sm text-slate-500 hover:text-slate-900 mb-8 transition-colors"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              Voltar ao Início
+            </Link>
+            <div className="flex items-center gap-3">
+              <div className="bg-amber-500 p-2.5 rounded-lg shadow-md">
+                <ShieldCheck className="w-8 h-8 text-white" />
+              </div>
+              <span className="text-3xl font-extrabold tracking-tight text-blue-950">
+                ALG Finanças
+              </span>
+            </div>
           </div>
-          <CardTitle className="text-3xl font-extrabold tracking-tight text-blue-950">
-            ALG Finanças
-          </CardTitle>
-          <CardDescription className="text-base text-blue-800/70 font-medium">
-            Acesso Restrito ao Sistema ERP
-          </CardDescription>
-        </CardHeader>
-        <form onSubmit={handleSubmit}>
-          <CardContent className="space-y-5 px-8">
+
+          <div className="space-y-2">
+            <h2 className="text-3xl font-bold text-slate-900 tracking-tight">Área Restrita</h2>
+            <p className="text-slate-500 text-base">
+              Insira suas credenciais para acessar o sistema ERP.
+            </p>
+          </div>
+
+          <form onSubmit={handleSubmit} className="space-y-6 pt-2">
             <div className="space-y-2">
-              <Label htmlFor="email" className="text-blue-950 font-bold">
+              <Label htmlFor="email" className="font-semibold text-slate-700 text-sm">
                 E-mail
               </Label>
               <Input
@@ -76,29 +112,30 @@ export default function Login() {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
-                className="h-12 border-blue-200 focus-visible:ring-amber-500 bg-white"
+                className="h-12 px-4 border-slate-200 bg-slate-50 focus-visible:ring-amber-500 focus-visible:border-amber-500 transition-all text-base"
               />
             </div>
+
             <div className="space-y-2">
-              <div className="flex justify-between items-center">
-                <Label htmlFor="password" className="text-blue-950 font-bold">
+              <div className="flex items-center justify-between">
+                <Label htmlFor="password" className="font-semibold text-slate-700 text-sm">
                   Senha
                 </Label>
               </div>
               <Input
                 id="password"
                 type="password"
+                placeholder="••••••••"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
-                className="h-12 border-blue-200 focus-visible:ring-amber-500 bg-white"
+                className="h-12 px-4 border-slate-200 bg-slate-50 focus-visible:ring-amber-500 focus-visible:border-amber-500 transition-all text-base"
               />
             </div>
-          </CardContent>
-          <CardFooter className="px-8 pb-8 pt-4">
+
             <Button
-              className="w-full h-12 bg-amber-500 hover:bg-amber-600 text-white font-bold text-lg shadow-md transition-all hover:shadow-lg"
               type="submit"
+              className="w-full h-12 bg-amber-500 hover:bg-amber-600 text-white font-bold text-lg shadow-md hover:shadow-lg transition-all"
               disabled={isLoading}
             >
               {isLoading ? (
@@ -110,9 +147,9 @@ export default function Login() {
                 'Entrar no Sistema'
               )}
             </Button>
-          </CardFooter>
-        </form>
-      </Card>
+          </form>
+        </div>
+      </div>
     </div>
   )
 }
