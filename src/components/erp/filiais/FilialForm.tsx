@@ -1,5 +1,8 @@
+import { useState, useEffect } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { getEmpresas } from '@/services/empresas'
+import { Empresa } from '@/types/empresa'
 import { filialSchema, FilialFormData } from '@/schemas/filialSchema'
 import {
   Form,
@@ -79,11 +82,44 @@ export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: F
   const { isTiModeEnabled, fieldConfigs } = useERPStore()
   const isTi = isTiModeEnabled
 
+  const [empresasList, setEmpresasList] = useState<Empresa[]>([])
+  const [isLoadingEmpresas, setIsLoadingEmpresas] = useState(true)
+  const [errorEmpresas, setErrorEmpresas] = useState(false)
+
+  useEffect(() => {
+    let mounted = true
+    const fetchEmpresas = async () => {
+      try {
+        setIsLoadingEmpresas(true)
+        setErrorEmpresas(false)
+        const data = await getEmpresas()
+        if (mounted) {
+          setEmpresasList(data)
+        }
+      } catch (err) {
+        if (mounted) {
+          setErrorEmpresas(true)
+          toast.error('Erro de Conexão', {
+            description: 'Não foi possível carregar a lista de empresas.',
+          })
+        }
+      } finally {
+        if (mounted) {
+          setIsLoadingEmpresas(false)
+        }
+      }
+    }
+    fetchEmpresas()
+    return () => {
+      mounted = false
+    }
+  }, [])
+
   const form = useForm<FilialFormData>({
     resolver: zodResolver(filialSchema),
     defaultValues: {
       codigo: initialData?.codigo || (initialData as any)?.C_FILI_CODI || '',
-      empresaId: initialData?.empresaId || '',
+      empresaId: initialData?.empresaId || (initialData as any)?.C_FILI_EMPR || '',
       nome: initialData?.nome || '',
       cnpj: initialData?.cnpj || '',
       ie: initialData?.ie || '',
@@ -202,30 +238,47 @@ export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: F
                     <FormItem>
                       <FormLabel className="flex items-center gap-2 text-blue-900 font-semibold">
                         <Building2 className="h-4 w-4 text-amber-800" />
-                        {empresaConfig?.customLabel || 'Empresa Matriz'}
+                        {empresaConfig?.customLabel || 'Empresa Filial'}
                         {empresaConfig?.isRequired && <span className="text-red-500 ml-1">*</span>}
                       </FormLabel>
                       <FieldWrapper isTi={isTi} techName="C_FILI_EMPR">
                         <Select
                           onValueChange={field.onChange}
                           defaultValue={field.value}
+                          value={field.value}
                           required={empresaConfig?.isRequired}
+                          disabled={isLoadingEmpresas || errorEmpresas}
                         >
                           <FormControl>
                             <SelectTrigger className="bg-white border-blue-200 focus-visible:ring-blue-500 shadow-sm text-gray-800">
-                              <SelectValue placeholder="Selecione a empresa" />
+                              <SelectValue
+                                placeholder={
+                                  isLoadingEmpresas
+                                    ? 'Carregando empresas...'
+                                    : errorEmpresas
+                                      ? 'Erro ao carregar empresas'
+                                      : empresasList.length === 0
+                                        ? 'Nenhuma empresa encontrada'
+                                        : 'Selecione a empresa'
+                                }
+                              />
                             </SelectTrigger>
                           </FormControl>
                           <SelectContent>
-                            {empresas.map((emp) => (
-                              <SelectItem key={emp.id} value={emp.id}>
-                                {emp.nomeFantasia ||
-                                  (emp as any).C_EMPR_FANT ||
-                                  (emp as any).C_EMPR_NOME ||
-                                  (emp as any).razaoSocial ||
-                                  'Empresa Sem Nome'}
+                            {empresasList.length === 0 && !isLoadingEmpresas && !errorEmpresas ? (
+                              <SelectItem value="empty" disabled>
+                                Nenhuma empresa encontrada
                               </SelectItem>
-                            ))}
+                            ) : (
+                              empresasList.map((emp) => (
+                                <SelectItem key={emp.id} value={emp.id}>
+                                  {emp.C_EMPR_NOME ||
+                                    emp.razaoSocial ||
+                                    emp.nomeFantasia ||
+                                    'Empresa Sem Nome'}
+                                </SelectItem>
+                              ))
+                            )}
                           </SelectContent>
                         </Select>
                       </FieldWrapper>
