@@ -22,25 +22,32 @@ export const mapRecordToFilial = (record: any): Filial => ({
   C_FILI_CODI: record.C_FILI_CODI,
 })
 
-const mapDataToRecord = (data: any) => ({
-  C_FILI_CODI: data.C_FILI_CODI || `FIL${Date.now().toString().slice(-4)}`,
-  C_FILI_EMPR: data.empresaId,
-  C_FILI_NOME: data.nome,
-  C_FILI_CNPJ: data.cnpj?.replace(/\D/g, ''),
-  C_FILI_INSC: data.ie,
-  C_FILI_CCEP: data.cep?.replace(/\D/g, ''),
-  C_FILI_ENDE: data.logradouro,
-  C_FILI_NUME: data.numero,
-  C_FILI_COMP: data.complemento,
-  C_FILI_BAIR: data.bairro,
-  C_FILI_MUNI: data.cidade,
-  C_FILI_UFED: data.uf,
-  C_FILI_FONE: data.telefone?.replace(/\D/g, ''),
-  C_FILI_MAIL: data.email,
-})
+const mapDataToRecord = (data: any) => {
+  const result: any = {
+    C_FILI_CODI: data.C_FILI_CODI || `FIL${Date.now().toString().slice(-4)}`,
+    C_FILI_EMPR: data.empresaId || null,
+    C_FILI_NOME: data.nome,
+    C_FILI_CNPJ: data.cnpj?.replace(/\D/g, ''),
+    C_FILI_INSC: data.ie,
+    C_FILI_CCEP: data.cep?.replace(/\D/g, ''),
+    C_FILI_ENDE: data.logradouro,
+    C_FILI_NUME: data.numero,
+    C_FILI_COMP: data.complemento,
+    C_FILI_BAIR: data.bairro,
+    C_FILI_MUNI: data.cidade,
+    C_FILI_UFED: data.uf,
+    C_FILI_FONE: data.telefone?.replace(/\D/g, ''),
+    C_FILI_MAIL: data.email,
+  }
+
+  // Ensure undefined values do not block PocketBase requests
+  Object.keys(result).forEach((key) => result[key] === undefined && delete result[key])
+
+  return result
+}
 
 export const getFiliais = async () => {
-  const records = await pb.collection('C_FILI').getFullList({ sort: '-C_FILI_CREA' })
+  const records = await pb.collection('C_FILI').getFullList({ sort: '-created' })
   return records.map(mapRecordToFilial)
 }
 

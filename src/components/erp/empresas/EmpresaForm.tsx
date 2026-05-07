@@ -245,7 +245,9 @@ export function EmpresaForm({ initialData, onSubmit, onCancel }: EmpresaFormProp
     <div className="bg-blue-50 p-6 rounded-xl border border-blue-100 shadow-sm">
       <div className="mb-6 pb-2 border-b border-blue-200 flex items-center gap-2">
         <Building2 className="h-6 w-6 text-amber-700" />
-        <h2 className="text-xl font-bold text-blue-900">Cadastro de Empresa</h2>
+        <h2 className="text-xl font-bold text-blue-900">
+          Cadastro de Empresa{isTi && ' - C_EMPR'}
+        </h2>
       </div>
 
       <Form {...form}>

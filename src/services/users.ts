@@ -26,7 +26,7 @@ export const mapRecordToUser = (record: any): User => ({
   C_USER_FILI: record.C_USER_FILI,
 })
 
-const mapDataToRecord = (data: any) => {
+const mapDataToRecord = (data: any, isCreate = false) => {
   const result: any = {
     C_USER_CODI: data.C_USER_CODI || `USR${Date.now().toString().slice(-4)}`,
     C_USER_NOME: data.name,
@@ -49,22 +49,30 @@ const mapDataToRecord = (data: any) => {
   if (data.password) {
     result.password = data.password
     result.passwordConfirm = data.password
+  } else if (isCreate) {
+    // Auth collections always require a password upon creation
+    result.password = 'Mudar@123'
+    result.passwordConfirm = 'Mudar@123'
   }
+
+  // Ensure undefined values do not block PocketBase requests
+  Object.keys(result).forEach((key) => result[key] === undefined && delete result[key])
+
   return result
 }
 
 export const getUsers = async () => {
-  const records = await pb.collection('C_USER').getFullList({ sort: '-C_USER_CREA' })
+  const records = await pb.collection('C_USER').getFullList({ sort: '-created' })
   return records.map(mapRecordToUser)
 }
 
 export const createUser = async (data: any) => {
-  const record = await pb.collection('C_USER').create(mapDataToRecord(data))
+  const record = await pb.collection('C_USER').create(mapDataToRecord(data, true))
   return mapRecordToUser(record)
 }
 
 export const updateUser = async (id: string, data: any) => {
-  const record = await pb.collection('C_USER').update(id, mapDataToRecord(data))
+  const record = await pb.collection('C_USER').update(id, mapDataToRecord(data, false))
   return mapRecordToUser(record)
 }
 
