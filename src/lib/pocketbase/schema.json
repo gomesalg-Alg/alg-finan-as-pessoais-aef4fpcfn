@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-05-07T19:35:48.344Z",
+  "generatedAt": "2026-05-07T20:09:02.418Z",
   "collections": [
     {
       "name": "C_USER",
@@ -268,7 +268,9 @@
           "autodateTriggers": ["onCreate", "onUpdate"]
         }
       ],
-      "indexes": []
+      "indexes": [
+        "CREATE UNIQUE INDEX `idx_c_empr_pkid_unique` ON `C_EMPR` (C_EMPR_PKID) WHERE C_EMPR_PKID != ''"
+      ]
     },
     {
       "name": "C_FILI",
@@ -387,7 +389,7 @@
           "autodateTriggers": ["onCreate", "onUpdate"]
         }
       ],
-      "indexes": []
+      "indexes": ["CREATE INDEX `idx_c_fili_empr_fk` ON `C_FILI` (C_FILI_EMPR)"]
     }
   ]
 }

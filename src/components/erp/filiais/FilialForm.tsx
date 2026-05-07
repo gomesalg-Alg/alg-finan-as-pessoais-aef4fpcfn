@@ -204,7 +204,7 @@ export function FilialForm({ initialData, empresas = [], onSubmit, onCancel }: F
                           </FormControl>
                           <SelectContent>
                             {empresas.map((emp) => (
-                              <SelectItem key={emp.id} value={emp.id}>
+                              <SelectItem key={emp.id} value={(emp as any).C_EMPR_PKID || emp.id}>
                                 {emp.nomeFantasia ||
                                   (emp as any).C_EMPR_FANT ||
                                   (emp as any).razaoSocial}
