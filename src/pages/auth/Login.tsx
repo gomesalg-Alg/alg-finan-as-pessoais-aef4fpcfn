@@ -73,13 +73,13 @@ export default function Login() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col justify-center items-center p-4">
+    <div className="min-h-screen bg-background flex flex-col justify-center items-center p-4">
       <div className="w-full max-w-md mb-8 text-center flex flex-col items-center">
-        <div className="bg-blue-900 p-3 rounded-xl mb-4 shadow-lg">
-          <Building2 className="h-10 w-10 text-amber-500" />
+        <div className="bg-primary/10 p-3 rounded-xl mb-4 shadow-sm">
+          <Building2 className="h-10 w-10 text-primary" />
         </div>
-        <h1 className="text-3xl font-bold text-blue-950">ALG Finanças</h1>
-        <p className="text-slate-600 mt-2">Sistema de Gestão Empresarial</p>
+        <h1 className="text-3xl font-bold tracking-tight text-foreground">ALG Finanças</h1>
+        <p className="text-muted-foreground mt-2">Sistema de Gestão Empresarial</p>
       </div>
 
       <Tabs defaultValue="login" className="w-full max-w-md">
@@ -89,9 +89,9 @@ export default function Login() {
         </TabsList>
 
         <TabsContent value="login">
-          <Card className="border-blue-100 shadow-md">
+          <Card className="shadow-md">
             <CardHeader>
-              <CardTitle className="text-xl text-blue-900">Bem-vindo de volta</CardTitle>
+              <CardTitle>Bem-vindo de volta</CardTitle>
               <CardDescription>Faça login para acessar o painel administrativo.</CardDescription>
             </CardHeader>
             <form onSubmit={handleLogin}>
@@ -99,7 +99,7 @@ export default function Login() {
                 <div className="space-y-2">
                   <Label htmlFor="login-email">E-mail</Label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+                    <Mail className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="login-email"
                       type="email"
@@ -114,7 +114,7 @@ export default function Login() {
                 <div className="space-y-2">
                   <Label htmlFor="login-password">Senha</Label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+                    <Lock className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="login-password"
                       type="password"
@@ -128,11 +128,7 @@ export default function Login() {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button
-                  type="submit"
-                  className="w-full bg-blue-800 hover:bg-blue-900"
-                  disabled={loading}
-                >
+                <Button type="submit" className="w-full" disabled={loading}>
                   {loading ? 'Entrando...' : 'Entrar'}
                 </Button>
               </CardFooter>
@@ -141,9 +137,9 @@ export default function Login() {
         </TabsContent>
 
         <TabsContent value="register">
-          <Card className="border-blue-100 shadow-md">
+          <Card className="shadow-md">
             <CardHeader>
-              <CardTitle className="text-xl text-blue-900">Criar nova conta</CardTitle>
+              <CardTitle>Criar nova conta</CardTitle>
               <CardDescription>Preencha os dados abaixo para criar seu acesso.</CardDescription>
             </CardHeader>
             <form onSubmit={handleRegister}>
@@ -151,7 +147,7 @@ export default function Login() {
                 <div className="space-y-2">
                   <Label htmlFor="reg-name">Nome Completo</Label>
                   <div className="relative">
-                    <User className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+                    <User className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="reg-name"
                       placeholder="Seu nome"
@@ -165,7 +161,7 @@ export default function Login() {
                 <div className="space-y-2">
                   <Label htmlFor="reg-email">E-mail</Label>
                   <div className="relative">
-                    <Mail className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+                    <Mail className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="reg-email"
                       type="email"
@@ -180,7 +176,7 @@ export default function Login() {
                 <div className="space-y-2">
                   <Label htmlFor="reg-password">Senha</Label>
                   <div className="relative">
-                    <Lock className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+                    <Lock className="absolute left-3 top-2.5 h-4 w-4 text-muted-foreground" />
                     <Input
                       id="reg-password"
                       type="password"
@@ -195,11 +191,7 @@ export default function Login() {
                 </div>
               </CardContent>
               <CardFooter>
-                <Button
-                  type="submit"
-                  className="w-full bg-blue-800 hover:bg-blue-900"
-                  disabled={loading}
-                >
+                <Button type="submit" className="w-full" disabled={loading}>
                   {loading ? 'Cadastrando...' : 'Cadastrar'}
                 </Button>
               </CardFooter>
