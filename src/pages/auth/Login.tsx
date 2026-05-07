@@ -12,9 +12,10 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card'
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { toast } from 'sonner'
 import { getErrorMessage } from '@/lib/pocketbase/errors'
-import { Lock, Mail } from 'lucide-react'
+import { Lock, Mail, AlertCircle } from 'lucide-react'
 
 import logoImg from '@/assets/logoescolhidoalg-48d57.jpeg'
 
@@ -22,13 +23,14 @@ export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
+  const [errorMsg, setErrorMsg] = useState('')
   const { signIn, user } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
 
   const from = location.state?.from?.pathname
     ? `${location.state.from.pathname}${location.state.from.search || ''}`
-    : '/erp'
+    : '/'
 
   useEffect(() => {
     if (user) {
@@ -39,6 +41,7 @@ export default function Login() {
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault()
     setLoading(true)
+    setErrorMsg('')
 
     try {
       const { error } = await signIn(email, password)
@@ -48,7 +51,7 @@ export default function Login() {
       navigate(from, { replace: true })
     } catch (error) {
       const msg = getErrorMessage(error)
-      toast.error('Erro ao fazer login', { description: msg })
+      setErrorMsg(msg || 'E-mail ou senha incorretos.')
     } finally {
       setLoading(false)
     }
@@ -72,6 +75,13 @@ export default function Login() {
           </CardHeader>
           <form onSubmit={handleLogin}>
             <CardContent className="space-y-4">
+              {errorMsg && (
+                <Alert variant="destructive">
+                  <AlertCircle className="h-4 w-4" />
+                  <AlertTitle>Erro na autenticação</AlertTitle>
+                  <AlertDescription>{errorMsg}</AlertDescription>
+                </Alert>
+              )}
               <div className="space-y-2">
                 <Label htmlFor="login-email">E-mail</Label>
                 <div className="relative">
