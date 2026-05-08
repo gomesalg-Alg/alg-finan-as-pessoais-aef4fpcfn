@@ -25,7 +25,7 @@ import {
 } from '@/components/ui/form'
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { toast } from 'sonner'
-import { getErrorMessage, extractFieldErrors } from '@/lib/pocketbase/errors'
+import { extractFieldErrors } from '@/lib/pocketbase/errors'
 import { Lock, Mail, AlertCircle, Loader2 } from 'lucide-react'
 
 import logoImg from '@/assets/logoescolhidoalg-48d57.jpeg'
@@ -74,7 +74,6 @@ export default function Login() {
       toast.success('Login realizado com sucesso!')
       navigate(targetPath, { replace: true })
     } catch (error) {
-      const msg = getErrorMessage(error)
       const fErrors = extractFieldErrors(error)
 
       if (Object.keys(fErrors).length > 0) {
@@ -83,18 +82,10 @@ export default function Login() {
         if (fErrors.password) form.setError('password', { message: fErrors.password })
       }
 
-      setErrorMsg(msg || 'E-mail ou senha incorretos.')
+      setErrorMsg('E-mail ou senha incorretos.')
     } finally {
       setLoading(false)
     }
-  }
-
-  if (authLoading) {
-    return (
-      <div className="flex h-screen w-full items-center justify-center bg-background">
-        <Loader2 className="h-8 w-8 animate-spin text-primary" />
-      </div>
-    )
   }
 
   return (
