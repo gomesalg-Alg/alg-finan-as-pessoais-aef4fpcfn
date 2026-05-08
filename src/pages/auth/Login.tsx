@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useAuth } from '@/hooks/use-auth'
 import pb from '@/lib/pocketbase/client'
@@ -57,11 +57,8 @@ export default function Login() {
       ? `${location.state.from.pathname}${location.state.from.search || ''}`
       : '/erp'
 
-  useEffect(() => {
-    if (!authLoading && user && pb.authStore.isValid) {
-      navigate(targetPath, { replace: true })
-    }
-  }, [user, authLoading, navigate, targetPath])
+  // Removed automatic redirect useEffect to ensure the login form is completely stable
+  // and does not disappear prematurely before the user attempts to log in.
 
   const onSubmit = async (values: FormValues) => {
     setLoading(true)
@@ -71,10 +68,40 @@ export default function Login() {
       const { error } = await signIn(values.email, values.password)
       if (error) throw error
 
+      const currentUser = pb.authStore.record
+
+      // Verify ERP access permissions as per acceptance criteria
+      const hasAccess =
+        currentUser &&
+        (currentUser.role === 'admin' ||
+          currentUser.is_admin === true ||
+          currentUser.acesso_erp === true ||
+          currentUser.sistema === 'Sistema-ERP' ||
+          (Array.isArray(currentUser.sistemas) && currentUser.sistemas.includes('Sistema-ERP')) ||
+          (Array.isArray(currentUser.permissoes) &&
+            currentUser.permissoes.includes('Sistema-ERP')) ||
+          JSON.stringify(currentUser).includes('Sistema-ERP'))
+
+      if (!hasAccess) {
+        pb.authStore.clear()
+        throw new Error('Acesso negado. Usuário sem permissão para o Sistema-ERP.')
+      }
+
       toast.success('Login realizado com sucesso!')
       navigate(targetPath, { replace: true })
-    } catch (error) {
+    } catch (error: any) {
       const fErrors = extractFieldErrors(error)
+      let defaultErrorMsg = 'E-mail ou senha incorretos ou erro de conexão.'
+
+      if (error?.status === 0 || error?.isAbort) {
+        defaultErrorMsg = 'Falha de conexão. Verifique sua internet ou tente novamente mais tarde.'
+      } else if (error?.status === 400 || error?.status === 401) {
+        defaultErrorMsg = 'E-mail ou senha incorretos.'
+      } else if (error?.message === 'Acesso negado. Usuário sem permissão para o Sistema-ERP.') {
+        defaultErrorMsg = error.message
+      } else if (error?.message) {
+        defaultErrorMsg = error.message
+      }
 
       if (Object.keys(fErrors).length > 0) {
         if (fErrors.email) form.setError('email', { message: fErrors.email })
@@ -82,7 +109,7 @@ export default function Login() {
         if (fErrors.password) form.setError('password', { message: fErrors.password })
       }
 
-      setErrorMsg('E-mail ou senha incorretos.')
+      setErrorMsg(defaultErrorMsg)
     } finally {
       setLoading(false)
     }
