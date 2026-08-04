@@ -75,7 +75,7 @@ export function Footer() {
                   className="flex items-start gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
                   <Mail className="h-5 w-5 text-primary shrink-0" />
-                  <span>gomesalg@gmail.com</span>
+                  <span>contato@alg-financas.com.br</span>
                 </a>
               </li>
               <li>

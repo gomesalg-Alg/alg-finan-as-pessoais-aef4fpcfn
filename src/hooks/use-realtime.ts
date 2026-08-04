@@ -17,9 +17,7 @@ export function useRealtime(
   callbackRef.current = callback
 
   useEffect(() => {
-    // Only attempt to subscribe if enabled AND user has a valid authenticated session
-    // This prevents runtime errors and "Something went wrong" crashes for unauthorized users
-    if (!enabled || !pb.authStore.isValid) return
+    if (!enabled) return
 
     let unsubscribeFn: (() => Promise<void>) | undefined
     let cancelled = false
@@ -34,12 +32,6 @@ export function useRealtime(
         } else {
           unsubscribeFn = fn
         }
-      })
-      .catch((err) => {
-        console.warn(
-          `[useRealtime] Permissão negada ou falha ao assinar ${collectionName}:`,
-          err?.message || err,
-        )
       })
 
     return () => {
