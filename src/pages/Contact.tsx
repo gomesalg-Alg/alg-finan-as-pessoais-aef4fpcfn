@@ -6,7 +6,7 @@ export default function Contact() {
   return (
     <div className="pt-24 pb-16 min-h-screen bg-background">
       <div className="container mx-auto px-4 md:px-6">
-        <div className="max-w-4xl mx-auto">
+        <div className="max-w-5xl mx-auto">
           <div className="text-center mb-16">
             <h1 className="text-4xl md:text-5xl font-bold mb-6 text-foreground">Vamos conversar</h1>
             <p className="text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
@@ -47,7 +47,7 @@ export default function Contact() {
                 <p className="text-sm font-medium text-muted-foreground mb-2">E-mail</p>
                 <a
                   href="mailto:contato@alg-financas.com.br"
-                  className="text-lg font-semibold text-foreground hover:text-primary transition-colors break-all md:break-words"
+                  className="text-lg font-semibold text-foreground hover:text-primary transition-colors whitespace-nowrap"
                 >
                   contato@alg-financas.com.br
                 </a>
