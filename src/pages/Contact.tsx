@@ -46,10 +46,10 @@ export default function Contact() {
                 </div>
                 <p className="text-sm font-medium text-muted-foreground mb-2">E-mail</p>
                 <a
-                  href="mailto:gomesalg@gmail.com"
-                  className="text-lg font-semibold text-foreground hover:text-primary transition-colors truncate w-full max-w-[250px]"
+                  href="mailto:contato@alg-financas.com.br"
+                  className="text-lg font-semibold text-foreground hover:text-primary transition-colors break-all md:break-words"
                 >
-                  gomesalg@gmail.com
+                  contato@alg-financas.com.br
                 </a>
               </div>
 
