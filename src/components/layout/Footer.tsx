@@ -57,7 +57,7 @@ export function Footer() {
             <h3 className="text-foreground font-semibold mb-6 text-lg">Especialidades</h3>
             <ul className="space-y-4">
               <li className="text-sm text-muted-foreground">Planejamento Financeiro</li>
-              <li className="text-sm text-muted-foreground">
+              <li className="text-sm text-muted-foreground whitespace-nowrap">
                 Gestão de Controle Financeiro Pessoal
               </li>
               <li className="text-sm text-muted-foreground">Consultoria de Investimentos</li>
@@ -75,7 +75,7 @@ export function Footer() {
                   className="flex items-start gap-3 text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
                   <Mail className="h-5 w-5 text-primary shrink-0" />
-                  <span>contato@alg-financas.com.br</span>
+                  <span className="whitespace-nowrap">contato@alg-financas.com.br</span>
                 </a>
               </li>
               <li>
