@@ -1,5 +1,5 @@
 {
-  "generatedAt": "2026-08-28T22:52:55.759Z",
+  "generatedAt": "2026-08-28T23:37:17.312Z",
   "collections": [
     {
       "name": "C_USER",
@@ -12,12 +12,6 @@
         "delete": "@request.auth.id != ''"
       },
       "fields": [
-        {
-          "name": "name",
-          "type": "text",
-          "required": false,
-          "system": false
-        },
         {
           "name": "avatar",
           "type": "file",

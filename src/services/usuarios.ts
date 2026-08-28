@@ -3,7 +3,7 @@ import pb from '@/lib/pocketbase/client'
 export const mapRecordToUsuario = (record: any) => ({
   id: record.id,
   email: record.email,
-  name: record.name || record.C_USER_NOME,
+  name: record.C_USER_NOME || '',
   C_USER_PKID: record.C_USER_PKID || record.id,
   C_USER_CREA: record.C_USER_CREA || record.created,
   C_USER_CODI: record.C_USER_CODI,
@@ -19,7 +19,6 @@ export const mapRecordToUsuario = (record: any) => ({
 })
 
 const mapDataToRecord = (data: any) => ({
-  name: data.name,
   C_USER_NOME: data.name,
   C_USER_NCPF: data.cpf?.replace(/\D/g, ''),
   C_USER_MAIL: data.email,

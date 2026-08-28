@@ -6,7 +6,7 @@ export const mapRecordToUser = (record: any): User => ({
   C_USER_PKID: record.C_USER_PKID || record.id,
   C_USER_CREA: record.C_USER_CREA || record.created,
   C_USER_UPDT: record.C_USER_UPDT || record.updated,
-  name: record.C_USER_NOME || record.name,
+  name: record.C_USER_NOME || '',
   email: record.C_USER_MAIL || record.email,
   role: record.C_USER_PERF?.toLowerCase() || record.role || 'user',
   status: record.C_USER_STAT || record.status || 'active',
@@ -30,7 +30,6 @@ const mapDataToRecord = (data: any, isCreate = false) => {
   const result: any = {
     C_USER_CODI: data.C_USER_CODI || `USR${Date.now().toString().slice(-4)}`,
     C_USER_NOME: data.name,
-    name: data.name,
     C_USER_MAIL: data.email,
     email: data.email,
     C_USER_PERF: data.role?.toUpperCase(),

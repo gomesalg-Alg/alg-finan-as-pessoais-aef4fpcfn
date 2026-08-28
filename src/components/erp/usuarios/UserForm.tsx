@@ -74,8 +74,8 @@ export function UserForm({ initialData, onSubmit, onCancel }: UserFormProps) {
   const form = useForm<UserFormData>({
     resolver: zodResolver(userSchema),
     defaultValues: {
-      name: initialData?.name || initialData?.C_USER_NOME || '',
-      email: initialData?.email || initialData?.C_USER_MAIL || '',
+      name: initialData?.C_USER_NOME || '',
+      email: initialData?.C_USER_MAIL || initialData?.email || '',
       role:
         initialData?.role ||
         (initialData?.C_USER_PERF?.toLowerCase() as 'admin' | 'user' | 'manager' | 'ti') ||

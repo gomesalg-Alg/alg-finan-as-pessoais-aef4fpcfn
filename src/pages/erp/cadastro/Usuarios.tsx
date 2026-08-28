@@ -81,7 +81,7 @@ export default function Usuarios() {
       if (!isAllowed) return false
 
       const matchText =
-        (u.C_USER_NOME || u.name)?.toLowerCase().includes(search.toLowerCase()) ||
+        (u.C_USER_NOME || '')?.toLowerCase().includes(search.toLowerCase()) ||
         (u.C_USER_MAIL || u.email)?.toLowerCase().includes(search.toLowerCase()) ||
         (u.C_USER_CODI || u.id)?.toLowerCase().includes(search.toLowerCase())
 
@@ -175,7 +175,7 @@ export default function Usuarios() {
       const filialName = filiais.find((f) => f.id === u.C_USER_FILI)?.C_FILI_NOME || 'N/A'
       return [
         u.C_USER_CODI || u.id.substring(0, 8),
-        u.C_USER_NOME || u.name,
+        u.C_USER_NOME || '',
         u.C_USER_NCPF || '',
         u.C_USER_MAIL || u.email,
         profileName,
@@ -275,7 +275,7 @@ export default function Usuarios() {
                       {user.C_USER_CODI || user.id.substring(0, 8)}
                     </TableCell>
                     <TableCell className="font-semibold flex items-center gap-2 max-w-[300px] truncate">
-                      {user.C_USER_NOME || user.name}
+                      {user.C_USER_NOME}
                       {(user.C_USER_PERF === 'ADMIN' || user.C_USER_PERF === 'TI') && (
                         <ShieldCheck className="h-4 w-4 text-primary shrink-0" />
                       )}
@@ -397,10 +397,8 @@ export default function Usuarios() {
             <AlertDialogTitle>Excluir Usuário</AlertDialogTitle>
             <AlertDialogDescription>
               Tem certeza que deseja excluir o usuário{' '}
-              <strong className="text-foreground">
-                {userToDelete?.C_USER_NOME || userToDelete?.name}
-              </strong>
-              ? Esta ação não pode ser desfeita.
+              <strong className="text-foreground">{userToDelete?.C_USER_NOME}</strong>? Esta ação
+              não pode ser desfeita.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
