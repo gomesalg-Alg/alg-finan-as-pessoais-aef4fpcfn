@@ -8,7 +8,9 @@ export function ERPHeader() {
   const navigate = useNavigate()
 
   const handleLogout = () => {
-    navigate('/')
+    pb.authStore.clear()
+    localStorage.removeItem('erp_current_user')
+    navigate('/login')
   }
 
   return (

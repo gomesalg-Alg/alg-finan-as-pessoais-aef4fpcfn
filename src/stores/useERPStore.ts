@@ -229,6 +229,9 @@ export const ERPProvider = ({ children }: { children: ReactNode }) => {
   const [fieldConfigs, setFieldConfigs] = useState<FieldConfig[]>(initialFieldConfigs)
 
   const [currentUser, setCurrentUser] = useState<User | null>(() => {
+    if (pb.authStore.isValid && pb.authStore.record) {
+      return mapRecordToUser(pb.authStore.record)
+    }
     try {
       const saved = localStorage.getItem('erp_current_user')
       if (saved) {
@@ -237,13 +240,35 @@ export const ERPProvider = ({ children }: { children: ReactNode }) => {
     } catch (e) {
       console.error(e)
     }
-    return initialUsers[0]
+    return null
   })
+
+  // Sync currentUser with pb.authStore changes
+  useEffect(() => {
+    const handleAuthChange = () => {
+      if (pb.authStore.isValid && pb.authStore.record) {
+        const mapped = mapRecordToUser(pb.authStore.record)
+        setCurrentUser(mapped)
+        localStorage.setItem('erp_current_user', JSON.stringify(mapped))
+      } else {
+        setCurrentUser(null)
+        localStorage.removeItem('erp_current_user')
+      }
+    }
+
+    // Initial check
+    handleAuthChange()
+
+    const unsubscribe = pb.authStore.onChange(handleAuthChange)
+    return () => {
+      unsubscribe()
+    }
+  }, [])
 
   useEffect(() => {
     if (currentUser) {
       localStorage.setItem('erp_current_user', JSON.stringify(currentUser))
-    } else {
+    } else if (!pb.authStore.isValid) {
       localStorage.removeItem('erp_current_user')
     }
   }, [currentUser])

@@ -33,13 +33,14 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signUp = async (email: string, password: string, extraData?: any) => {
     try {
-      await pb.collection('c_user').create({
-        email,
+      const cleanEmail = email.trim()
+      await pb.collection('C_USER').create({
+        email: cleanEmail,
         password,
         passwordConfirm: password,
         ...extraData,
       })
-      await pb.collection('c_user').authWithPassword(email, password)
+      await pb.collection('C_USER').authWithPassword(cleanEmail, password)
       return { error: null }
     } catch (error) {
       return { error }
@@ -48,7 +49,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signIn = async (email: string, password: string) => {
     try {
-      await pb.collection('c_user').authWithPassword(email, password)
+      const cleanEmail = email.trim()
+      await pb.collection('C_USER').authWithPassword(cleanEmail, password)
       return { error: null }
     } catch (error) {
       return { error }
@@ -57,6 +59,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   const signOut = () => {
     pb.authStore.clear()
+    localStorage.removeItem('erp_current_user')
   }
 
   return (

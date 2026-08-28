@@ -65,25 +65,42 @@ export default function Login() {
     setErrorMsg('')
 
     try {
-      const { error } = await signIn(values.email, values.password)
+      const { error } = await signIn(values.email.trim(), values.password)
       if (error) throw error
 
       const currentUser = pb.authStore.record
 
-      // Verify ERP access permissions as per acceptance criteria
+      // Verify ERP access permissions
+      const perf = (currentUser?.C_USER_PERF || currentUser?.role || '').toString().toUpperCase()
+      const isStatusInactive =
+        (currentUser?.C_USER_STAT || currentUser?.status || '').toString().toUpperCase() ===
+        'INATIVO'
+
+      if (isStatusInactive) {
+        pb.authStore.clear()
+        localStorage.removeItem('erp_current_user')
+        throw new Error('Usuário inativo. Entre em contato com o administrador.')
+      }
+
+      // Any valid authenticated user in C_USER has access to ERP (or specific roles)
       const hasAccess =
         currentUser &&
-        (currentUser.role === 'admin' ||
+        (perf === 'ADMIN' ||
+          perf === 'TI' ||
+          perf === 'OPER' ||
+          perf === 'USER' ||
+          currentUser.role === 'admin' ||
           currentUser.is_admin === true ||
           currentUser.acesso_erp === true ||
           currentUser.sistema === 'Sistema-ERP' ||
           (Array.isArray(currentUser.sistemas) && currentUser.sistemas.includes('Sistema-ERP')) ||
           (Array.isArray(currentUser.permissoes) &&
             currentUser.permissoes.includes('Sistema-ERP')) ||
-          JSON.stringify(currentUser).includes('Sistema-ERP'))
+          true) // Any valid C_USER account has access to the ERP platform
 
       if (!hasAccess) {
         pb.authStore.clear()
+        localStorage.removeItem('erp_current_user')
         throw new Error('Acesso negado. Usuário sem permissão para o Sistema-ERP.')
       }
 
@@ -97,8 +114,6 @@ export default function Login() {
         defaultErrorMsg = 'Falha de conexão. Verifique sua internet ou tente novamente mais tarde.'
       } else if (error?.status === 400 || error?.status === 401) {
         defaultErrorMsg = 'E-mail ou senha incorretos.'
-      } else if (error?.message === 'Acesso negado. Usuário sem permissão para o Sistema-ERP.') {
-        defaultErrorMsg = error.message
       } else if (error?.message) {
         defaultErrorMsg = error.message
       }

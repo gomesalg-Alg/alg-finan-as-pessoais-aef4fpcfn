@@ -177,10 +177,17 @@ export function ERPSidebar() {
               asChild
               className="text-sidebar-foreground hover:bg-red-500/10 hover:text-red-500 font-semibold transition-colors"
             >
-              <Link to="/login" className="flex items-center gap-3">
+              <button
+                onClick={() => {
+                  pb.authStore.clear()
+                  localStorage.removeItem('erp_current_user')
+                  window.location.href = '/login'
+                }}
+                className="flex items-center gap-3 w-full text-left"
+              >
                 <LogOut className="h-5 w-5 text-[#8B4513] shrink-0" />
                 <span>Sair do Sistema</span>
-              </Link>
+              </button>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
