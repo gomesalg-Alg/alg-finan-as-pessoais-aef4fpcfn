@@ -1,71 +1,75 @@
 import { useEffect, useState } from 'react'
-import {
-  TrendingDown,
-  TrendingUp,
-  Building2,
-  Wallet,
-  LineChart,
-  Landmark,
-  Target,
-  Activity,
-} from 'lucide-react'
+import { TrendingUp, Building2, Landmark, BarChart3, CalendarClock, Receipt } from 'lucide-react'
 
-type Accent = 'sky' | 'emerald' | 'amber' | 'violet' | 'rose'
-
-const FloatCard = ({
-  className,
-  animation,
-  children,
-}: {
-  className?: string
-  animation?: string
-  children: React.ReactNode
-}) => (
-  <div
-    className={`absolute hidden lg:block ${className ?? ''}`}
-    style={animation ? { animation } : undefined}
-  >
-    {children}
-  </div>
-)
-
-const MiniCard = ({
-  icon,
-  title,
-  value,
-  accent = 'sky',
-}: {
+type Card = {
   icon: React.ReactNode
   title: string
-  value: React.ReactNode
-  accent?: Accent
-}) => {
-  const accents: Record<Accent, string> = {
-    sky: 'text-sky-400',
-    emerald: 'text-emerald-400',
-    amber: 'text-amber-400',
-    violet: 'text-violet-400',
-    rose: 'text-rose-400',
-  }
-  return (
-    <div className="w-60 rounded-xl border border-slate-700/60 bg-slate-900/70 p-4 shadow-2xl backdrop-blur-md">
-      <div className="flex items-center gap-3">
-        <div className="rounded-lg bg-slate-800/80 p-2">{icon}</div>
-        <div className="min-w-0">
-          <p className="truncate text-xs text-slate-400">{title}</p>
-          <p className={`text-sm font-semibold ${accents[accent]}`}>{value}</p>
-        </div>
-      </div>
-    </div>
-  )
+  text: string
+  className: string
+  delay: string
+  duration: string
 }
 
-const floatAnim = (delay: string, duration: string, distance: number) =>
-  `floaty ${duration} ease-in-out ${delay} ${distance} alternate infinite`
+// Grandes cartões de notificação no estilo do template de referência:
+// título em caixa alta + ícone, texto de 2 linhas — flutuando sobre o
+// painel escuro da esquerda.
+const cards: Card[] = [
+  {
+    icon: <BarChart3 className="h-5 w-5 text-sky-400" />,
+    title: 'FLUXO DE CAIXA',
+    text: 'Saldo do mês atualizado em tempo real, com entradas e saídas consolidadas.',
+    className: 'top-[8%] right-[6%]',
+    delay: '0s',
+    duration: '7s',
+  },
+  {
+    icon: <Building2 className="h-5 w-5 text-violet-400" />,
+    title: 'FILIAIS',
+    text: '3 unidades ativas conectadas ao cofre consolidado da matriz.',
+    className: 'top-[32%] right-[16%]',
+    delay: '1.2s',
+    duration: '8s',
+  },
+  {
+    icon: <TrendingUp className="h-5 w-5 text-emerald-400" />,
+    title: 'RECEITA VS DESPESA',
+    text: 'Resultado do trimestre positivo — margem crescendo mês a mês.',
+    className: 'top-[56%] right-[7%]',
+    delay: '0.6s',
+    duration: '9s',
+  },
+  {
+    icon: <Landmark className="h-5 w-5 text-amber-400" />,
+    title: 'COFRE',
+    text: 'Reserva consolidada com rendimento acompanhado diariamente.',
+    className: 'bottom-[8%] right-[18%]',
+    delay: '1.8s',
+    duration: '7.5s',
+  },
+]
 
-// Floating cards showing ALG Finanças business elements (cash flow, charts,
-// vault, branches) around the login form — replaces the generic notification
-// cards of the reference template.
+// Ícones circulares luminosos flutuando entre os cartões.
+const orbs = [
+  {
+    icon: <CalendarClock className="h-5 w-5 text-[#1B2A4A]" />,
+    className: 'top-[42%] left-[10%]',
+    delay: '0.4s',
+    duration: '6s',
+  },
+  {
+    icon: <Receipt className="h-5 w-5 text-[#1B2A4A]" />,
+    className: 'top-[68%] left-[24%]',
+    delay: '1.4s',
+    duration: '7s',
+  },
+  {
+    icon: <Landmark className="h-5 w-5 text-[#1B2A4A]" />,
+    className: 'bottom-[16%] left-[44%]',
+    delay: '0.9s',
+    duration: '6.5s',
+  },
+]
+
 export const FinancialFloatingCards = () => {
   const [reduced, setReduced] = useState(false)
 
@@ -77,83 +81,53 @@ export const FinancialFloatingCards = () => {
     return () => mq.removeEventListener('change', handler)
   }, [])
 
-  const anim = (delay: string, duration: string, dist: number) =>
-    reduced ? undefined : floatAnim(delay, duration, dist)
-
   return (
     <>
       <style>{`
-        @keyframes floaty {
-          from { transform: translateY(0) rotate(-0.4deg); }
-          to   { transform: translateY(-14px) rotate(0.4deg); }
+        @keyframes algFloat {
+          from { transform: translateY(0); }
+          to   { transform: translateY(-16px); }
         }
       `}</style>
 
-      {/* Top-left — cash flow */}
-      <FloatCard className="top-[12%] left-[6%]" animation={anim('0s', '7s', 1)}>
-        <MiniCard
-          icon={<Wallet className="h-5 w-5 text-sky-400" />}
-          title="Fluxo de Caixa — Novembro"
-          value="Entradas R$ 128.400"
-          accent="sky"
-        />
-      </FloatCard>
-
-      {/* Top-right — chart */}
-      <FloatCard className="top-[10%] right-[7%]" animation={anim('1.2s', '8s', 2)}>
-        <MiniCard
-          icon={<LineChart className="h-5 w-5 text-emerald-400" />}
-          title="Receita vs Despesa"
-          value="+12,8% no mês"
-          accent="emerald"
-        />
-      </FloatCard>
-
-      {/* Mid-left — vault */}
-      <FloatCard className="top-[48%] left-[4%]" animation={anim('0.6s', '9s', 3)}>
-        <MiniCard
-          icon={<Landmark className="h-5 w-5 text-amber-400" />}
-          title="Cofre Consolidado"
-          value="R$ 1.240.000 em caixa"
-          accent="amber"
-        />
-      </FloatCard>
-
-      {/* Mid-right — branches */}
-      <FloatCard className="top-[52%] right-[5%]" animation={anim('2s', '7.5s', 1)}>
-        <MiniCard
-          icon={<Building2 className="h-5 w-5 text-violet-400" />}
-          title="Filiais Ativas"
-          value="4 unidades · 2 regionais"
-          accent="violet"
-        />
-      </FloatCard>
-
-      {/* Bottom-left — quarterly goals */}
-      <FloatCard className="bottom-[14%] left-[12%]" animation={anim('1.5s', '8.5s', 2)}>
-        <MiniCard
-          icon={<Target className="h-5 w-5 text-rose-400" />}
-          title="Metas do Trimestre"
-          value="87% atingido"
-          accent="emerald"
-        />
-      </FloatCard>
-
-      {/* Bottom-right — daily result */}
-      <FloatCard className="bottom-[12%] right-[11%]" animation={anim('0.3s', '9.5s', 1)}>
-        <MiniCard
-          icon={<Activity className="h-5 w-5 text-sky-400" />}
-          title="Resultado do Dia"
-          value={
-            <span className="inline-flex items-center gap-1">
-              <TrendingDown className="h-3.5 w-3.5" />
-              <TrendingUp className="h-3.5 w-3.5" />
-              -2,1% / +5,4%
-            </span>
+      {cards.map((card) => (
+        <div
+          key={card.title}
+          className={`absolute hidden xl:block ${card.className}`}
+          style={
+            reduced
+              ? undefined
+              : {
+                  animation: `algFloat ${card.duration} ease-in-out ${card.delay} infinite alternate`,
+                }
           }
-          accent="sky"
-        />
-      </FloatCard>
+        >
+          <div className="w-72 xl:w-80 rounded-2xl border border-white/10 bg-[#0D1526]/85 p-4 shadow-2xl shadow-black/40 backdrop-blur-md">
+            <div className="flex items-center gap-3">
+              <div className="rounded-lg bg-white/5 p-2">{card.icon}</div>
+              <p className="text-[13px] font-bold tracking-wide text-white">{card.title}</p>
+            </div>
+            <p className="mt-2.5 text-sm leading-relaxed text-slate-300">{card.text}</p>
+          </div>
+        </div>
+      ))}
+
+      {/* Ícones circulares luminosos */}
+      {orbs.map((orb, i) => (
+        <div
+          key={i}
+          className={`absolute hidden xl:flex h-12 w-12 items-center justify-center rounded-full bg-amber-50 shadow-[0_0_30px_rgba(255,240,200,0.45)] ${orb.className}`}
+          style={
+            reduced
+              ? undefined
+              : {
+                  animation: `algFloat ${orb.duration} ease-in-out ${orb.delay} infinite alternate`,
+                }
+          }
+        >
+          {orb.icon}
+        </div>
+      ))}
     </>
   )
 }

@@ -8,14 +8,6 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card'
-import {
   Form,
   FormControl,
   FormField,
@@ -26,7 +18,7 @@ import {
 import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert'
 import { toast } from 'sonner'
 import { extractFieldErrors } from '@/lib/pocketbase/errors'
-import { Lock, Mail, AlertCircle, Loader2, TrendingUp } from 'lucide-react'
+import { AlertCircle, Loader2 } from 'lucide-react'
 
 import logoImg from '@/assets/logoescolhidoalg-48d57.jpeg'
 import { FinancialFloatingCards } from '@/components/auth/FloatingCards'
@@ -41,7 +33,7 @@ type FormValues = z.infer<typeof formSchema>
 export default function Login() {
   const [loading, setLoading] = useState(false)
   const [errorMsg, setErrorMsg] = useState('')
-  const { signIn, user, loading: authLoading } = useAuth()
+  const { signIn } = useAuth()
   const navigate = useNavigate()
   const location = useLocation()
 
@@ -103,123 +95,142 @@ export default function Login() {
   }
 
   return (
-    <div className="relative min-h-screen w-full overflow-hidden bg-[#050B18] text-foreground flex flex-col">
-      {/* Futuristic ambient background (glow + grid + stars) */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_rgba(56,189,248,0.16),_transparent_55%)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,_rgba(59,130,246,0.12),_transparent_55%)]" />
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,rgba(148,163,184,0.05)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.05)_1px,transparent_1px)] bg-[size:48px_48px]" />
-        <div className="absolute inset-0 opacity-40 bg-[radial-gradient(circle_at_20%_30%,_rgba(56,189,248,0.10),_transparent_40%),radial-gradient(circle_at_80%_70%,_rgba(168,85,247,0.10),_transparent_40%)]" />
-      </div>
-
-      {/* Floating business cards around the form */}
-      <FinancialFloatingCards />
-      {/* Reconciled with backend schema on 2026-11-21T23:58:36Z — C_USER has no `name` column. */}
-
-      {/* Form */}
-      <div className="relative z-10 flex-1 flex flex-col justify-center items-center p-4">
-        <div className="w-full max-w-md mb-8 text-center flex flex-col items-center">
-          <div className="mb-4 shadow-2xl rounded-full overflow-hidden w-28 h-28 border-4 border-slate-700/60 ring-2 ring-sky-400/30">
-            <img src={logoImg} alt="ALG Finanças Logo" className="w-full h-full object-cover" />
-          </div>
-          <h1 className="text-3xl font-bold tracking-tight text-white">ALG Finanças</h1>
-          <p className="text-slate-400 mt-2">Sistema de Gestão Empresarial</p>
+    <div className="flex min-h-screen w-full flex-col lg:flex-row bg-[#FAF7F2] text-foreground">
+      {/* ===== METADE ESQUERDA — painel escuro com cards flutuantes ===== */}
+      <section className="relative flex min-h-[55vh] w-full flex-col justify-end overflow-hidden bg-[#0A1428] px-8 py-12 text-white lg:min-h-screen lg:w-[58%] lg:px-14 lg:py-16">
+        {/* Glow radial central + anéis concêntricos sutis */}
+        <div className="pointer-events-none absolute inset-0">
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_55%,rgba(59,110,190,0.35),transparent_60%)]" />
+          <div className="absolute left-1/2 top-[55%] h-[1100px] w-[1100px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.06]" />
+          <div className="absolute left-1/2 top-[55%] h-[800px] w-[800px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.07]" />
+          <div className="absolute left-1/2 top-[55%] h-[520px] w-[520px] -translate-x-1/2 -translate-y-1/2 rounded-full border border-white/[0.08]" />
         </div>
 
-        <div className="w-full max-w-md">
-          <Card className="shadow-2xl bg-slate-900/70 backdrop-blur-xl border border-slate-700/60">
-            <CardHeader>
-              <CardTitle className="text-white">Bem-vindo de volta</CardTitle>
-              <CardDescription className="text-slate-400">
-                Faça login para acessar o painel administrativo.
-              </CardDescription>
-            </CardHeader>
+        {/* Cards de notificação grandes flutuando + ícones luminosos */}
+        <FinancialFloatingCards />
+
+        {/* Brilho estrela central */}
+        <div className="pointer-events-none absolute left-1/2 top-[52%] hidden -translate-x-1/2 -translate-y-1/2 lg:block">
+          <svg width="90" height="90" viewBox="0 0 100 100" className="text-amber-50/90">
+            <path
+              d="M50 0 C55 35 65 45 100 50 C65 55 55 65 50 100 C45 65 35 55 0 50 C35 45 45 35 50 0 Z"
+              fill="currentColor"
+            />
+          </svg>
+        </div>
+
+        {/* Título editorial no canto inferior esquerdo */}
+        <div className="relative z-10 max-w-lg">
+          <h1 className="font-serif text-5xl leading-[1.05] tracking-tight text-white lg:text-6xl">
+            O controle total das suas finanças.
+          </h1>
+          <p className="mt-6 max-w-md text-lg leading-relaxed text-slate-300">
+            Fluxo de caixa, filiais e cofre num só painel — a ALG Finanças organiza, consolida e
+            mostra tudo — você só acompanha.
+          </p>
+        </div>
+      </section>
+
+      {/* ===== METADE DIREITA — formulário em fundo claro ===== */}
+      <section className="relative flex min-h-[45vh] w-full flex-1 items-center justify-center overflow-hidden bg-[#FAF7F2] px-6 py-12 lg:min-h-screen lg:px-10">
+        <div className="relative z-10 w-full max-w-md">
+          {/* Logo ALG Finanças */}
+          <div className="mb-10 flex justify-center">
+            <div className="h-16 w-16 overflow-hidden rounded-2xl shadow-lg ring-1 ring-black/10">
+              <img src={logoImg} alt="ALG Finanças Logo" className="h-full w-full object-cover" />
+            </div>
+          </div>
+
+          <h2 className="text-4xl font-semibold tracking-tight text-slate-900">
+            Bem-vindo de volta
+          </h2>
+          <p className="mt-2 text-slate-500">Entre para acessar seu Hub.</p>
+
+          <div className="mt-8">
             <Form {...form}>
-              <form onSubmit={form.handleSubmit(onSubmit)}>
-                <CardContent className="space-y-4">
-                  {errorMsg && (
-                    <Alert variant="destructive">
-                      <AlertCircle className="h-4 w-4" />
-                      <AlertTitle>Erro na autenticação</AlertTitle>
-                      <AlertDescription>{errorMsg}</AlertDescription>
-                    </Alert>
+              <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+                {errorMsg && (
+                  <Alert variant="destructive">
+                    <AlertCircle className="h-4 w-4" />
+                    <AlertTitle>Erro na autenticação</AlertTitle>
+                    <AlertDescription>{errorMsg}</AlertDescription>
+                  </Alert>
+                )}
+
+                <FormField
+                  control={form.control}
+                  name="email"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                        Email
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="email"
+                          placeholder="seu@email.com"
+                          className="h-12 border-slate-200 bg-white text-slate-900 shadow-sm placeholder:text-slate-400 focus-visible:border-slate-400 focus-visible:ring-slate-300/60"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
                   )}
+                />
 
-                  <FormField
-                    control={form.control}
-                    name="email"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-slate-300">E-mail</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Mail className="absolute left-3 top-2.5 h-4 w-4 text-slate-500" />
-                            <Input
-                              placeholder="seu@email.com"
-                              className="pl-9 bg-slate-800/60 border-slate-700/60 text-white placeholder:text-slate-500 focus-visible:ring-sky-400/50 focus-visible:border-sky-400/50"
-                              {...field}
-                            />
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
+                <FormField
+                  control={form.control}
+                  name="password"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormLabel className="text-xs font-semibold uppercase tracking-wider text-slate-500">
+                        Senha
+                      </FormLabel>
+                      <FormControl>
+                        <Input
+                          type="password"
+                          placeholder="••••••••"
+                          className="h-12 border-slate-200 bg-white text-slate-900 shadow-sm placeholder:text-slate-400 focus-visible:border-slate-400 focus-visible:ring-slate-300/60"
+                          {...field}
+                        />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
 
-                  <FormField
-                    control={form.control}
-                    name="password"
-                    render={({ field }) => (
-                      <FormItem>
-                        <FormLabel className="text-slate-300">Senha</FormLabel>
-                        <FormControl>
-                          <div className="relative">
-                            <Lock className="absolute left-3 top-2.5 h-4 w-4 text-slate-500" />
-                            <Input
-                              type="password"
-                              placeholder="••••••••"
-                              className="pl-9 bg-slate-800/60 border-slate-700/60 text-white placeholder:text-slate-500 focus-visible:ring-sky-400/50 focus-visible:border-sky-400/50"
-                              {...field}
-                            />
-                          </div>
-                        </FormControl>
-                        <FormMessage />
-                      </FormItem>
-                    )}
-                  />
-                </CardContent>
-                <CardFooter className="flex-col gap-3">
-                  <Button
-                    type="submit"
-                    className="w-full bg-gradient-to-r from-sky-500 to-indigo-500 hover:from-sky-400 hover:to-indigo-400 text-white shadow-lg shadow-sky-500/20"
-                    disabled={loading}
-                  >
-                    {loading ? (
-                      <>
-                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                        Entrando...
-                      </>
-                    ) : (
-                      <>
-                        Entrar
-                        <TrendingUp className="ml-2 h-4 w-4" />
-                      </>
-                    )}
-                  </Button>
-                  <p className="text-xs text-slate-500 text-center w-full">
+                <Button
+                  type="submit"
+                  className="h-12 w-full bg-blue-700 text-base font-medium text-white shadow-lg shadow-blue-700/25 hover:bg-blue-800"
+                  disabled={loading}
+                >
+                  {loading ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Entrando...
+                    </>
+                  ) : (
+                    'Entrar'
+                  )}
+                </Button>
+
+                <p className="text-center text-sm text-slate-500">
+                  Não tem conta?{' '}
+                  <span className="font-medium text-slate-400">
                     Acesso restrito a colaboradores autorizados.
-                  </p>
-                </CardFooter>
+                  </span>
+                </p>
               </form>
             </Form>
-          </Card>
-        </div>
-      </div>
+          </div>
 
-      {/* Discreet footer */}
-      <footer className="relative z-10 py-4 text-center text-xs text-slate-600">
-        © {new Date().getFullYear()} ALG Finanças · Todos os direitos reservados
-      </footer>
+          <div className="mt-12 border-t border-slate-200 pt-6 text-center">
+            <p className="text-xs text-slate-400">
+              © {new Date().getFullYear()} ALG Finanças · Todos os direitos reservados
+            </p>
+          </div>
+        </div>
+      </section>
     </div>
   )
 }
