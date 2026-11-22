@@ -8,6 +8,7 @@ import {
   Receipt,
   Target,
   CircleDollarSign,
+  Wallet,
 } from 'lucide-react'
 
 type Floater = {
@@ -79,6 +80,15 @@ const cards: Floater[] = [
     delay: 2.6,
     duration: 5.0,
     radius: 26,
+  },
+  {
+    icon: <Wallet className="h-5 w-5 text-rose-400" />,
+    title: 'ORÇAMENTO',
+    text: 'Limites por centro de custo e filial, com acompanhamento do realizado versus o previsto.',
+    className: 'top-[45%] right-[6%]',
+    delay: 1.3,
+    duration: 4.4,
+    radius: 20,
   },
 ]
 
