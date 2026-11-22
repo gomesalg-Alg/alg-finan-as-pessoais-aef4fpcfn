@@ -119,12 +119,12 @@ export default function Login() {
           </svg>
         </div>
 
-        {/* Título editorial centralizado no painel */}
-        <div className="relative z-10 mx-auto max-w-lg text-center">
+        {/* Título editorial no canto inferior esquerdo do painel */}
+        <div className="absolute bottom-10 left-8 z-10 max-w-lg text-left lg:bottom-16 lg:left-14">
           <h1 className="font-serif text-5xl leading-[1.05] tracking-tight text-white lg:text-6xl">
             O controle total das suas finanças.
           </h1>
-          <p className="mx-auto mt-6 max-w-md text-lg leading-relaxed text-slate-300">
+          <p className="mt-6 max-w-md text-lg leading-relaxed text-slate-300">
             Fluxo de caixa, filiais e cofre num só painel — a ALG Finanças organiza, consolida e
             mostra tudo — você só acompanha.
           </p>

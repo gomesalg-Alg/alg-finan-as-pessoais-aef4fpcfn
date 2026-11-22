@@ -1,5 +1,14 @@
 import { useEffect, useState } from 'react'
-import { TrendingUp, Building2, Landmark, BarChart3, CalendarClock, Receipt } from 'lucide-react'
+import {
+  TrendingUp,
+  Building2,
+  Landmark,
+  BarChart3,
+  CalendarClock,
+  Receipt,
+  Target,
+  CircleDollarSign,
+} from 'lucide-react'
 
 type Floater = {
   icon: React.ReactNode
@@ -9,6 +18,8 @@ type Floater = {
   delay: number
   duration: number
   radius: number
+  // Classes literais de cor viva para o fundo do ícone circular
+  orbClass?: string
 }
 
 // Grandes cartões de notificação no estilo do template de referência:
@@ -16,7 +27,7 @@ type Floater = {
 // direito / topo do painel escuro, longe do título do canto inferior esquerdo.
 const cards: Floater[] = [
   {
-    icon: <BarChart3 className="h-5 w-5 text-sky-400" />,
+    icon: <BarChart3 className="h-5 w-5 text-cyan-300" />,
     title: 'FLUXO DE CAIXA',
     text: 'Saldo do mês atualizado em tempo real, com entradas e saídas consolidadas.',
     className: 'top-[3%] right-[5%]',
@@ -25,7 +36,7 @@ const cards: Floater[] = [
     radius: 16,
   },
   {
-    icon: <Building2 className="h-5 w-5 text-violet-400" />,
+    icon: <Building2 className="h-5 w-5 text-fuchsia-400" />,
     title: 'FILIAIS',
     text: '3 unidades ativas conectadas ao cofre consolidado da matriz.',
     className: 'top-[17%] right-[28%]',
@@ -43,7 +54,7 @@ const cards: Floater[] = [
     radius: 18,
   },
   {
-    icon: <Landmark className="h-5 w-5 text-amber-400" />,
+    icon: <Landmark className="h-5 w-5 text-amber-300" />,
     title: 'COFRE',
     text: 'Reserva consolidada com rendimento acompanhado diariamente.',
     className: 'top-[45%] right-[26%]',
@@ -51,31 +62,52 @@ const cards: Floater[] = [
     duration: 5.6,
     radius: 24,
   },
+  {
+    icon: <Target className="h-5 w-5 text-orange-400" />,
+    title: 'METAS',
+    text: 'Metas do trimestre acompanhadas por centro de custo, com alerta de desvio.',
+    className: 'top-[3%] right-[62%]',
+    delay: 1.6,
+    duration: 4.9,
+    radius: 20,
+  },
+  {
+    icon: <CircleDollarSign className="h-5 w-5 text-lime-400" />,
+    title: 'INVESTIMENTOS',
+    text: 'Aplicações da reserva com rentabilidade diária e carteira diversificada.',
+    className: 'top-[31%] right-[52%]',
+    delay: 2.6,
+    duration: 5.0,
+    radius: 26,
+  },
 ]
 
 // Ícones circulares luminosos orbitando entre os cartões, na mesma
 // região superior/direita do painel.
 const orbs: Floater[] = [
   {
-    icon: <CalendarClock className="h-5 w-5 text-[#1B2A4A]" />,
-    className: 'top-[12%] right-[52%]',
+    icon: <CalendarClock className="h-5 w-5 text-white" />,
+    className: 'top-[12%] right-[60%]',
     delay: 0.9,
     duration: 3.4,
     radius: 26,
+    orbClass: 'bg-emerald-400 shadow-[0_0_30px_rgba(52,211,153,0.7)]',
   },
   {
-    icon: <Receipt className="h-5 w-5 text-[#1B2A4A]" />,
+    icon: <Receipt className="h-5 w-5 text-white" />,
     className: 'top-[36%] right-[68%]',
     delay: 1.7,
     duration: 3.9,
     radius: 30,
+    orbClass: 'bg-pink-500 shadow-[0_0_30px_rgba(236,72,153,0.7)]',
   },
   {
-    icon: <Landmark className="h-5 w-5 text-[#1B2A4A]" />,
+    icon: <Landmark className="h-5 w-5 text-white" />,
     className: 'top-[42%] right-[56%]',
     delay: 0.3,
     duration: 3.6,
     radius: 22,
+    orbClass: 'bg-amber-400 shadow-[0_0_30px_rgba(251,191,36,0.7)]',
   },
 ]
 
@@ -126,7 +158,9 @@ export const FinancialFloatingCards = () => {
                 <p className="mt-2.5 text-sm leading-relaxed text-slate-300">{f.text}</p>
               </div>
             ) : (
-              <div className="flex h-12 w-12 items-center justify-center rounded-full bg-amber-50 shadow-[0_0_30px_rgba(255,240,200,0.45)]">
+              <div
+                className={`flex h-12 w-12 items-center justify-center rounded-full ${f.orbClass ?? ''}`}
+              >
                 {f.icon}
               </div>
             )}
