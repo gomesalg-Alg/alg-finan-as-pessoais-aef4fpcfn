@@ -97,7 +97,7 @@ export default function Login() {
   return (
     <div className="flex min-h-screen w-full flex-col lg:flex-row bg-[#FAF7F2] text-foreground">
       {/* ===== METADE ESQUERDA — painel escuro com cards flutuantes ===== */}
-      <section className="relative flex min-h-[55vh] w-full flex-col justify-end overflow-hidden bg-[#0A1428] px-8 py-12 text-white lg:min-h-screen lg:w-[58%] lg:px-14 lg:py-16">
+      <section className="relative flex min-h-[55vh] w-full flex-col items-center justify-center overflow-hidden bg-[#0A1428] px-8 py-12 text-white lg:min-h-screen lg:w-[58%] lg:px-14 lg:py-16">
         {/* Glow radial central + anéis concêntricos sutis */}
         <div className="pointer-events-none absolute inset-0">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_55%,rgba(59,110,190,0.35),transparent_60%)]" />
@@ -119,12 +119,12 @@ export default function Login() {
           </svg>
         </div>
 
-        {/* Título editorial no canto inferior esquerdo */}
-        <div className="relative z-10 max-w-lg">
+        {/* Título editorial centralizado no painel */}
+        <div className="relative z-10 mx-auto max-w-lg text-center">
           <h1 className="font-serif text-5xl leading-[1.05] tracking-tight text-white lg:text-6xl">
             O controle total das suas finanças.
           </h1>
-          <p className="mt-6 max-w-md text-lg leading-relaxed text-slate-300">
+          <p className="mx-auto mt-6 max-w-md text-lg leading-relaxed text-slate-300">
             Fluxo de caixa, filiais e cofre num só painel — a ALG Finanças organiza, consolida e
             mostra tudo — você só acompanha.
           </p>
